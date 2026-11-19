@@ -79,7 +79,7 @@ button:disabled{opacity:.6}
 .mark{position:absolute;z-index:6;top:3%;right:5%;font-size:calc(3.4*1cqw);font-weight:800;color:rgba(255,255,255,.85);text-shadow:0 1px 4px #000;pointer-events:none}
 .mark.l{right:auto;left:5%}
 .cap{position:absolute;left:4%;right:4%;text-align:center;font-weight:900;line-height:1.18;font-size:calc(var(--fs) * 1cqw);pointer-events:none;z-index:6;font-family:'Poppins','Noto Sans Devanagari',sans-serif}
-.cap.bottom{bottom:15%}.cap.middle{top:50%;transform:translateY(-50%)}.cap.top{top:12%}
+.cap.bottom{bottom:15%}.cap.lowmid{bottom:30%}.cap.middle{top:50%;transform:translateY(-50%)}.cap.top{top:12%}
 .cap.up{text-transform:uppercase}
 .cap .w{display:inline-block;margin:0 .1em;will-change:transform}
 .f-poppins{font-family:'Poppins','Noto Sans Devanagari',sans-serif}
@@ -125,7 +125,7 @@ button:disabled{opacity:.6}
 .pick{position:absolute;inset:0;z-index:10;display:none;touch-action:none;cursor:crosshair}
 .pickbox{position:absolute;border:2px dashed var(--ac);background:rgba(255,212,0,.18);border-radius:6px;box-shadow:0 0 0 9999px rgba(0,0,0,.5);pointer-events:none}
 .pickmsg{position:absolute;top:8px;left:8px;right:8px;text-align:center;font-size:12px;background:rgba(0,0,0,.75);padding:6px;border-radius:8px;pointer-events:none}
-.ctrl{display:flex;gap:8px;justify-content:center;margin-top:12px}.ctrl button{flex:1;max-width:170px}
+.ctrl{display:flex;gap:8px;justify-content:center;margin-top:12px}.ctrl button{flex:1;max-width:170px}.ctrl{flex-wrap:wrap}.ctrl .skip{flex:0 0 auto;min-width:64px}
 .time{font-variant-numeric:tabular-nums;text-align:center;color:var(--mut);font-size:12px;margin-top:8px}
 .pcard{background:#0d1017;border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:10px}
 .pc-top{display:flex;gap:8px;align-items:center}
@@ -176,9 +176,11 @@ body.recording .toast{display:none}
       <div class="bar"><i id="prog"></i></div>
       <div class="pick" id="pick"><div class="pickbox" id="pickbox"></div><div class="pickmsg">Tap or drag the box onto the streamer's facecam</div></div>
     </div>
-    <div class="time" id="time">0:00 / 0:00</div>
+    <div class="time" id="time">00:00:00 / 00:00:00</div>
     <div class="ctrl">
+      <button class="skip" id="back" title="Back 5 seconds (Left arrow)">⏪ 5s</button>
       <button class="pri" id="play">▶ Play clip</button>
+      <button class="skip" id="fwd" title="Forward 5 seconds (Right arrow)">5s ⏩</button>
       <button id="restart">⏮ Restart</button>
     </div>
   </section>
@@ -201,9 +203,9 @@ body.recording .toast{display:none}
       <label>YouTube link (video, Shorts or livestream replay)</label>
       <input type="text" id="url" placeholder="https://www.youtube.com/watch?v=...">
       <div class="row">
-        <div><label>Start (min:sec)</label><input type="text" id="start" value="0:00">
+        <div><label>Start (HH:MM:SS)</label><input type="text" id="start" value="00:00:00" placeholder="00:00:00" inputmode="text" autocomplete="off">
           <button class="mini" id="setStart">Use current time as start</button></div>
-        <div><label>End</label><input type="text" id="end" value="0:30">
+        <div><label>End (HH:MM:SS)</label><input type="text" id="end" value="00:00:30" placeholder="00:00:30" inputmode="text" autocomplete="off">
           <button class="mini" id="setEnd">Use current time as end</button></div>
       </div>
       <label class="chk"><input type="checkbox" id="loop" checked> Loop the clip</label>
@@ -249,12 +251,19 @@ oh my god did you see that?!"></textarea>
       <h3>Streamer facecam</h3>
       <label class="chk"><input type="checkbox" id="camon" checked> Show the streamer's facecam (cropped from the stream)</label>
       <div class="row">
-        <div><label>Corner</label>
-          <select id="ccorner"><option value="br" selected>Bottom right</option><option value="bl">Bottom left</option><option value="tr">Top right</option><option value="tl">Top left</option></select></div>
+        <div><label>Position</label>
+          <select id="ccorner">
+            <option value="br" selected>Bottom right</option><option value="bl">Bottom left</option>
+            <option value="tr">Top right</option><option value="tl">Top left</option>
+            <option value="tm">Top middle</option>
+            <option value="mm">Middle (center)</option>
+            <option value="rm">Right middle</option><option value="lm">Left middle</option>
+            <option value="ac">Bottom middle, just above captions</option>
+          </select></div>
         <div><label>Shape</label>
-          <select id="cshape"><option value="round" selected>Rounded square</option><option value="circle">Circle</option><option value="wide">Wide 4:3</option></select></div>
+          <select id="cshape"><option value="round" selected>Rounded square</option><option value="circle">Circle</option><option value="wide">Wide 4:3</option><option value="wide169">Wider 16:9</option><option value="ultra">Ultra wide 21:9</option><option value="strip">Strip 3:1</option></select></div>
       </div>
-      <div class="sl"><span>Size</span><input type="range" id="csize" min="18" max="52" value="32"><em></em></div>
+      <div class="sl"><span>Size</span><input type="range" id="csize" min="18" max="92" value="32"><em></em></div>
       <div class="sl"><span>Border</span><input type="range" id="cbw" min="0" max="8" value="3"><em></em></div>
       <div class="row">
         <div><label>Border color</label><input type="color" id="cbc" value="#ffffff"></div>
@@ -313,7 +322,7 @@ oh my god did you see that?!"></textarea>
             <option value="">None</option>
           </select></div>
         <div><label>Position</label>
-          <select id="pos"><option value="bottom">Bottom</option><option value="middle">Middle</option><option value="top">Top</option></select></div>
+          <select id="pos"><option value="bottom">Bottom</option><option value="lowmid">Bottom middle (a bit higher)</option><option value="middle">Middle</option><option value="top">Top</option></select></div>
       </div>
       <div class="row">
         <div><label>Highlight color</label><input type="color" id="hl" value="#ffd400"></div>
@@ -413,9 +422,17 @@ oh my god did you see that?!"></textarea>
 
 <script>
 /*PURE-START*/
-function pt(s){s=String(s).trim();if(!s)return 0;const p=s.split(':').map(Number);if(p.some(isNaN))return NaN;return p.reduce((a,b)=>a*60+b,0)}
-function ft(t){t=Math.max(0,t||0);const h=Math.floor(t/3600),m=Math.floor(t%3600/60),s=Math.floor(t%60);return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(s).padStart(2,'0')}
-function ftd(t){t=Math.round(Math.max(0,t||0)*10)/10;const h=Math.floor(t/3600),m=Math.floor(t%3600/60),s=t%60;const whole=Number.isInteger(s);const ss=whole?String(s).padStart(2,'0'):s.toFixed(1).padStart(4,'0');return (h?h+':'+String(m).padStart(2,'0'):m)+':'+ss}
+function pt(s){
+  s=String(s).trim().toLowerCase().replace(/[;,]/g,':').replace(/\s+/g,'');
+  if(!s)return 0;
+  let m=s.match(/^(?:(\d+)h)?(?:(\d+)m(?:in)?)?(?:(\d+(?:\.\d+)?)s(?:ec)?)?$/);
+  if(m&&/[hms]/.test(s))return (+m[1]||0)*3600+(+m[2]||0)*60+(+m[3]||0);
+  const p=s.split(':').map(x=>x===''?NaN:Number(x));
+  if(p.length>3||p.some(isNaN))return NaN;
+  return p.reduce((a,b)=>a*60+b,0);
+}
+function ft(t){t=Math.max(0,t||0);const h=Math.floor(t/3600),m=Math.floor(t%3600/60),sc=Math.floor(t%60);return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(sc).padStart(2,'0')}
+function ftd(t){t=Math.round(Math.max(0,t||0)*10)/10;const h=Math.floor(t/3600),m=Math.floor(t%3600/60),sc=Math.round((t%60)*10)/10;const ss=Number.isInteger(sc)?String(sc).padStart(2,'0'):sc.toFixed(1).padStart(4,'0');return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+ss}
 function tsToSec(s){s=String(s).trim().replace(',','.');const p=s.split(':').map(Number);if(p.some(isNaN))return NaN;return p.reduce((a,b)=>a*60+b,0)}
 
 function parseTranscript(raw){
@@ -528,8 +545,8 @@ let recFinish=null,recCancel=false,recBusy=false;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2800)}
 function vid(u){u=(u||'').trim();const m=u.match(/(?:youtu\.be\/|v=|shorts\/|live\/|embed\/)([\w-]{11})/);if(m)return m[1];return /^[\w-]{11}$/.test(u)?u:null}
-const S=()=>pt($('start').value)||0;
-const E=()=>{const e=pt($('end').value);return isNaN(e)?S()+30:e};
+const S=()=>{const v=pt($('start').value);return isNaN(v)?0:v};
+const E=()=>{const raw=String($('end').value).trim();if(!raw)return S()+30;const e=pt(raw);return isNaN(e)?S()+30:e};
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
 
 /* tabs */
@@ -571,7 +588,21 @@ $('c_reset').onclick=()=>{selectChip('none');setColor(PRESETS.none)};
 /* layout + facecam */
 function camAspect(){
   if($('layout').value==='stack'){const ph=$('phone');return ph.clientWidth/Math.max(1,ph.clientHeight*0.42)}
-  return $('cshape').value==='wide'?4/3:1;
+  return ({wide:4/3,wide169:16/9,ultra:21/9,strip:3}[$('cshape').value])||1;
+}
+/* where the caption block sits (bottom edge, in cqw; phone height = 177.8cqw) */
+function capBottomCqw(){
+  const p=$('pos').value,L=$('layout').value;
+  if(L==='stack')return p==='lowmid'?50:44*1.778;
+  if(p==='bottom')return 15*1.778;
+  if(p==='lowmid')return 30*1.778;
+  return 0;
+}
+function aboveCapBottom(){
+  const p=$('pos').value;
+  const capH=(+$('fs').value)*1.18*2;
+  if(p==='bottom'||p==='lowmid')return Math.round((capBottomCqw()+capH+3)*10)/10;
+  return 12;
 }
 function applyLayout(){
   const L=pickOn?'fit':$('layout').value,st=$('stage'),vw=$('vwrap'),x=$('xpos').value;
@@ -590,8 +621,14 @@ function applyCam(){
   }else{
     const size=+$('csize').value,r=camAspect(),corner=$('ccorner').value,shape=$('cshape').value;
     css+='width:'+size+'cqw;aspect-ratio:'+r+';';
-    css+=(corner[0]==='b'?'bottom:4cqw;':'top:5cqw;')+(corner[1]==='r'?'right:4cqw;':'left:4cqw;');
-    css+='border-radius:'+(shape==='circle'?'50%':shape==='wide'?'4cqw':'6cqw')+';';
+    if(corner==='tm')css+='top:5cqw;left:50%;transform:translateX(-50%);';
+    else if(corner==='mm')css+='top:50%;left:50%;transform:translate(-50%,-50%);';
+    else if(corner==='rm')css+='top:50%;right:4cqw;transform:translateY(-50%);';
+    else if(corner==='lm')css+='top:50%;left:4cqw;transform:translateY(-50%);';
+    else if(corner==='ac')css+='bottom:'+aboveCapBottom()+'cqw;left:50%;transform:translateX(-50%);';
+    else css+=(corner[0]==='b'?'bottom:4cqw;':'top:5cqw;')+(corner[1]==='r'?'right:4cqw;':'left:4cqw;');
+    css+='max-width:92cqw;';
+    css+='border-radius:'+(shape==='circle'?'50%':shape==='round'?'6cqw':shape==='wide'?'4cqw':'3cqw')+';';
     css+='border:'+(bw*0.4)+'cqw solid '+col+';';
     css+=$('cglow').checked?'box-shadow:0 0 5cqw '+col+',0 2cqw 6cqw rgba(0,0,0,.6);':'box-shadow:0 2cqw 6cqw rgba(0,0,0,.6);';
   }
@@ -646,9 +683,14 @@ function applyAll(){
   c.style.setProperty('--fs',$('fs').value);
   c.style.display=pickOn?'none':'';
   let b='';
-  if($('pos').value==='bottom'){
-    if(L==='stack')b='44%';
-    else if($('camon').checked&&!pickOn&&$('ccorner').value[0]==='b')b=((+$('csize').value)/camAspect()+9)+'cqw';
+  const pv=$('pos').value;
+  if(pv==='bottom'||pv==='lowmid'){
+    const base=pv==='bottom'?'15%':'30%';
+    if(L==='stack')b=pv==='bottom'?'44%':'50%';
+    else if($('camon').checked&&!pickOn&&$('ccorner').value[0]==='b'){
+      const clr=((+$('csize').value)/camAspect()+9)+'cqw';
+      b=pv==='bottom'?clr:'max('+base+','+clr+')';
+    }
   }
   c.style.bottom=b;
   const v=k=>+$('c_'+k).value;
@@ -674,6 +716,20 @@ const LIVE=['style','font','anim','pos','hl','fs','up','xpos','motion','f_gr','f
 LIVE.forEach(id=>$(id).addEventListener('input',applyAll));
 ['caps','rel','start','n'].forEach(id=>$(id).addEventListener('input',parseCaps));
 $('end').addEventListener('input',applyAll);
+/* apply start/end edits to the player right away (on Enter or when leaving the field) */
+function applyTimes(which){
+  if(!ready||!player)return;
+  const sv=S(),ev=E();
+  if(isNaN(pt($('start').value))||isNaN(pt($('end').value||'0'))){toast('Write times like 00:01:25');return}
+  if(ev<=sv){toast('End time must be after start time');return}
+  const t=player.getCurrentTime();
+  if(which==='start'||t<sv||t>=ev){jump(sv);playTrans()}
+  lastKey='';parseCaps();applyAll();
+}
+['start','end'].forEach(id=>{
+  $(id).addEventListener('change',()=>applyTimes(id));
+  $(id).addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$(id).blur();}});
+});
 $('camon').addEventListener('change',()=>{
   if($('camon').checked){if(curId)loadCam(curId)}
   else if(camReady&&camPlayer){try{camPlayer.pauseVideo()}catch(_){}}
@@ -800,7 +856,9 @@ function loadClip(id){
 $('load').onclick=()=>{
   const id=vid($('url').value);
   if(!id){toast('Enter a valid YouTube link');return}
-  if(isNaN(pt($('start').value))||isNaN(pt($('end').value))){toast('Write times like 1:25');return}
+  if(!String($('start').value).trim())$('start').value='00:00:00';
+  if(!String($('end').value).trim())$('end').value=ftd(S()+30);
+  if(isNaN(pt($('start').value))||isNaN(pt($('end').value))){toast('Write times like 00:01:25');return}
   if(E()<=S()){toast('End time must be after start time');return}
   plOn=false;loadClip(id);
 };
@@ -811,6 +869,20 @@ $('play').onclick=()=>{
   if(t<S()||t>=E()-.2){jump(S());playTrans()}
   player.playVideo();
 };
+function skip(d){
+  if(!ready||!player)return toast('Load a clip first');
+  const s=S(),e=E(),t=player.getCurrentTime();
+  jump(Math.min(Math.max(t+d,s),Math.max(s,e-0.3)));
+  lastKey='';
+}
+$('back').onclick=()=>skip(-5);
+$('fwd').onclick=()=>skip(5);
+document.addEventListener('keydown',e=>{
+  const tg=(e.target.tagName||'').toLowerCase();
+  if(tg==='input'||tg==='textarea'||tg==='select')return;
+  if(e.key==='ArrowLeft'){e.preventDefault();skip(-5)}
+  else if(e.key==='ArrowRight'){e.preventDefault();skip(5)}
+});
 $('restart').onclick=()=>{if(!ready)return;jump(S());player.playVideo();playTrans()};
 $('setStart').onclick=()=>{if(!ready)return toast('Load a video first');$('start').value=ftd(player.getCurrentTime());parseCaps()};
 $('setEnd').onclick=()=>{if(!ready)return toast('Load a video first');$('end').value=ftd(player.getCurrentTime());applyAll()};
