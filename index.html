@@ -120,6 +120,42 @@ button:disabled{opacity:.6}
 @keyframes mglitch{0%,88%,100%{transform:translate(0);filter:none}90%{transform:translate(-2%,0) skewX(4deg);filter:hue-rotate(90deg) saturate(2)}93%{transform:translate(2%,1%) skewX(-4deg);filter:hue-rotate(-90deg)}96%{transform:translate(-1%,-1%)}}
 .m-drift{animation:mdrift 12s ease-in-out infinite alternate}
 @keyframes mdrift{from{transform:scale(1.15) translateX(-3%)}to{transform:scale(1.15) translateX(3%)}}
+
+/* streamer name bar (animated lower third) */
+.lt{position:absolute;z-index:6;left:5%;bottom:3.5cqw;width:max-content;max-width:90%;pointer-events:none;display:flex;flex-direction:column;--lc:#ffd400;--lts:1;font-family:'Poppins','Noto Sans Devanagari',sans-serif}
+.ln-line{height:calc(.7cqw * var(--lts));background:var(--lc);transform:scaleX(0);transform-origin:left;box-shadow:0 0 3cqw var(--lc)}
+.ln-panel{position:relative;overflow:hidden;background:linear-gradient(90deg,rgba(8,9,14,.92),rgba(8,9,14,.6));border-left:calc(1.1cqw * var(--lts)) solid var(--lc);padding:calc(2cqw * var(--lts)) calc(4.5cqw * var(--lts)) calc(2cqw * var(--lts)) calc(3.2cqw * var(--lts));clip-path:inset(0 100% 0 0)}
+.ln-panel::after{content:"";position:absolute;top:0;bottom:0;left:0;width:30%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);transform:translateX(-160%) skewX(-20deg);opacity:0}
+.ln-name{overflow:hidden;font-size:calc(5.2cqw * var(--lts));font-weight:900;line-height:1.2;letter-spacing:.04em;text-transform:uppercase;color:#fff;white-space:nowrap}
+.ln-name span{display:block;transform:translateY(115%)}
+.ln-sub{font-size:calc(2.9cqw * var(--lts));font-weight:600;line-height:1.3;letter-spacing:.18em;text-transform:uppercase;color:var(--lc);opacity:0;margin-top:calc(.5cqw * var(--lts));white-space:nowrap}
+.lt.bold .ln-panel{background:var(--lc);border-left:0}
+.lt.bold .ln-name{color:#0a0b10}
+.lt.bold .ln-sub{color:#0a0b10}
+.lt.bold .ln-line{background:#fff;box-shadow:none}
+.lt.glass .ln-line{display:none}
+.lt.glass .ln-panel{background:rgba(255,255,255,.16);backdrop-filter:blur(2cqw);-webkit-backdrop-filter:blur(2cqw);border-left:0;border-bottom:calc(.7cqw * var(--lts)) solid var(--lc);border-radius:2cqw}
+.lt.glass .ln-sub{color:#fff}
+.lt.in .ln-line{animation:lnLine .55s cubic-bezier(.7,0,.2,1) forwards}
+.lt.in .ln-panel{animation:lnPanel .65s cubic-bezier(.7,0,.2,1) .25s forwards}
+.lt.in .ln-panel::after{animation:lnShine 4.5s ease-in-out 1s infinite}
+.lt.in .ln-name span{animation:lnUp .5s cubic-bezier(.2,.9,.2,1) .65s forwards}
+.lt.in .ln-sub{animation:lnFade .5s ease-out .9s forwards}
+.lt.out .ln-line{transform-origin:right;transform:scaleX(1);animation:lnLineOut .45s cubic-bezier(.7,0,.2,1) .15s forwards}
+.lt.out .ln-panel{clip-path:inset(0 0 0 0);animation:lnPanelOut .5s cubic-bezier(.7,0,.2,1) forwards}
+.lt.out .ln-name span{transform:translateY(0);animation:lnUpOut .3s ease-in forwards}
+.lt.out .ln-sub{opacity:1;animation:lnFadeOut .25s ease-in forwards}
+@keyframes lnLine{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes lnLineOut{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+@keyframes lnPanel{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes lnPanelOut{from{clip-path:inset(0 0 0 0)}to{clip-path:inset(0 0 0 100%)}}
+@keyframes lnUp{from{transform:translateY(115%)}to{transform:translateY(0)}}
+@keyframes lnUpOut{from{transform:translateY(0)}to{transform:translateY(-115%)}}
+@keyframes lnFade{from{opacity:0}to{opacity:1}}
+@keyframes lnFadeOut{from{opacity:1}to{opacity:0}}
+@keyframes lnShine{0%{transform:translateX(-160%) skewX(-20deg);opacity:0}6%{opacity:1}28%{transform:translateX(480%) skewX(-20deg);opacity:1}30%,100%{transform:translateX(480%) skewX(-20deg);opacity:0}}
+.lite .ln-panel::after{animation:none!important}
+
 .bar{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.18);z-index:9}
 .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--ac3))}
 .pick{position:absolute;inset:0;z-index:10;display:none;touch-action:none;cursor:crosshair}
@@ -155,7 +191,7 @@ body.recording .toast{display:none}
 <body>
 <header>
   <h1>🎬 Clip Studio Pro</h1>
-  <p>Find the best moments, add a streamer facecam, color grade, add effects and animated captions, and translate them to English.</p>
+  <p>Find the best moments, add a streamer facecam, color grade, add effects, a streamer name bar and animated captions, and translate them to English.</p>
 </header>
 
 <main>
@@ -172,6 +208,7 @@ body.recording .toast{display:none}
       <div class="fx fade" id="fade"></div>
       <div class="empty" id="empty">Paste a YouTube link and<br>press "Load clip"</div>
       <div class="cap bottom s1 up" id="cap"></div>
+      <div class="lt cine" id="lt"><div class="ln-line"></div><div class="ln-panel"><div class="ln-name"><span id="ltN"></span></div><div class="ln-sub" id="ltS"></div></div></div>
       <div class="mark" id="mark"></div>
       <div class="bar"><i id="prog"></i></div>
       <div class="pick" id="pick"><div class="pickbox" id="pickbox"></div><div class="pickmsg">Tap or drag the box onto the streamer's facecam</div></div>
@@ -245,6 +282,8 @@ oh my god did you see that?!"></textarea>
         <option value="stack">Stacked: gameplay on top, facecam panel below</option>
       </select>
       <div class="sl"><span>Gameplay position</span><input type="range" id="xpos" min="0" max="100" value="50"><em></em></div>
+      <div class="sl"><span>Stacked: gameplay height %</span><input type="range" id="split" min="40" max="85" value="62"><em></em></div>
+      <div class="hint">In Stacked layout, the gameplay takes this much of the height and the facecam panel gets the rest. Drag it up for bigger gameplay, down for a bigger facecam.</div>
       <label>Background color (shows in Fit mode)</label>
       <input type="color" id="bgc" value="#0a0b10">
 
@@ -273,7 +312,7 @@ oh my god did you see that?!"></textarea>
       <div class="sl"><span>Cam zoom</span><input type="range" id="cz" min="1.5" max="8" step="0.1" value="4"><em></em></div>
       <div class="sl"><span>Cam left/right</span><input type="range" id="cx" min="0" max="100" step="0.5" value="88"><em></em></div>
       <div class="sl"><span>Cam up/down</span><input type="range" id="cy" min="0" max="100" step="0.5" value="80"><em></em></div>
-      <div class="hint">YouTube gives us one video, and the streamer's webcam is a small box inside it. The facecam here is a zoomed copy of that box, kept in sync and muted. Press "Pick facecam area", then tap or drag the box onto the webcam in the stream. Because it zooms into a small part of the picture, it looks softer than the main video. Captions move up automatically so they don't sit under the facecam.</div>
+      <div class="hint">YouTube gives us one video, and the streamer's webcam is a small box inside it. The facecam here is a zoomed copy of that box, kept in sync and muted. Press "Pick facecam area", then tap or drag the box onto the webcam in the stream. Because it zooms into a small part of the picture, it looks softer than the main video. Captions and the facecam move up automatically so they don't sit on top of the streamer name bar.</div>
     </section>
 
     <section class="card pane" id="p-caps">
@@ -360,6 +399,36 @@ oh my god did you see that?!"></textarea>
 
     <section class="card pane" id="p-fx">
       <h2><b>7</b> Effects</h2>
+
+      <h3 style="margin-top:4px">Streamer name bar</h3>
+      <label class="chk"><input type="checkbox" id="lt_on" checked> Show the animated name bar at the bottom</label>
+      <label>Streamer name</label>
+      <input type="text" id="lt_name" placeholder="e.g. Mortal" autocomplete="off">
+      <label>Tagline (optional)</label>
+      <input type="text" id="lt_sub" placeholder="e.g. Live on YouTube" autocomplete="off">
+      <div class="row">
+        <div><label>Bar style</label>
+          <select id="lt_style">
+            <option value="cine">Cinematic (dark panel)</option>
+            <option value="bold">Solid color</option>
+            <option value="glass">Glass</option>
+          </select></div>
+        <div><label>Accent color</label><input type="color" id="lt_col" value="#ffd400"></div>
+      </div>
+      <div class="row">
+        <div><label>Align</label>
+          <select id="lt_al"><option value="l" selected>Left</option><option value="c">Center</option><option value="r">Right</option></select></div>
+        <div><label>When to show</label>
+          <select id="lt_mode">
+            <option value="always">Whole clip</option>
+            <option value="first">First 7 seconds</option>
+            <option value="loop">Every 14 seconds, for 7</option>
+          </select></div>
+      </div>
+      <div class="sl"><span>Size</span><input type="range" id="lt_sz" min="60" max="160" value="100"><em></em></div>
+      <div class="hint">The bar sweeps in with a glowing line, the panel opens, the name slides up and a light shine passes over it, then it sweeps out. It stays above the cinematic black bars if you turn those on.</div>
+
+      <h3>Look</h3>
       <div class="row">
         <div><label>Motion (gameplay only)</label>
           <select id="motion">
@@ -403,7 +472,7 @@ oh my god did you see that?!"></textarea>
         <ol>
           <li>Use desktop Chrome or Edge. Phones can't record the screen from a web page.</li>
           <li>Press Record. When the browser asks, choose <b>this tab</b> and keep "Share tab audio" ticked, or the file will have no sound.</li>
-          <li>The preview grows to full height, plays the clip once from start to end, and the file downloads by itself. The recording is cropped to just the vertical frame, with captions, facecam, color and effects included.</li>
+          <li>The preview grows to full height, plays the clip once from start to end, and the file downloads by itself. The recording is cropped to just the vertical frame, with captions, facecam, name bar, color and effects included.</li>
           <li>Leave the tab open and in front while it records. For "Record all picks", Chrome may ask once to allow multiple downloads.</li>
         </ol>
         This records what plays in your own browser, so the quality depends on your computer and the stream. Only clip content you have the right to use, such as your own streams or ones with the streamer's permission. WebM files may not show a total length until they are played, which is normal.
@@ -413,7 +482,7 @@ oh my god did you see that?!"></textarea>
     <section class="card pane" id="p-share">
       <h2><b>9</b> Share</h2>
       <button class="pri" id="share" style="width:100%">🔗 Copy share link for this clip</button>
-      <div class="hint">The link saves the video, times, captions, layout, facecam, style, color and effects. It does not include the transcript. Whoever opens it sees exactly this clip.</div>
+      <div class="hint">The link saves the video, times, captions, layout, facecam, name bar, style, color and effects. It does not include the transcript. Whoever opens it sees exactly this clip.</div>
     </section>
   </div>
 </main>
@@ -541,6 +610,7 @@ let player=null,ready=false,apiReady=false,pendingLoad=null,playing=false,caps=[
 let camPlayer=null,camReady=false,camId=null,lastSync=0,jumpAt=0,pickOn=false;
 let segsAll=[],picks=[],plOn=false,plList=[],plI=0;
 let recFinish=null,recCancel=false,recBusy=false;
+let ltKey='';
 
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2800)}
@@ -585,17 +655,26 @@ function setColor(p){CIDS.forEach(k=>$('c_'+k).value=p[k]);applyAll()}
 document.querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{selectChip(ch.dataset.p);setColor(PRESETS[ch.dataset.p])});
 $('c_reset').onclick=()=>{selectChip('none');setColor(PRESETS.none)};
 
+/* streamer name bar geometry (all in cqw; phone height = 177.8cqw) */
+function ltActive(){return !!($('lt_on').checked&&$('lt_name').value.trim()&&!pickOn)}
+function ltBottom(){return $('f_bars').checked?21:3.5}
+function ltTop(){
+  if(!ltActive()||$('layout').value==='stack')return 0;
+  const z=(+$('lt_sz').value)/100,sub=$('lt_sub').value.trim();
+  return Math.round((ltBottom()+(5.8+(sub?3.8:0))*z+5.4*z+3)*10)/10;
+}
+
 /* layout + facecam */
 function camAspect(){
-  if($('layout').value==='stack'){const ph=$('phone');return ph.clientWidth/Math.max(1,ph.clientHeight*0.42)}
+  if($('layout').value==='stack'){const ph=$('phone');return ph.clientWidth/Math.max(1,ph.clientHeight*(100-(+$('split').value))/100)}
   return ({wide:4/3,wide169:16/9,ultra:21/9,strip:3}[$('cshape').value])||1;
 }
-/* where the caption block sits (bottom edge, in cqw; phone height = 177.8cqw) */
+/* where the caption block sits (bottom edge, in cqw) */
 function capBottomCqw(){
   const p=$('pos').value,L=$('layout').value;
-  if(L==='stack')return p==='lowmid'?50:44*1.778;
-  if(p==='bottom')return 15*1.778;
-  if(p==='lowmid')return 30*1.778;
+  if(L==='stack'){const pn=100-(+$('split').value);return (p==='lowmid'?pn+8:pn+2)*1.778}
+  if(p==='bottom')return Math.max(15*1.778,ltTop());
+  if(p==='lowmid')return Math.max(30*1.778,ltTop());
   return 0;
 }
 function aboveCapBottom(){
@@ -607,17 +686,18 @@ function aboveCapBottom(){
 function applyLayout(){
   const L=pickOn?'fit':$('layout').value,st=$('stage'),vw=$('vwrap'),x=$('xpos').value;
   st.style.background=$('bgc').value;
-  st.style.height=L==='stack'?'58%':'100%';
+  st.style.height=L==='stack'?$('split').value+'%':'100%';
   if(L==='fit')vw.style.cssText='width:100%;height:auto;left:0;top:50%;transform:translateY(-50%)';
   else vw.style.cssText='height:100%;width:auto;left:'+x+'%;top:50%;transform:translate(-'+x+'%,-50%)';
 }
+function camBottom(){return Math.max(4,ltTop())}
 function applyCam(){
   const cam=$('cam'),on=$('camon').checked&&!pickOn&&!!curId;
   if(!on){cam.style.cssText='display:none';return}
   const L=$('layout').value,bw=+$('cbw').value,col=$('cbc').value;
   let css='display:block;';
   if(L==='stack'){
-    css+='left:0;right:0;bottom:0;height:42%;border-radius:0;border-top:'+(bw*0.4)+'cqw solid '+col+';';
+    css+='left:0;right:0;bottom:0;height:'+(100-(+$('split').value))+'%;border-radius:0;border-top:'+(bw*0.4)+'cqw solid '+col+';';
   }else{
     const size=+$('csize').value,r=camAspect(),corner=$('ccorner').value,shape=$('cshape').value;
     css+='width:'+size+'cqw;aspect-ratio:'+r+';';
@@ -626,7 +706,7 @@ function applyCam(){
     else if(corner==='rm')css+='top:50%;right:4cqw;transform:translateY(-50%);';
     else if(corner==='lm')css+='top:50%;left:4cqw;transform:translateY(-50%);';
     else if(corner==='ac')css+='bottom:'+aboveCapBottom()+'cqw;left:50%;transform:translateX(-50%);';
-    else css+=(corner[0]==='b'?'bottom:4cqw;':'top:5cqw;')+(corner[1]==='r'?'right:4cqw;':'left:4cqw;');
+    else css+=(corner[0]==='b'?'bottom:'+camBottom()+'cqw;':'top:5cqw;')+(corner[1]==='r'?'right:4cqw;':'left:4cqw;');
     css+='max-width:92cqw;';
     css+='border-radius:'+(shape==='circle'?'50%':shape==='round'?'6cqw':shape==='wide'?'4cqw':'3cqw')+';';
     css+='border:'+(bw*0.4)+'cqw solid '+col+';';
@@ -686,10 +766,12 @@ function applyAll(){
   const pv=$('pos').value;
   if(pv==='bottom'||pv==='lowmid'){
     const base=pv==='bottom'?'15%':'30%';
-    if(L==='stack')b=pv==='bottom'?'44%':'50%';
-    else if($('camon').checked&&!pickOn&&$('ccorner').value[0]==='b'){
-      const clr=((+$('csize').value)/camAspect()+9)+'cqw';
-      b=pv==='bottom'?clr:'max('+base+','+clr+')';
+    if(L==='stack'){const pn=100-(+$('split').value);b=(pv==='bottom'?pn+2:pn+8)+'%'}
+    else{
+      const parts=[base];
+      if($('camon').checked&&!pickOn&&$('ccorner').value[0]==='b')parts.push(((+$('csize').value)/camAspect()+camBottom()+5)+'cqw');
+      if(ltTop()>0)parts.push(ltTop()+'cqw');
+      b=parts.length>1?'max('+parts.join(',')+')':'';
     }
   }
   c.style.bottom=b;
@@ -707,12 +789,23 @@ function applyAll(){
   $('bars').style.display=$('f_bars').checked?'block':'none';
   const mk=$('mark');mk.textContent=$('wm').value;
   mk.classList.toggle('l',$('camon').checked&&!pickOn&&$('ccorner').value==='tr'&&L!=='stack');
+  /* streamer name bar */
+  const lt=$('lt'),al=$('lt_al').value,sub=$('lt_sub').value.trim();
+  lt.style.setProperty('--lc',$('lt_col').value);
+  lt.style.setProperty('--lts',(+$('lt_sz').value)/100);
+  lt.style.bottom=ltBottom()+'cqw';
+  lt.style.left=al==='l'?'5%':al==='c'?'50%':'auto';
+  lt.style.right=al==='r'?'5%':'auto';
+  lt.style.transform=al==='c'?'translateX(-50%)':'none';
+  if($('ltN').textContent!==$('lt_name').value.trim())$('ltN').textContent=$('lt_name').value.trim();
+  if($('ltS').textContent!==sub)$('ltS').textContent=sub;
+  $('ltS').style.display=sub?'':'none';
   applyLayout();applyCam();
   if(pickOn)updatePick();
   document.querySelectorAll('.sl').forEach(s=>{const i=s.querySelector('input'),e=s.querySelector('em');if(i&&e&&i.id!=='fs')e.textContent=i.value});
   $('fs_v').textContent=$('fs').value;
 }
-const LIVE=['style','font','anim','pos','hl','fs','up','xpos','motion','f_gr','f_vi','f_sc','f_lk','f_bars','wm','layout','bgc','camon','ccorner','cshape','csize','cbw','cbc','cglow','cz','cx','cy',...CIDS.map(k=>'c_'+k)];
+const LIVE=['split','style','font','anim','pos','hl','fs','up','xpos','motion','f_gr','f_vi','f_sc','f_lk','f_bars','wm','layout','bgc','camon','ccorner','cshape','csize','cbw','cbc','cglow','cz','cx','cy','lt_on','lt_name','lt_sub','lt_style','lt_col','lt_al','lt_mode','lt_sz',...CIDS.map(k=>'c_'+k)];
 LIVE.forEach(id=>$(id).addEventListener('input',applyAll));
 ['caps','rel','start','n'].forEach(id=>$(id).addEventListener('input',parseCaps));
 $('end').addEventListener('input',applyAll);
@@ -745,6 +838,25 @@ function playTrans(){
   el.style.opacity=1;void el.offsetWidth;
   el.style.transition=t==='flash'?'opacity .45s ease-out':'opacity .9s ease-out';
   el.style.opacity=0;
+}
+
+/* streamer name bar: decide when it animates in and out */
+function renderLT(t){
+  const el=$('lt');
+  let want='hide';
+  if(ltActive()&&curId){
+    const rel=t-S(),mode=$('lt_mode').value;
+    let vis=rel>=0.4&&t<E();
+    if(vis&&mode==='first')vis=rel<6.9;
+    else if(vis&&mode==='loop')vis=((rel-0.4)%14)<7;
+    want=vis?'in':'out';
+  }
+  const st=$('lt_style').value,key=want+'|'+st;
+  if(key===ltKey)return;
+  const prev=ltKey.split('|')[0];
+  ltKey=key;
+  if(want==='out'&&prev!=='in')want='hide';
+  el.className='lt '+st+(want==='hide'?'':' '+want);
 }
 
 /* caption render */
@@ -787,6 +899,7 @@ function tick(){
   $('time').textContent=ft(Math.max(0,t-s))+' / '+ft(len)+'   (video: '+ft(t)+')';
   syncCam(t);
   renderCap(t);
+  renderLT(t);
 }
 setInterval(tick,80);
 
@@ -1084,8 +1197,8 @@ $('lite').addEventListener('input',()=>document.body.classList.toggle('lite',$('
 document.body.classList.toggle('lite',$('lite').checked);
 
 /* share link */
-const SHARE=['url:v','start:s','end:e','caps:c','layout:ly','ccorner:cco','cshape:csh','csize:csz','cbw:cbw','cbc:cbc','cz:czz','cx:cxx','cy:cyy','bgc:bgc','style:st','font:fo','anim:an','pos:pos','hl:hl','n:n','fs:fs','xpos:x','motion:mo','trans:tr','f_gr:gr','f_vi:vi','f_sc:sc','f_lk:lk','wm:wm',...CIDS.map(k=>'c_'+k+':k'+k)];
-const SHAREC=['rel:rel','up:up','loop:lp','f_bars:bars','camon:cam','cglow:glow'];
+const SHARE=['url:v','start:s','end:e','caps:c','layout:ly','ccorner:cco','cshape:csh','csize:csz','cbw:cbw','cbc:cbc','cz:czz','cx:cxx','cy:cyy','bgc:bgc','style:st','font:fo','anim:an','pos:pos','hl:hl','n:n','fs:fs','xpos:x','motion:mo','trans:tr','f_gr:gr','f_vi:vi','f_sc:sc','f_lk:lk','wm:wm','split:sp','lt_name:ltn','lt_sub:lts','lt_style:lty','lt_col:ltc','lt_al:lta','lt_mode:ltm','lt_sz:ltz',...CIDS.map(k=>'c_'+k+':k'+k)];
+const SHAREC=['rel:rel','up:up','loop:lp','f_bars:bars','camon:cam','cglow:glow','lt_on:lton'];
 $('share').onclick=async()=>{
   const p=new URLSearchParams();
   SHARE.forEach(x=>{const[id,k]=x.split(':');p.set(k,$(id).value)});
