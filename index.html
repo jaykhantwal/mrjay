@@ -184,6 +184,10 @@ button:disabled{opacity:.6}
 @keyframes ripple{from{transform:scale(1);opacity:.9}to{transform:scale(1.35);opacity:0}}
 @keyframes fOut{to{opacity:0}}
 @keyframes fIn{to{opacity:1}}
+.cam.cneon::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:2;box-shadow:inset 0 0 3cqw currentColor,inset 0 0 1cqw #fff}
+.cam.cneon.pulse::after{animation:npulse 1.6s ease-in-out infinite}
+.cam.cneon.cycle{animation:camcycle 6s linear infinite}
+@keyframes camcycle{0%,100%{color:#00f0ff}25%{color:#7c5cff}50%{color:#ff3d81}75%{color:#ffd400}}
 .bar{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.18);z-index:9}
 .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--ac3))}
 .pick{position:absolute;inset:0;z-index:10;display:none;touch-action:none;cursor:crosshair}
@@ -218,232 +222,232 @@ body.recording .toast{display:none}
 </head>
 <body>
 <header>
-<h1>🎬 Clip Studio Pro</h1>
-<p>Find the best moments, add a streamer facecam, color grade, add effects, a streamer name bar and animated captions, and translate them to English.</p>
+  <h1>🎬 Clip Studio Pro</h1>
+  <p>Find the best moments, add a streamer facecam, color grade, add effects, a streamer name bar and animated captions, and translate them to English.</p>
 </header>
 
 <main>
-<section class="card prev">
-<div class="phone" id="phone">
-<div class="stage" id="stage"><div class="vwrap" id="vwrap"><div id="yt"></div></div></div>
-<div class="cam" id="cam"><div class="camv" id="camv"><div id="yt2"></div></div></div>
-<div class="fx vig"></div>
-<div class="fx grain"></div>
-<div class="fx scan"></div>
-<div class="fx leak"></div>
-<div class="fx bars" id="bars"></div>
-<div class="fx neon" id="neon"></div>
-<div class="fx flash" id="flash"></div>
-<div class="fx fade" id="fade"></div>
-<div class="empty" id="empty">Paste a YouTube link and<br>press "Load clip"</div>
-<div class="cap bottom s1 up" id="cap"></div>
+  <section class="card prev">
+    <div class="phone" id="phone">
+      <div class="stage" id="stage"><div class="vwrap" id="vwrap"><div id="yt"></div></div></div>
+      <div class="cam" id="cam"><div class="camv" id="camv"><div id="yt2"></div></div></div>
+      <div class="fx vig"></div>
+      <div class="fx grain"></div>
+      <div class="fx scan"></div>
+      <div class="fx leak"></div>
+      <div class="fx bars" id="bars"></div>
+      <div class="fx neon" id="neon"></div>
+      <div class="fx flash" id="flash"></div>
+      <div class="fx fade" id="fade"></div>
+      <div class="empty" id="empty">Paste a YouTube link and<br>press "Load clip"</div>
+      <div class="cap bottom s1 up" id="cap"></div>
       <div class="cta" id="cta"><div class="cta-b like"><span class="ic" id="ctaIc">👍</span><span id="ctaL">Like</span></div><div class="cta-b sub"><span class="s1" id="ctaS1">🔔 Subscribe</span><span class="s2" id="ctaS2">✔ Subscribed</span></div></div>
-<div class="lt cine" id="lt"><div class="ln-line"></div><div class="ln-panel"><div class="ln-name"><span id="ltN"></span></div><div class="ln-sub" id="ltS"></div></div></div>
-<div class="mark" id="mark"></div>
-<div class="bar"><i id="prog"></i></div>
-<div class="pick" id="pick"><div class="pickbox" id="pickbox"></div><div class="pickmsg">Tap or drag the box onto the streamer's facecam</div></div>
-</div>
-<div class="time" id="time">00:00:00 / 00:00:00</div>
-<div class="ctrl">
-<button class="skip" id="back" title="Back 5 seconds (Left arrow)">⏪ 5s</button>
-<button class="pri" id="play">▶ Play clip</button>
-<button class="skip" id="fwd" title="Forward 5 seconds (Right arrow)">5s ⏩</button>
-<button id="restart">⏮ Restart</button>
-</div>
-</section>
+      <div class="lt cine" id="lt"><div class="ln-line"></div><div class="ln-panel"><div class="ln-name"><span id="ltN"></span></div><div class="ln-sub" id="ltS"></div></div></div>
+      <div class="mark" id="mark"></div>
+      <div class="bar"><i id="prog"></i></div>
+      <div class="pick" id="pick"><div class="pickbox" id="pickbox"></div><div class="pickmsg">Tap or drag the box onto the streamer's facecam</div></div>
+    </div>
+    <div class="time" id="time">00:00:00 / 00:00:00</div>
+    <div class="ctrl">
+      <button class="skip" id="back" title="Back 5 seconds (Left arrow)">⏪ 5s</button>
+      <button class="pri" id="play">▶ Play clip</button>
+      <button class="skip" id="fwd" title="Forward 5 seconds (Right arrow)">5s ⏩</button>
+      <button id="restart">⏮ Restart</button>
+    </div>
+  </section>
 
-<div>
-<div class="tabs" id="tabs">
-<button class="tab on" data-t="clip">🎞 Clip</button>
-<button class="tab" data-t="moments">🎯 Moments</button>
-<button class="tab" data-t="layout">📐 Layout</button>
-<button class="tab" data-t="caps">💬 Captions</button>
-<button class="tab" data-t="style">🔤 Style</button>
-<button class="tab" data-t="color">🎨 Color</button>
-<button class="tab" data-t="fx">✨ Effects</button>
-<button class="tab" data-t="export">⬇ Download</button>
-<button class="tab" data-t="share">🔗 Share</button>
-</div>
+  <div>
+    <div class="tabs" id="tabs">
+      <button class="tab on" data-t="clip">🎞 Clip</button>
+      <button class="tab" data-t="moments">🎯 Moments</button>
+      <button class="tab" data-t="layout">📐 Layout</button>
+      <button class="tab" data-t="caps">💬 Captions</button>
+      <button class="tab" data-t="style">🔤 Style</button>
+      <button class="tab" data-t="color">🎨 Color</button>
+      <button class="tab" data-t="fx">✨ Effects</button>
+      <button class="tab" data-t="export">⬇ Download</button>
+      <button class="tab" data-t="share">🔗 Share</button>
+    </div>
 
-<section class="card pane on" id="p-clip">
-<h2><b>1</b> Video and clip time</h2>
-<label>YouTube link (video, Shorts or livestream replay)</label>
-<input type="text" id="url" placeholder="https://www.youtube.com/watch?v=...">
-<div class="row">
-<div><label>Start (HH:MM:SS)</label><input type="text" id="start" value="00:00:00" placeholder="00:00:00" inputmode="text" autocomplete="off">
-<button class="mini" id="setStart">Use current time as start</button></div>
-<div><label>End (HH:MM:SS)</label><input type="text" id="end" value="00:00:30" placeholder="00:00:30" inputmode="text" autocomplete="off">
-<button class="mini" id="setEnd">Use current time as end</button></div>
-</div>
-<label class="chk"><input type="checkbox" id="loop" checked> Loop the clip</label>
-<div style="margin-top:12px"><button class="pri" id="load" style="width:100%">Load clip</button></div>
-<label class="chk"><input type="checkbox" id="lite" checked> Smooth mode (turns off animated grain, light leak and glitch)</label>
-<div class="hint">Hours work too, like 1:23:45. A stream that is still live stutters when you jump around in it, so use the replay link after the stream has ended. If playback is still choppy, turn off the facecam while you pick times (Layout tab), because it runs a second copy of the video.</div>
-</section>
+    <section class="card pane on" id="p-clip">
+      <h2><b>1</b> Video and clip time</h2>
+      <label>YouTube link (video, Shorts or livestream replay)</label>
+      <input type="text" id="url" placeholder="https://www.youtube.com/watch?v=...">
+      <div class="row">
+        <div><label>Start (HH:MM:SS)</label><input type="text" id="start" value="00:00:00" placeholder="00:00:00" inputmode="text" autocomplete="off">
+          <button class="mini" id="setStart">Use current time as start</button></div>
+        <div><label>End (HH:MM:SS)</label><input type="text" id="end" value="00:00:30" placeholder="00:00:30" inputmode="text" autocomplete="off">
+          <button class="mini" id="setEnd">Use current time as end</button></div>
+      </div>
+      <label class="chk"><input type="checkbox" id="loop" checked> Loop the clip</label>
+      <div style="margin-top:12px"><button class="pri" id="load" style="width:100%">Load clip</button></div>
+      <label class="chk"><input type="checkbox" id="lite" checked> Smooth mode (turns off animated grain, light leak and glitch)</label>
+      <div class="hint">Hours work too, like 1:23:45. A stream that is still live stutters when you jump around in it, so use the replay link after the stream has ended. If playback is still choppy, turn off the facecam while you pick times (Layout tab), because it runs a second copy of the video.</div>
+    </section>
 
-<section class="card pane" id="p-moments">
-<h2><b>2</b> Best moments finder</h2>
-<label>Transcript (with timestamps)</label>
-<textarea id="tx" placeholder="0:00
+    <section class="card pane" id="p-moments">
+      <h2><b>2</b> Best moments finder</h2>
+      <label>Transcript (with timestamps)</label>
+      <textarea id="tx" placeholder="0:00
 welcome back everybody
 0:04
 oh my god did you see that?!"></textarea>
-<input type="file" id="tfile" accept=".srt,.vtt,.txt,text/plain">
-<div class="hint">How to get a transcript: open the video on YouTube, tap "...more", choose "Show transcript", select all of it and copy it here. You can also load an .srt, .vtt or .txt file. Formats like "0:12 text", "[0:12] text", SRT and VTT all work.</div>
-<div class="row">
-<div><label>Clip length</label>
-<select id="mlen"><option value="15">15 sec</option><option value="30" selected>30 sec</option><option value="45">45 sec</option><option value="60">60 sec</option></select></div>
-<div><label>How many clips</label>
-<select id="mcount"><option value="3">3</option><option value="5" selected>5</option><option value="8">8</option></select></div>
-</div>
-<label>Keywords to prioritize (optional, comma separated)</label>
-<input type="text" id="mkw" placeholder="clutch, win, bhai, funny">
-<div style="margin-top:12px"><button class="pri" id="find" style="width:100%">🔍 Find best moments</button></div>
-<div id="picks"></div>
-<div class="hint">The finder reads the words, not the pictures. It scores each window by excitement, questions, laughter, big statements, numbers, keywords and how strong the opening line is. The score is a ranking against the other windows in this transcript, not a promise of views. Previewing a pick fills in the times and captions, and Auto-edit also picks a caption style, color grade and motion.</div>
-</section>
+      <input type="file" id="tfile" accept=".srt,.vtt,.txt,text/plain">
+      <div class="hint">How to get a transcript: open the video on YouTube, tap "...more", choose "Show transcript", select all of it and copy it here. You can also load an .srt, .vtt or .txt file. Formats like "0:12 text", "[0:12] text", SRT and VTT all work.</div>
+      <div class="row">
+        <div><label>Clip length</label>
+          <select id="mlen"><option value="15">15 sec</option><option value="30" selected>30 sec</option><option value="45">45 sec</option><option value="60">60 sec</option></select></div>
+        <div><label>How many clips</label>
+          <select id="mcount"><option value="3">3</option><option value="5" selected>5</option><option value="8">8</option></select></div>
+      </div>
+      <label>Keywords to prioritize (optional, comma separated)</label>
+      <input type="text" id="mkw" placeholder="clutch, win, bhai, funny">
+      <div style="margin-top:12px"><button class="pri" id="find" style="width:100%">🔍 Find best moments</button></div>
+      <div id="picks"></div>
+      <div class="hint">The finder reads the words, not the pictures. It scores each window by excitement, questions, laughter, big statements, numbers, keywords and how strong the opening line is. The score is a ranking against the other windows in this transcript, not a promise of views. Previewing a pick fills in the times and captions, and Auto-edit also picks a caption style, color grade and motion.</div>
+    </section>
 
-<section class="card pane" id="p-layout">
-<h2><b>3</b> Layout and facecam</h2>
-<label>Layout</label>
-<select id="layout">
-<option value="fill">Fill: gameplay fills the vertical frame</option>
-<option value="fit">Fit: whole 16:9 frame, no cropping</option>
-<option value="stack">Stacked: gameplay on top, facecam panel below</option>
-<option value="stackt">Stacked: facecam panel on top, gameplay below</option>
-</select>
-<div class="sl"><span>Gameplay position</span><input type="range" id="xpos" min="0" max="100" value="50"><em></em></div>
-<div class="sl"><span>Stacked: gameplay height %</span><input type="range" id="split" min="40" max="90" value="70"><em></em></div>
-<div class="hint">In Stacked layout, the gameplay takes this much of the height and the facecam panel gets the rest. Drag it up for bigger gameplay, down for a bigger facecam.</div>
-<label>Background color (shows in Fit mode)</label>
-<input type="color" id="bgc" value="#0a0b10">
+    <section class="card pane" id="p-layout">
+      <h2><b>3</b> Layout and facecam</h2>
+      <label>Layout</label>
+      <select id="layout">
+        <option value="fill">Fill: gameplay fills the vertical frame</option>
+        <option value="fit">Fit: whole 16:9 frame, no cropping</option>
+        <option value="stack">Stacked: gameplay on top, facecam panel below</option>
+        <option value="stackt">Stacked: facecam panel on top, gameplay below</option>
+      </select>
+      <div class="sl"><span>Gameplay position</span><input type="range" id="xpos" min="0" max="100" value="50"><em></em></div>
+      <div class="sl"><span>Stacked: gameplay height %</span><input type="range" id="split" min="40" max="90" value="70"><em></em></div>
+      <div class="hint">In Stacked layout, the gameplay takes this much of the height and the facecam panel gets the rest. Drag it up for bigger gameplay, down for a bigger facecam.</div>
+      <label>Background color (shows in Fit mode)</label>
+      <input type="color" id="bgc" value="#0a0b10">
 
-<h3>Streamer facecam</h3>
-<label class="chk"><input type="checkbox" id="camon" checked> Show the streamer's facecam (cropped from the stream)</label>
-<div class="row">
-<div><label>Position</label>
-<select id="ccorner">
-<option value="br" selected>Bottom right</option><option value="bl">Bottom left</option>
-<option value="tr">Top right</option><option value="tl">Top left</option>
-<option value="tm">Top middle</option>
-<option value="mm">Middle (center)</option>
-<option value="rm">Right middle</option><option value="lm">Left middle</option>
-<option value="ac">Bottom middle, just above captions</option>
-<option value="ptop">Full panel on TOP (stacked)</option>
-<option value="pbot">Full panel at BOTTOM (stacked)</option>
-</select></div>
-<div><label>Shape</label>
-<select id="cshape"><option value="round" selected>Rounded square</option><option value="circle">Circle</option><option value="wide">Wide 4:3</option><option value="wide169">Wider 16:9</option><option value="ultra">Ultra wide 21:9</option><option value="strip">Strip 3:1</option></select></div>
-</div>
-<div class="sl"><span>Panel height % (stacked)</span><input type="range" id="cpanel" min="10" max="60" value="30"><em></em></div>
-<div class="sl"><span>Size</span><input type="range" id="csize" min="18" max="92" value="32"><em></em></div>
+      <h3>Streamer facecam</h3>
+      <label class="chk"><input type="checkbox" id="camon" checked> Show the streamer's facecam (cropped from the stream)</label>
+      <div class="row">
+        <div><label>Position</label>
+          <select id="ccorner">
+            <option value="br" selected>Bottom right</option><option value="bl">Bottom left</option>
+            <option value="tr">Top right</option><option value="tl">Top left</option>
+            <option value="tm">Top middle</option>
+            <option value="mm">Middle (center)</option>
+            <option value="rm">Right middle</option><option value="lm">Left middle</option>
+            <option value="ac">Bottom middle, just above captions</option>
+            <option value="ptop">Full panel on TOP (stacked)</option>
+            <option value="pbot">Full panel at BOTTOM (stacked)</option>
+          </select></div>
+        <div><label>Shape</label>
+          <select id="cshape"><option value="round" selected>Rounded square</option><option value="circle">Circle</option><option value="wide">Wide 4:3</option><option value="wide169">Wider 16:9</option><option value="ultra">Ultra wide 21:9</option><option value="strip">Strip 3:1</option></select></div>
+      </div>
+      <div class="sl"><span>Panel height % (stacked)</span><input type="range" id="cpanel" min="10" max="60" value="30"><em></em></div>
+      <div class="sl"><span>Size</span><input type="range" id="csize" min="18" max="92" value="32"><em></em></div>
       <label class="chk"><input type="checkbox" id="cneon" checked> Neon glow border on the facecam (uses the neon color from Effects)</label>
-<div class="sl"><span>Border</span><input type="range" id="cbw" min="0" max="8" value="3"><em></em></div>
-<div class="row">
-<div><label>Border color</label><input type="color" id="cbc" value="#ffffff"></div>
-<div><label class="chk" style="margin-top:30px"><input type="checkbox" id="cglow" checked> Glow</label></div>
-</div>
-<div style="margin-top:12px"><button class="pri" id="pickbtn" style="width:100%">🎯 Pick facecam area</button></div>
-<div class="sl"><span>Cam zoom</span><input type="range" id="cz" min="1.5" max="8" step="0.1" value="4"><em></em></div>
-<div class="sl"><span>Cam left/right</span><input type="range" id="cx" min="0" max="100" step="0.5" value="88"><em></em></div>
-<div class="sl"><span>Cam up/down</span><input type="range" id="cy" min="0" max="100" step="0.5" value="80"><em></em></div>
-<div class="hint">YouTube gives us one video, and the streamer's webcam is a small box inside it. The facecam here is a zoomed copy of that box, kept in sync and muted. Press "Pick facecam area", then tap or drag the box onto the webcam in the stream. Because it zooms into a small part of the picture, it looks softer than the main video. Captions and the facecam move up automatically so they don't sit on top of the streamer name bar.</div>
-</section>
+      <div class="sl"><span>Border</span><input type="range" id="cbw" min="0" max="8" value="3"><em></em></div>
+      <div class="row">
+        <div><label>Border color</label><input type="color" id="cbc" value="#ffffff"></div>
+        <div><label class="chk" style="margin-top:30px"><input type="checkbox" id="cglow" checked> Glow</label></div>
+      </div>
+      <div style="margin-top:12px"><button class="pri" id="pickbtn" style="width:100%">🎯 Pick facecam area</button></div>
+      <div class="sl"><span>Cam zoom</span><input type="range" id="cz" min="1.5" max="8" step="0.1" value="4"><em></em></div>
+      <div class="sl"><span>Cam left/right</span><input type="range" id="cx" min="0" max="100" step="0.5" value="88"><em></em></div>
+      <div class="sl"><span>Cam up/down</span><input type="range" id="cy" min="0" max="100" step="0.5" value="80"><em></em></div>
+      <div class="hint">YouTube gives us one video, and the streamer's webcam is a small box inside it. The facecam here is a zoomed copy of that box, kept in sync and muted. Press "Pick facecam area", then tap or drag the box onto the webcam in the stream. Because it zooms into a small part of the picture, it looks softer than the main video. Captions and the facecam move up automatically so they don't sit on top of the streamer name bar.</div>
+    </section>
 
-<section class="card pane" id="p-caps">
-<h2><b>4</b> Captions</h2>
-<label>One caption per line: time, then text</label>
-<textarea id="caps" placeholder="0:00 This clip is absolutely wild
+    <section class="card pane" id="p-caps">
+      <h2><b>4</b> Captions</h2>
+      <label>One caption per line: time, then text</label>
+      <textarea id="caps" placeholder="0:00 This clip is absolutely wild
 0:04 Watch what happens next
 0:09 And here comes the best part"></textarea>
-<label class="chk"><input type="checkbox" id="rel"> Count times from clip start (0:00 = start of clip)</label>
-<div class="row" style="margin-top:10px">
-<button class="pri" id="tr">🌐 Translate to English</button>
-<button id="orig">↩ Restore original</button>
-</div>
-<div class="hint">Translation uses the free MyMemory service, so it has a daily limit and slang can come out rough. Fix any line in the box afterwards. Each line stays until the next line's time, and its words are highlighted one by one.</div>
-</section>
+      <label class="chk"><input type="checkbox" id="rel"> Count times from clip start (0:00 = start of clip)</label>
+      <div class="row" style="margin-top:10px">
+        <button class="pri" id="tr">🌐 Translate to English</button>
+        <button id="orig">↩ Restore original</button>
+      </div>
+      <div class="hint">Translation uses the free MyMemory service, so it has a daily limit and slang can come out rough. Fix any line in the box afterwards. Each line stays until the next line's time, and its words are highlighted one by one.</div>
+    </section>
 
-<section class="card pane" id="p-style">
-<h2><b>5</b> Caption style</h2>
-<div class="row">
-<div><label>Style</label>
-<select id="style">
-<option value="s1">Bold yellow (classic)</option>
-<option value="s2">Highlight box</option>
-<option value="s3">Neon glow</option>
-<option value="s4">Clean fade</option>
-<option value="s5">Pop shadow</option>
-<option value="s6">Dark pill</option>
-<option value="s7">Outline only</option>
-</select></div>
-<div><label>Font</label>
-<select id="font">
-<option value="f-poppins">Poppins</option>
-<option value="f-anton">Anton</option>
-<option value="f-bebas">Bebas Neue</option>
-<option value="f-marker">Marker</option>
-</select></div>
-</div>
-<div class="row">
-<div><label>Entry animation</label>
-<select id="anim">
-<option value="a-pop">Pop</option>
-<option value="a-bounce">Bounce</option>
-<option value="a-slide">Slide</option>
-<option value="a-shake">Shake</option>
-<option value="a-fade">Fade</option>
-<option value="">None</option>
-</select></div>
-<div><label>Position</label>
-<select id="pos"><option value="bottom">Bottom</option><option value="lowmid">Bottom middle (a bit higher)</option><option value="middle">Middle</option><option value="top">Top</option></select></div>
-</div>
-<div class="row">
-<div><label>Highlight color</label><input type="color" id="hl" value="#ffd400"></div>
-<div><label>Words at a time</label>
-<select id="n"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></div>
-</div>
-<div class="sl"><span>Text size</span><input type="range" id="fs" min="5" max="13" step="0.5" value="8"><em id="fs_v">8</em></div>
-<label class="chk"><input type="checkbox" id="up" checked> Uppercase English words</label>
-</section>
+    <section class="card pane" id="p-style">
+      <h2><b>5</b> Caption style</h2>
+      <div class="row">
+        <div><label>Style</label>
+          <select id="style">
+            <option value="s1">Bold yellow (classic)</option>
+            <option value="s2">Highlight box</option>
+            <option value="s3">Neon glow</option>
+            <option value="s4">Clean fade</option>
+            <option value="s5">Pop shadow</option>
+            <option value="s6">Dark pill</option>
+            <option value="s7">Outline only</option>
+          </select></div>
+        <div><label>Font</label>
+          <select id="font">
+            <option value="f-poppins">Poppins</option>
+            <option value="f-anton">Anton</option>
+            <option value="f-bebas">Bebas Neue</option>
+            <option value="f-marker">Marker</option>
+          </select></div>
+      </div>
+      <div class="row">
+        <div><label>Entry animation</label>
+          <select id="anim">
+            <option value="a-pop">Pop</option>
+            <option value="a-bounce">Bounce</option>
+            <option value="a-slide">Slide</option>
+            <option value="a-shake">Shake</option>
+            <option value="a-fade">Fade</option>
+            <option value="">None</option>
+          </select></div>
+        <div><label>Position</label>
+          <select id="pos"><option value="bottom">Bottom</option><option value="lowmid">Bottom middle (a bit higher)</option><option value="middle">Middle</option><option value="top">Top</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>Highlight color</label><input type="color" id="hl" value="#ffd400"></div>
+        <div><label>Words at a time</label>
+          <select id="n"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></div>
+      </div>
+      <div class="sl"><span>Text size</span><input type="range" id="fs" min="5" max="13" step="0.5" value="8"><em id="fs_v">8</em></div>
+      <label class="chk"><input type="checkbox" id="up" checked> Uppercase English words</label>
+    </section>
 
-<section class="card pane" id="p-color">
-<h2><b>6</b> Color grading</h2>
-<div class="chips" id="chips">
-<div class="chip on" data-p="none">Original</div>
-<div class="chip" data-p="cinema">Cinematic</div>
-<div class="chip" data-p="vintage">Vintage</div>
-<div class="chip" data-p="bw">Black &amp; white</div>
-<div class="chip" data-p="vibrant">Vibrant</div>
-<div class="chip" data-p="cyber">Cyber</div>
-<div class="chip" data-p="sunset">Sunset</div>
-<div class="chip" data-p="moody">Moody</div>
-<div class="chip" data-p="warm">Warm glow</div>
-</div>
-<div style="margin-top:10px">
-<div class="sl"><span>Brightness</span><input type="range" id="c_br" min="50" max="150" value="100"><em></em></div>
-<div class="sl"><span>Contrast</span><input type="range" id="c_co" min="50" max="160" value="100"><em></em></div>
-<div class="sl"><span>Saturation</span><input type="range" id="c_sa" min="0" max="220" value="100"><em></em></div>
-<div class="sl"><span>Warmth (sepia)</span><input type="range" id="c_se" min="0" max="100" value="0"><em></em></div>
-<div class="sl"><span>Hue shift</span><input type="range" id="c_hu" min="-180" max="180" value="0"><em></em></div>
-<div class="sl"><span>Blur</span><input type="range" id="c_bl" min="0" max="6" step="0.5" value="0"><em></em></div>
-</div>
-<button class="mini" id="c_reset">Reset color</button>
-<div class="hint">Color grading applies to the gameplay and the facecam together.</div>
-</section>
+    <section class="card pane" id="p-color">
+      <h2><b>6</b> Color grading</h2>
+      <div class="chips" id="chips">
+        <div class="chip on" data-p="none">Original</div>
+        <div class="chip" data-p="cinema">Cinematic</div>
+        <div class="chip" data-p="vintage">Vintage</div>
+        <div class="chip" data-p="bw">Black &amp; white</div>
+        <div class="chip" data-p="vibrant">Vibrant</div>
+        <div class="chip" data-p="cyber">Cyber</div>
+        <div class="chip" data-p="sunset">Sunset</div>
+        <div class="chip" data-p="moody">Moody</div>
+        <div class="chip" data-p="warm">Warm glow</div>
+      </div>
+      <div style="margin-top:10px">
+        <div class="sl"><span>Brightness</span><input type="range" id="c_br" min="50" max="150" value="100"><em></em></div>
+        <div class="sl"><span>Contrast</span><input type="range" id="c_co" min="50" max="160" value="100"><em></em></div>
+        <div class="sl"><span>Saturation</span><input type="range" id="c_sa" min="0" max="220" value="100"><em></em></div>
+        <div class="sl"><span>Warmth (sepia)</span><input type="range" id="c_se" min="0" max="100" value="0"><em></em></div>
+        <div class="sl"><span>Hue shift</span><input type="range" id="c_hu" min="-180" max="180" value="0"><em></em></div>
+        <div class="sl"><span>Blur</span><input type="range" id="c_bl" min="0" max="6" step="0.5" value="0"><em></em></div>
+      </div>
+      <button class="mini" id="c_reset">Reset color</button>
+      <div class="hint">Color grading applies to the gameplay and the facecam together.</div>
+    </section>
 
-<section class="card pane" id="p-fx">
-<h2><b>7</b> Effects</h2>
+    <section class="card pane" id="p-fx">
+      <h2><b>7</b> Effects</h2>
 
-<h3 style="margin-top:4px">Neon border</h3>
-<label class="chk"><input type="checkbox" id="neon_on" checked> Neon light around the whole video</label>
-<div class="row">
-<div><label>Neon color</label><input type="color" id="neon_col" value="#00f0ff"></div>
-<div><label>Animation</label>
-<select id="neon_an"><option value="steady">Steady</option><option value="pulse" selected>Pulse</option><option value="cycle">Color cycle</option></select></div>
-</div>
-<div class="sl"><span>Thickness</span><input type="range" id="neon_w" min="0.4" max="3" step="0.1" value="1.2"><em></em></div>
-<div class="sl"><span>Glow</span><input type="range" id="neon_g" min="2" max="14" step="0.5" value="6"><em></em></div>
+      <h3 style="margin-top:4px">Neon border</h3>
+      <label class="chk"><input type="checkbox" id="neon_on" checked> Neon light around the whole video</label>
+      <div class="row">
+        <div><label>Neon color</label><input type="color" id="neon_col" value="#00f0ff"></div>
+        <div><label>Animation</label>
+          <select id="neon_an"><option value="steady">Steady</option><option value="pulse" selected>Pulse</option><option value="cycle">Color cycle</option></select></div>
+      </div>
+      <div class="sl"><span>Thickness</span><input type="range" id="neon_w" min="0.4" max="3" step="0.1" value="1.2"><em></em></div>
+      <div class="sl"><span>Glow</span><input type="range" id="neon_g" min="2" max="14" step="0.5" value="6"><em></em></div>
 
       <h3>Like and Subscribe / Follow buttons</h3>
       <label class="chk"><input type="checkbox" id="cta_on" checked> Show animated Like and Subscribe / Follow buttons at the bottom</label>
@@ -457,91 +461,91 @@ oh my god did you see that?!"></textarea>
       <button class="mini" id="cta_shuf">🎲 Shuffle the times</button>
       <div class="hint">Each appearance lasts about 5 seconds: the buttons pop up, Like gets pressed, then Subscribe or Follow gets pressed. Times are random each time you load or shuffle. These are plain styled buttons, not the platform logos.</div>
 
-<h3>Streamer name bar</h3>
-<label class="chk"><input type="checkbox" id="lt_on" checked> Show the animated name bar at the bottom</label>
-<label>Streamer name</label>
-<input type="text" id="lt_name" placeholder="e.g. Mortal" autocomplete="off">
-<label>Tagline (optional)</label>
-<input type="text" id="lt_sub" placeholder="e.g. Live on YouTube" autocomplete="off">
-<div class="row">
-<div><label>Bar style</label>
-<select id="lt_style">
-<option value="cine">Cinematic (dark panel)</option>
-<option value="bold">Solid color</option>
-<option value="glass">Glass</option>
-</select></div>
-<div><label>Accent color</label><input type="color" id="lt_col" value="#ffd400"></div>
-</div>
-<div class="row">
-<div><label>Align</label>
-<select id="lt_al"><option value="l" selected>Left</option><option value="c">Center</option><option value="r">Right</option></select></div>
-<div><label>When to show</label>
-<select id="lt_mode">
-<option value="always">Whole clip</option>
-<option value="first">First 7 seconds</option>
-<option value="loop">Every 14 seconds, for 7</option>
-</select></div>
-</div>
-<div class="sl"><span>Size</span><input type="range" id="lt_sz" min="60" max="160" value="100"><em></em></div>
-<div class="hint">The bar sweeps in with a glowing line, the panel opens, the name slides up and a light shine passes over it, then it sweeps out. It stays above the cinematic black bars if you turn those on.</div>
+      <h3>Streamer name bar</h3>
+      <label class="chk"><input type="checkbox" id="lt_on" checked> Show the animated name bar at the bottom</label>
+      <label>Streamer name</label>
+      <input type="text" id="lt_name" placeholder="e.g. Mortal" autocomplete="off">
+      <label>Tagline (optional)</label>
+      <input type="text" id="lt_sub" placeholder="e.g. Live on YouTube" autocomplete="off">
+      <div class="row">
+        <div><label>Bar style</label>
+          <select id="lt_style">
+            <option value="cine">Cinematic (dark panel)</option>
+            <option value="bold">Solid color</option>
+            <option value="glass">Glass</option>
+          </select></div>
+        <div><label>Accent color</label><input type="color" id="lt_col" value="#ffd400"></div>
+      </div>
+      <div class="row">
+        <div><label>Align</label>
+          <select id="lt_al"><option value="l" selected>Left</option><option value="c">Center</option><option value="r">Right</option></select></div>
+        <div><label>When to show</label>
+          <select id="lt_mode">
+            <option value="always">Whole clip</option>
+            <option value="first">First 7 seconds</option>
+            <option value="loop">Every 14 seconds, for 7</option>
+          </select></div>
+      </div>
+      <div class="sl"><span>Size</span><input type="range" id="lt_sz" min="60" max="160" value="100"><em></em></div>
+      <div class="hint">The bar sweeps in with a glowing line, the panel opens, the name slides up and a light shine passes over it, then it sweeps out. It stays above the cinematic black bars if you turn those on.</div>
 
-<h3>Look</h3>
-<div class="row">
-<div><label>Motion (gameplay only)</label>
-<select id="motion">
-<option value="">None</option>
-<option value="m-zoom">Slow zoom</option>
-<option value="m-pulse">Beat pulse</option>
-<option value="m-shake">Shake</option>
-<option value="m-glitch">Glitch</option>
-<option value="m-drift">Drift</option>
-</select></div>
-<div><label>Opening transition</label>
-<select id="trans">
-<option value="">None</option>
-<option value="fade">Fade in from black</option>
-<option value="flash">White flash</option>
-</select></div>
-</div>
-<div style="margin-top:10px">
-<div class="sl"><span>Film grain</span><input type="range" id="f_gr" min="0" max="100" value="0"><em></em></div>
-<div class="sl"><span>Vignette</span><input type="range" id="f_vi" min="0" max="100" value="0"><em></em></div>
-<div class="sl"><span>Scanlines</span><input type="range" id="f_sc" min="0" max="100" value="0"><em></em></div>
-<div class="sl"><span>Light leak</span><input type="range" id="f_lk" min="0" max="100" value="0"><em></em></div>
-</div>
-<label class="chk"><input type="checkbox" id="f_bars"> Cinematic black bars</label>
-<label>Watermark or channel name</label>
-<input type="text" id="wm" placeholder="@yourchannel">
-<div class="hint">Effects show in the preview and in the share link. They are drawn over YouTube's player, so record your screen if you want a video file.</div>
-</section>
+      <h3>Look</h3>
+      <div class="row">
+        <div><label>Motion (gameplay only)</label>
+          <select id="motion">
+            <option value="">None</option>
+            <option value="m-zoom">Slow zoom</option>
+            <option value="m-pulse">Beat pulse</option>
+            <option value="m-shake">Shake</option>
+            <option value="m-glitch">Glitch</option>
+            <option value="m-drift">Drift</option>
+          </select></div>
+        <div><label>Opening transition</label>
+          <select id="trans">
+            <option value="">None</option>
+            <option value="fade">Fade in from black</option>
+            <option value="flash">White flash</option>
+          </select></div>
+      </div>
+      <div style="margin-top:10px">
+        <div class="sl"><span>Film grain</span><input type="range" id="f_gr" min="0" max="100" value="0"><em></em></div>
+        <div class="sl"><span>Vignette</span><input type="range" id="f_vi" min="0" max="100" value="0"><em></em></div>
+        <div class="sl"><span>Scanlines</span><input type="range" id="f_sc" min="0" max="100" value="0"><em></em></div>
+        <div class="sl"><span>Light leak</span><input type="range" id="f_lk" min="0" max="100" value="0"><em></em></div>
+      </div>
+      <label class="chk"><input type="checkbox" id="f_bars"> Cinematic black bars</label>
+      <label>Watermark or channel name</label>
+      <input type="text" id="wm" placeholder="@yourchannel">
+      <div class="hint">Effects show in the preview and in the share link. They are drawn over YouTube's player, so record your screen if you want a video file.</div>
+    </section>
 
-<section class="card pane" id="p-export">
-<h2><b>8</b> Download clip</h2>
-<button class="pri" id="rec" style="width:100%">⏺ Record and download this clip</button>
-<div class="row" style="margin-top:10px">
-<div><label>Format</label>
-<select id="recfmt"><option value="auto">Auto (MP4 if your browser can)</option><option value="webm">WebM</option></select></div>
-<div><label>Quality</label>
-<select id="recbr"><option value="10000000">High</option><option value="5000000" selected>Standard</option></select></div>
-</div>
-<div style="margin-top:10px"><button id="recall" style="width:100%">⏺ Record all moment picks (one file each)</button></div>
-<div class="hint">
-<ol>
-<li>Use desktop Chrome or Edge. Phones can't record the screen from a web page.</li>
-<li>Press Record. When the browser asks, choose <b>this tab</b> and keep "Share tab audio" ticked, or the file will have no sound.</li>
-<li>The preview grows to full height, plays the clip once from start to end, and the file downloads by itself. The recording is cropped to just the vertical frame, with captions, facecam, name bar, color and effects included.</li>
-<li>Leave the tab open and in front while it records. For "Record all picks", Chrome may ask once to allow multiple downloads.</li>
-</ol>
-This records what plays in your own browser, so the quality depends on your computer and the stream. Only clip content you have the right to use, such as your own streams or ones with the streamer's permission. WebM files may not show a total length until they are played, which is normal.
-</div>
-</section>
+    <section class="card pane" id="p-export">
+      <h2><b>8</b> Download clip</h2>
+      <button class="pri" id="rec" style="width:100%">⏺ Record and download this clip</button>
+      <div class="row" style="margin-top:10px">
+        <div><label>Format</label>
+          <select id="recfmt"><option value="auto">Auto (MP4 if your browser can)</option><option value="webm">WebM</option></select></div>
+        <div><label>Quality</label>
+          <select id="recbr"><option value="10000000">High</option><option value="5000000" selected>Standard</option></select></div>
+      </div>
+      <div style="margin-top:10px"><button id="recall" style="width:100%">⏺ Record all moment picks (one file each)</button></div>
+      <div class="hint">
+        <ol>
+          <li>Use desktop Chrome or Edge. Phones can't record the screen from a web page.</li>
+          <li>Press Record. When the browser asks, choose <b>this tab</b> and keep "Share tab audio" ticked, or the file will have no sound.</li>
+          <li>The preview grows to full height, plays the clip once from start to end, and the file downloads by itself. The recording is cropped to just the vertical frame, with captions, facecam, name bar, color and effects included.</li>
+          <li>Leave the tab open and in front while it records. For "Record all picks", Chrome may ask once to allow multiple downloads.</li>
+        </ol>
+        This records what plays in your own browser, so the quality depends on your computer and the stream. Only clip content you have the right to use, such as your own streams or ones with the streamer's permission. WebM files may not show a total length until they are played, which is normal.
+      </div>
+    </section>
 
-<section class="card pane" id="p-share">
-<h2><b>9</b> Share</h2>
-<button class="pri" id="share" style="width:100%">🔗 Copy share link for this clip</button>
-<div class="hint">The link saves the video, times, captions, layout, facecam, name bar, style, color and effects. It does not include the transcript. Whoever opens it sees exactly this clip.</div>
-</section>
-</div>
+    <section class="card pane" id="p-share">
+      <h2><b>9</b> Share</h2>
+      <button class="pri" id="share" style="width:100%">🔗 Copy share link for this clip</button>
+      <div class="hint">The link saves the video, times, captions, layout, facecam, name bar, style, color and effects. It does not include the transcript. Whoever opens it sees exactly this clip.</div>
+    </section>
+  </div>
 </main>
 <div id="recbar"><div><span class="dot"></span><b>Recording</b></div><div id="recmsg">Starting...</div><button id="recstop" class="pri">■ Stop and save</button></div>
 <div class="toast" id="toast"></div>
@@ -549,51 +553,51 @@ This records what plays in your own browser, so the quality depends on your comp
 <script>
 /*PURE-START*/
 function pt(s){
-s=String(s).trim().toLowerCase().replace(/[;,]/g,':').replace(/\s+/g,'');
-if(!s)return 0;
-let m=s.match(/^(?:(\d+)h)?(?:(\d+)m(?:in)?)?(?:(\d+(?:\.\d+)?)s(?:ec)?)?$/);
-if(m&&/[hms]/.test(s))return (+m[1]||0)*3600+(+m[2]||0)*60+(+m[3]||0);
-const p=s.split(':').map(x=>x===''?NaN:Number(x));
-if(p.length>3||p.some(isNaN))return NaN;
-return p.reduce((a,b)=>a*60+b,0);
+  s=String(s).trim().toLowerCase().replace(/[;,]/g,':').replace(/\s+/g,'');
+  if(!s)return 0;
+  let m=s.match(/^(?:(\d+)h)?(?:(\d+)m(?:in)?)?(?:(\d+(?:\.\d+)?)s(?:ec)?)?$/);
+  if(m&&/[hms]/.test(s))return (+m[1]||0)*3600+(+m[2]||0)*60+(+m[3]||0);
+  const p=s.split(':').map(x=>x===''?NaN:Number(x));
+  if(p.length>3||p.some(isNaN))return NaN;
+  return p.reduce((a,b)=>a*60+b,0);
 }
 function ft(t){t=Math.max(0,t||0);const h=Math.floor(t/3600),m=Math.floor(t%3600/60),sc=Math.floor(t%60);return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(sc).padStart(2,'0')}
 function ftd(t){t=Math.round(Math.max(0,t||0)*10)/10;const h=Math.floor(t/3600),m=Math.floor(t%3600/60),sc=Math.round((t%60)*10)/10;const ss=Number.isInteger(sc)?String(sc).padStart(2,'0'):sc.toFixed(1).padStart(4,'0');return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+ss}
 function tsToSec(s){s=String(s).trim().replace(',','.');const p=s.split(':').map(Number);if(p.some(isNaN))return NaN;return p.reduce((a,b)=>a*60+b,0)}
 
 function parseTranscript(raw){
-const lines=String(raw||'').replace(/\r/g,'').replace(/^\uFEFF/,'').split('\n').map(l=>l.trim());
-const out=[];
-const TS='((?:\\d{1,2}:)?\\d{1,2}:\\d{2}(?:[.,]\\d{1,3})?)';
-const T=new RegExp('^\\[?'+TS+'\\]?$');
-const ARROW=new RegExp('^'+TS+'\\s*-->\\s*'+TS);
-const INLINE=new RegExp('^\\[?'+TS+'\\]?\\s*[-–:]?\\s+(.+)$');
-let i=0;
-while(i<lines.length){
-const l=lines[i];
-if(!l||/^WEBVTT/.test(l)||/^\d+$/.test(l)||/^(NOTE|STYLE)\b/.test(l)){i++;continue}
-let m=l.match(ARROW);
-if(m){
-const t=tsToSec(m[1]);const txt=[];i++;
-while(i<lines.length&&lines[i]){txt.push(lines[i]);i++}
-const text=txt.join(' ').replace(/<[^>]+>/g,'').trim();
-if(text)out.push({t,text});
-continue;
-}
-m=l.match(T);
-if(m){
-const t=tsToSec(m[1]);const txt=[];i++;
-while(i<lines.length&&lines[i]&&!T.test(lines[i])){txt.push(lines[i]);i++}
-const text=txt.join(' ').trim();
-if(text)out.push({t,text});
-continue;
-}
-m=l.match(INLINE);
-if(m){out.push({t:tsToSec(m[1]),text:m[2].trim()});i++;continue}
-if(out.length)out[out.length-1].text+=' '+l;
-i++;
-}
-return out.filter(s=>!isNaN(s.t)&&s.text).sort((a,b)=>a.t-b.t);
+  const lines=String(raw||'').replace(/\r/g,'').replace(/^\uFEFF/,'').split('\n').map(l=>l.trim());
+  const out=[];
+  const TS='((?:\\d{1,2}:)?\\d{1,2}:\\d{2}(?:[.,]\\d{1,3})?)';
+  const T=new RegExp('^\\[?'+TS+'\\]?$');
+  const ARROW=new RegExp('^'+TS+'\\s*-->\\s*'+TS);
+  const INLINE=new RegExp('^\\[?'+TS+'\\]?\\s*[-–:]?\\s+(.+)$');
+  let i=0;
+  while(i<lines.length){
+    const l=lines[i];
+    if(!l||/^WEBVTT/.test(l)||/^\d+$/.test(l)||/^(NOTE|STYLE)\b/.test(l)){i++;continue}
+    let m=l.match(ARROW);
+    if(m){
+      const t=tsToSec(m[1]);const txt=[];i++;
+      while(i<lines.length&&lines[i]){txt.push(lines[i]);i++}
+      const text=txt.join(' ').replace(/<[^>]+>/g,'').trim();
+      if(text)out.push({t,text});
+      continue;
+    }
+    m=l.match(T);
+    if(m){
+      const t=tsToSec(m[1]);const txt=[];i++;
+      while(i<lines.length&&lines[i]&&!T.test(lines[i])){txt.push(lines[i]);i++}
+      const text=txt.join(' ').trim();
+      if(text)out.push({t,text});
+      continue;
+    }
+    m=l.match(INLINE);
+    if(m){out.push({t:tsToSec(m[1]),text:m[2].trim()});i++;continue}
+    if(out.length)out[out.length-1].text+=' '+l;
+    i++;
+  }
+  return out.filter(s=>!isNaN(s.t)&&s.text).sort((a,b)=>a.t-b.t);
 }
 
 const EN_RX=/\b(wow|omg|insane|crazy|no way|let'?s go|oh my god|unbelievable|incredible|amazing|holy|dude|bro|bruh|what the|are you kidding|clutch|gg|boom|finally|literally|secret|mistake|truth|never|always|best|worst|biggest|first time|oh no|wait|watch this|did you see|oh my|wtf|shut up|cooked|goat)\b/gi;
@@ -602,60 +606,60 @@ const LAUGH_RX=/(haha+|hehe+|\blol\b|\blmao\b|😂|🤣|हा\s?हा|हा�
 const cnt=(s,rx)=>(s.match(rx)||[]).length;
 
 function scoreWindow(segs,L,kws){
-const text=segs.map(s=>s.text).join(' ');
-const lower=text.toLowerCase();
-const excl=cnt(text,/!/g),q=cnt(text,/\?/g);
-const caps=cnt(text,/\b[A-Z]{3,}\b/g);
-const hype=cnt(text,EN_RX)+cnt(text,HI_RX);
-const laugh=cnt(text,LAUGH_RX);
-const num=cnt(text,/\b\d+(?:[.,]\d+)?\b/g);
-const kw=(kws||[]).reduce((a,k)=>a+(k?lower.split(k).length-1:0),0);
-const words=text.split(/\s+/).length,density=words/Math.max(1,L);
-const first=segs[0].text,last=segs[segs.length-1].text;
-const hook=/[?!]/.test(first)||cnt(first,EN_RX)+cnt(first,HI_RX)>0||/^\d/.test(first);
-const filler=/^(so|um|uh|and|but|ok|okay|like|yeah|hmm)\b/i.test(first);
-let gaps=0;
-for(let j=0;j+1<segs.length;j++){if(segs[j+1].t-segs[j].t>6)gaps++}
-let score=2*Math.min(excl,8)+1.2*Math.min(caps,8)+3*Math.min(hype,8)+2*Math.min(q,5)+4*Math.min(laugh,4)+8*Math.min(kw,5)+0.8*Math.min(num,5)+4*Math.min(density,4)+(hook?6:0)+(/[.!?]["')\]]?$/.test(last.trim())?3:0)-(filler?3:0)-4*gaps;
-if(segs.length<3)score*=0.5;
-const tags=[];
-if(laugh>=1)tags.push('laugh');
-if(excl+caps+hype>=4)tags.push('energy');
-if(hook)tags.push('hook');
-if(q>=2)tags.push('question');
-if(kw>0)tags.push('keyword');
-if(num>=3)tags.push('stat');
-return {score,tags};
+  const text=segs.map(s=>s.text).join(' ');
+  const lower=text.toLowerCase();
+  const excl=cnt(text,/!/g),q=cnt(text,/\?/g);
+  const caps=cnt(text,/\b[A-Z]{3,}\b/g);
+  const hype=cnt(text,EN_RX)+cnt(text,HI_RX);
+  const laugh=cnt(text,LAUGH_RX);
+  const num=cnt(text,/\b\d+(?:[.,]\d+)?\b/g);
+  const kw=(kws||[]).reduce((a,k)=>a+(k?lower.split(k).length-1:0),0);
+  const words=text.split(/\s+/).length,density=words/Math.max(1,L);
+  const first=segs[0].text,last=segs[segs.length-1].text;
+  const hook=/[?!]/.test(first)||cnt(first,EN_RX)+cnt(first,HI_RX)>0||/^\d/.test(first);
+  const filler=/^(so|um|uh|and|but|ok|okay|like|yeah|hmm)\b/i.test(first);
+  let gaps=0;
+  for(let j=0;j+1<segs.length;j++){if(segs[j+1].t-segs[j].t>6)gaps++}
+  let score=2*Math.min(excl,8)+1.2*Math.min(caps,8)+3*Math.min(hype,8)+2*Math.min(q,5)+4*Math.min(laugh,4)+8*Math.min(kw,5)+0.8*Math.min(num,5)+4*Math.min(density,4)+(hook?6:0)+(/[.!?]["')\]]?$/.test(last.trim())?3:0)-(filler?3:0)-4*gaps;
+  if(segs.length<3)score*=0.5;
+  const tags=[];
+  if(laugh>=1)tags.push('laugh');
+  if(excl+caps+hype>=4)tags.push('energy');
+  if(hook)tags.push('hook');
+  if(q>=2)tags.push('question');
+  if(kw>0)tags.push('keyword');
+  if(num>=3)tags.push('stat');
+  return {score,tags};
 }
 
 function findMoments(segs,L,N,kwStr){
-if(!segs||!segs.length)return [];
-const kws=String(kwStr||'').split(',').map(s=>s.trim().toLowerCase()).filter(Boolean);
-const cands=[];
-let j=0;
-for(let i=0;i<segs.length;i++){
-const t0=segs[i].t,tEnd=t0+L;
-if(j<i)j=i;
-while(j<segs.length&&segs[j].t<tEnd)j++;
-const win=segs.slice(i,j);
-if(!win.length)continue;
-const nxt=segs[j];
-let e=nxt?Math.min(nxt.t,tEnd+3):win[win.length-1].t+4;
-e=Math.max(e,t0+Math.min(L,5));
-const sc=scoreWindow(win,L,kws);
-cands.push({s:t0,e,score:sc.score,tags:sc.tags,text:win.map(s=>s.text).join(' ')});
-}
-cands.sort((a,b)=>b.score-a.score);
-const max=cands.length?Math.max(cands[0].score,1):1;
-const picked=[];
-for(const c of cands){
-if(picked.length>=N)break;
-if(c.score<=0&&picked.length)break;
-if(picked.some(p=>c.s<p.e-2&&c.e>p.s+2))continue;
-picked.push(c);
-}
-picked.forEach(c=>{c.pct=Math.max(1,Math.round(c.score/max*100))});
-return picked;
+  if(!segs||!segs.length)return [];
+  const kws=String(kwStr||'').split(',').map(s=>s.trim().toLowerCase()).filter(Boolean);
+  const cands=[];
+  let j=0;
+  for(let i=0;i<segs.length;i++){
+    const t0=segs[i].t,tEnd=t0+L;
+    if(j<i)j=i;
+    while(j<segs.length&&segs[j].t<tEnd)j++;
+    const win=segs.slice(i,j);
+    if(!win.length)continue;
+    const nxt=segs[j];
+    let e=nxt?Math.min(nxt.t,tEnd+3):win[win.length-1].t+4;
+    e=Math.max(e,t0+Math.min(L,5));
+    const sc=scoreWindow(win,L,kws);
+    cands.push({s:t0,e,score:sc.score,tags:sc.tags,text:win.map(s=>s.text).join(' ')});
+  }
+  cands.sort((a,b)=>b.score-a.score);
+  const max=cands.length?Math.max(cands[0].score,1):1;
+  const picked=[];
+  for(const c of cands){
+    if(picked.length>=N)break;
+    if(c.score<=0&&picked.length)break;
+    if(picked.some(p=>c.s<p.e-2&&c.e>p.s+2))continue;
+    picked.push(c);
+  }
+  picked.forEach(c=>{c.pct=Math.max(1,Math.round(c.score/max*100))});
+  return picked;
 }
 /*PURE-END*/
 </script>
@@ -681,33 +685,33 @@ const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
 
 /* tabs */
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
-document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===b));
-document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id==='p-'+b.dataset.t));
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===b));
+  document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id==='p-'+b.dataset.t));
 });
 
 /* captions */
 function parseCaps(){
-const rel=$('rel').checked,s=S();
-caps=$('caps').value.split('\n').map(l=>{
-const m=l.match(/^\s*(\d+(?::\d+){0,2}(?:\.\d+)?)\s+(.+?)\s*$/);
-if(!m)return null;
-let t=pt(m[1]);if(rel)t+=s;
-return {t,text:m[2]};
-}).filter(Boolean).sort((a,b)=>a.t-b.t);
-lastKey='';
+  const rel=$('rel').checked,s=S();
+  caps=$('caps').value.split('\n').map(l=>{
+    const m=l.match(/^\s*(\d+(?::\d+){0,2}(?:\.\d+)?)\s+(.+?)\s*$/);
+    if(!m)return null;
+    let t=pt(m[1]);if(rel)t+=s;
+    return {t,text:m[2]};
+  }).filter(Boolean).sort((a,b)=>a.t-b.t);
+  lastKey='';
 }
 
 /* color presets */
 const PRESETS={
-none:{br:100,co:100,sa:100,se:0,hu:0,bl:0},
-cinema:{br:96,co:122,sa:115,se:18,hu:-8,bl:0},
-vintage:{br:104,co:92,sa:78,se:55,hu:-6,bl:0},
-bw:{br:104,co:128,sa:0,se:0,hu:0,bl:0},
-vibrant:{br:104,co:112,sa:185,se:0,hu:0,bl:0},
-cyber:{br:100,co:120,sa:150,se:0,hu:-55,bl:0},
-sunset:{br:104,co:108,sa:140,se:35,hu:-14,bl:0},
-moody:{br:84,co:132,sa:80,se:0,hu:18,bl:0},
-warm:{br:108,co:96,sa:122,se:30,hu:-4,bl:0}
+  none:{br:100,co:100,sa:100,se:0,hu:0,bl:0},
+  cinema:{br:96,co:122,sa:115,se:18,hu:-8,bl:0},
+  vintage:{br:104,co:92,sa:78,se:55,hu:-6,bl:0},
+  bw:{br:104,co:128,sa:0,se:0,hu:0,bl:0},
+  vibrant:{br:104,co:112,sa:185,se:0,hu:0,bl:0},
+  cyber:{br:100,co:120,sa:150,se:0,hu:-55,bl:0},
+  sunset:{br:104,co:108,sa:140,se:35,hu:-14,bl:0},
+  moody:{br:84,co:132,sa:80,se:0,hu:18,bl:0},
+  warm:{br:108,co:96,sa:122,se:30,hu:-4,bl:0}
 };
 const CIDS=['br','co','sa','se','hu','bl'];
 function selectChip(name){document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x.dataset.p===name))}
@@ -724,9 +728,6 @@ function ctaOn(){return $('cta_on').checked&&!pickOn}
 function ctaZ(){return (+$('cta_sz').value)/100}
 function stackH(){return (ltActive()?ltH()+1.5:0)+(ctaOn()?10*ctaZ()+1:0)}
 function ltTop(){
-  if(!ltActive()||$('layout').value==='stack')return 0;
-  const z=(+$('lt_sz').value)/100,sub=$('lt_sub').value.trim();
-  return Math.round((ltBottom()+(5.8+(sub?3.8:0))*z+5.4*z+3)*10)/10;
   if($('layout').value==='stack')return 0;
   const hh=stackH();
   return hh>0?Math.round((ltBottom()+hh+3)*10)/10:0;
@@ -779,162 +780,159 @@ function renderCTA(t){
 
 /* layout + facecam */
 function camAspect(){
-if(isStk()){const ph=$('phone');return ph.clientWidth/Math.max(1,ph.clientHeight*(100-(+$('split').value))/100)}
-return ({wide:4/3,wide169:16/9,ultra:21/9,strip:3}[$('cshape').value])||1;
+  if(isStk()){const ph=$('phone');return ph.clientWidth/Math.max(1,ph.clientHeight*(100-(+$('split').value))/100)}
+  return ({wide:4/3,wide169:16/9,ultra:21/9,strip:3}[$('cshape').value])||1;
 }
 /* where the caption block sits (bottom edge, in cqw) */
 function capBottomCqw(){
-const p=$('pos').value,L=$('layout').value;
-if(L==='stack'){const pn=100-(+$('split').value);return (p==='lowmid'?pn+8:pn+2)*1.778}
-if(p==='bottom')return Math.max(15*1.778,ltTop());
-if(p==='lowmid')return Math.max(30*1.778,ltTop());
-return 0;
+  const p=$('pos').value,L=$('layout').value;
+  if(L==='stack'){const pn=100-(+$('split').value);return (p==='lowmid'?pn+8:pn+2)*1.778}
+  if(p==='bottom')return Math.max(15*1.778,ltTop());
+  if(p==='lowmid')return Math.max(30*1.778,ltTop());
+  return 0;
 }
 function aboveCapBottom(){
-const p=$('pos').value;
-const capH=(+$('fs').value)*1.18*2;
-if(p==='bottom'||p==='lowmid')return Math.round((capBottomCqw()+capH+3)*10)/10;
-return 12;
+  const p=$('pos').value;
+  const capH=(+$('fs').value)*1.18*2;
+  if(p==='bottom'||p==='lowmid')return Math.round((capBottomCqw()+capH+3)*10)/10;
+  return 12;
 }
 function applyLayout(){
-const L=pickOn?'fit':$('layout').value,st=$('stage'),vw=$('vwrap'),x=$('xpos').value;
-st.style.background=$('bgc').value;
-const sp=+$('split').value,stk=(L==='stack'||L==='stackt');
-st.style.height=stk?sp+'%':'100%';st.style.top=L==='stackt'?(100-sp)+'%':'0';
-if(L==='fit')vw.style.cssText='width:100%;height:auto;left:0;top:50%;transform:translateY(-50%)';
-else vw.style.cssText='height:100%;width:auto;left:'+x+'%;top:50%;transform:translate(-'+x+'%,-50%)';
+  const L=pickOn?'fit':$('layout').value,st=$('stage'),vw=$('vwrap'),x=$('xpos').value;
+  st.style.background=$('bgc').value;
+  const sp=+$('split').value,stk=(L==='stack'||L==='stackt');
+  st.style.height=stk?sp+'%':'100%';st.style.top=L==='stackt'?(100-sp)+'%':'0';
+  if(L==='fit')vw.style.cssText='width:100%;height:auto;left:0;top:50%;transform:translateY(-50%)';
+  else vw.style.cssText='height:100%;width:auto;left:'+x+'%;top:50%;transform:translate(-'+x+'%,-50%)';
 }
 function camBottom(){return Math.max(4,ltTop())}
 function applyCam(){
-const cam=$('cam'),on=$('camon').checked&&!pickOn&&!!curId;
-if(!on){cam.style.cssText='display:none';return}
-  const L=$('layout').value,bw=+$('cbw').value,col=$('cbc').value;
+  const cam=$('cam'),on=$('camon').checked&&!pickOn&&!!curId;
+  if(!on){cam.style.cssText='display:none';return}
   const L=$('layout').value,bw=+$('cbw').value,cn=$('cneon').checked,col=cn?$('neon_col').value:$('cbc').value;
-  const neonSh='0 0 1.2cqw '+col+',0 0 3.5cqw '+col+',0 0 7cqw '+col+',inset 0 0 2.5cqw '+col;
-let css='display:block;';
-if(L==='stack'||L==='stackt'){
-const tp=L==='stackt';
-    css+='left:0;right:0;'+(tp?'top:0;':'bottom:0;')+'height:'+(100-(+$('split').value))+'%;border-radius:0;'+(tp?'border-bottom:':'border-top:')+(bw*0.4)+'cqw solid '+col+';';
-    css+='left:0;right:0;'+(tp?'top:0;':'bottom:0;')+'height:'+(100-(+$('split').value))+'%;border-radius:0;'+(tp?'border-bottom:':'border-top:')+(bw*0.4)+'cqw solid '+col+';'+(cn?'box-shadow:'+neonSh+';':'');
-}else{
-const size=+$('csize').value,r=camAspect(),corner=$('ccorner').value,shape=$('cshape').value;
-css+='width:'+size+'cqw;aspect-ratio:'+r+';';
-if(corner==='tm')css+='top:5cqw;left:50%;transform:translateX(-50%);';
-else if(corner==='mm')css+='top:50%;left:50%;transform:translate(-50%,-50%);';
-else if(corner==='rm')css+='top:50%;right:4cqw;transform:translateY(-50%);';
-else if(corner==='lm')css+='top:50%;left:4cqw;transform:translateY(-50%);';
-else if(corner==='ac')css+='bottom:'+aboveCapBottom()+'cqw;left:50%;transform:translateX(-50%);';
-else css+=(corner[0]==='b'?'bottom:'+camBottom()+'cqw;':'top:5cqw;')+(corner[1]==='r'?'right:4cqw;':'left:4cqw;');
-css+='max-width:92cqw;';
-css+='border-radius:'+(shape==='circle'?'50%':shape==='round'?'6cqw':shape==='wide'?'4cqw':'3cqw')+';';
-css+='border:'+(bw*0.4)+'cqw solid '+col+';';
-    css+=$('cglow').checked?'box-shadow:0 0 5cqw '+col+',0 2cqw 6cqw rgba(0,0,0,.6);':'box-shadow:0 2cqw 6cqw rgba(0,0,0,.6);';
+  const neonSh='0 0 1.2cqw currentColor,0 0 3.5cqw currentColor,0 0 7cqw currentColor,inset 0 0 3cqw currentColor',bcol=cn?'currentColor':col;
+  let css='display:block;color:'+col+';';
+  cam.className='cam'+(cn?' cneon '+($('neon_an').value==='steady'?'':$('neon_an').value):'');
+  if(L==='stack'||L==='stackt'){
+    const tp=L==='stackt';
+    css+='left:0;right:0;'+(tp?'top:0;':'bottom:0;')+'height:'+(100-(+$('split').value))+'%;border-radius:0;'+(tp?'border-bottom:':'border-top:')+(bw*0.4)+'cqw solid '+bcol+';'+(cn?'box-shadow:'+neonSh+';':'');
+  }else{
+    const size=+$('csize').value,r=camAspect(),corner=$('ccorner').value,shape=$('cshape').value;
+    css+='width:'+size+'cqw;aspect-ratio:'+r+';';
+    if(corner==='tm')css+='top:5cqw;left:50%;transform:translateX(-50%);';
+    else if(corner==='mm')css+='top:50%;left:50%;transform:translate(-50%,-50%);';
+    else if(corner==='rm')css+='top:50%;right:4cqw;transform:translateY(-50%);';
+    else if(corner==='lm')css+='top:50%;left:4cqw;transform:translateY(-50%);';
+    else if(corner==='ac')css+='bottom:'+aboveCapBottom()+'cqw;left:50%;transform:translateX(-50%);';
+    else css+=(corner[0]==='b'?'bottom:'+camBottom()+'cqw;':'top:5cqw;')+(corner[1]==='r'?'right:4cqw;':'left:4cqw;');
+    css+='max-width:92cqw;';
+    css+='border-radius:'+(shape==='circle'?'50%':shape==='round'?'6cqw':shape==='wide'?'4cqw':'3cqw')+';';
+    css+='border:'+(bw*0.4)+'cqw solid '+bcol+';';
     css+=cn?'box-shadow:'+neonSh+',0 2cqw 6cqw rgba(0,0,0,.6);':($('cglow').checked?'box-shadow:0 0 5cqw '+col+',0 2cqw 6cqw rgba(0,0,0,.6);':'box-shadow:0 2cqw 6cqw rgba(0,0,0,.6);');
-}
-cam.style.cssText=css;
-layoutCam();
+  }
+  cam.style.cssText=css;
+  layoutCam();
 }
 function layoutCam(){
-const v=$('camv'),bw=v.clientWidth,bh=v.clientHeight;
-if(!bw||!bh)return;
-const z=+$('cz').value,cx=+$('cx').value/100,cy=+$('cy').value/100;
-const H=bh*z,W=H*16/9,f=v.firstElementChild;
-if(!f)return;
-f.style.width=W+'px';f.style.height=H+'px';
-f.style.left=(bw/2-cx*W)+'px';f.style.top=(bh/2-cy*H)+'px';
+  const v=$('camv'),bw=v.clientWidth,bh=v.clientHeight;
+  if(!bw||!bh)return;
+  const z=+$('cz').value,cx=+$('cx').value/100,cy=+$('cy').value/100;
+  const H=bh*z,W=H*16/9,f=v.firstElementChild;
+  if(!f)return;
+  f.style.width=W+'px';f.style.height=H+'px';
+  f.style.left=(bw/2-cx*W)+'px';f.style.top=(bh/2-cy*H)+'px';
 }
 function updatePick(){
-const ph=$('phone'),fw=ph.clientWidth,fh=fw*9/16,top=(ph.clientHeight-fh)/2;
-const z=+$('cz').value,r=camAspect();
-const w=fw*9*r/(16*z),h=fw*9/(16*z);
-const cx=+$('cx').value/100,cy=+$('cy').value/100,b=$('pickbox');
-b.style.width=w+'px';b.style.height=h+'px';
-b.style.left=(cx*fw-w/2)+'px';b.style.top=(top+cy*fh-h/2)+'px';
+  const ph=$('phone'),fw=ph.clientWidth,fh=fw*9/16,top=(ph.clientHeight-fh)/2;
+  const z=+$('cz').value,r=camAspect();
+  const w=fw*9*r/(16*z),h=fw*9/(16*z);
+  const cx=+$('cx').value/100,cy=+$('cy').value/100,b=$('pickbox');
+  b.style.width=w+'px';b.style.height=h+'px';
+  b.style.left=(cx*fw-w/2)+'px';b.style.top=(top+cy*fh-h/2)+'px';
 }
 function pickAt(e){
-const rect=$('phone').getBoundingClientRect(),fw=rect.width,fh=fw*9/16,top=(rect.height-fh)/2;
-$('cx').value=Math.round(clamp((e.clientX-rect.left)/fw,0,1)*200)/2;
-$('cy').value=Math.round(clamp((e.clientY-rect.top-top)/fh,0,1)*200)/2;
-updatePick();applyAll();
+  const rect=$('phone').getBoundingClientRect(),fw=rect.width,fh=fw*9/16,top=(rect.height-fh)/2;
+  $('cx').value=Math.round(clamp((e.clientX-rect.left)/fw,0,1)*200)/2;
+  $('cy').value=Math.round(clamp((e.clientY-rect.top-top)/fh,0,1)*200)/2;
+  updatePick();applyAll();
 }
 (function(){
-const pk=$('pick');let drag=false;
-pk.addEventListener('pointerdown',e=>{drag=true;try{pk.setPointerCapture(e.pointerId)}catch(_){}pickAt(e)});
-pk.addEventListener('pointermove',e=>{if(drag)pickAt(e)});
-pk.addEventListener('pointerup',()=>{drag=false});
-pk.addEventListener('pointercancel',()=>{drag=false});
+  const pk=$('pick');let drag=false;
+  pk.addEventListener('pointerdown',e=>{drag=true;try{pk.setPointerCapture(e.pointerId)}catch(_){}pickAt(e)});
+  pk.addEventListener('pointermove',e=>{if(drag)pickAt(e)});
+  pk.addEventListener('pointerup',()=>{drag=false});
+  pk.addEventListener('pointercancel',()=>{drag=false});
 })();
 $('pickbtn').onclick=()=>{
-if(!ready){toast('Load the video first (Clip tab)');return}
-pickOn=!pickOn;
-$('pick').style.display=pickOn?'block':'none';
-$('pickbtn').textContent=pickOn?'✅ Done picking':'🎯 Pick facecam area';
-applyAll();
-if(pickOn){updatePick();window.scrollTo({top:0,behavior:'smooth'})}
+  if(!ready){toast('Load the video first (Clip tab)');return}
+  pickOn=!pickOn;
+  $('pick').style.display=pickOn?'block':'none';
+  $('pickbtn').textContent=pickOn?'✅ Done picking':'🎯 Pick facecam area';
+  applyAll();
+  if(pickOn){updatePick();window.scrollTo({top:0,behavior:'smooth'})}
 };
 
 /* apply everything */
 function applyAll(){
-const L=pickOn?'fit':$('layout').value;
-const c=$('cap');
-c.className='cap '+$('pos').value+' '+$('style').value+' '+$('font').value+' '+$('anim').value+($('up').checked?' up':'');
-c.style.setProperty('--hl',$('hl').value);
-c.style.setProperty('--fs',$('fs').value);
-c.style.display=pickOn?'none':'';
-let b='';
-const pv=$('pos').value;
-if(pv==='bottom'||pv==='lowmid'){
-const base=pv==='bottom'?'15%':'30%';
-if(L==='stack'){const pn=100-(+$('split').value);b=(pv==='bottom'?pn+2:pn+8)+'%'}
-else{
-const parts=[base];
-if($('camon').checked&&!pickOn&&L!=='stackt'&&$('ccorner').value[0]==='b')parts.push(((+$('csize').value)/camAspect()+camBottom()+5)+'cqw');
-if(ltTop()>0)parts.push(ltTop()+'cqw');
-b=parts.length>1?'max('+parts.join(',')+')':'';
-}
-}
-c.style.bottom=b;
-const v=k=>+$('c_'+k).value;
-const filt=`brightness(${v('br')}%) contrast(${v('co')}%) saturate(${v('sa')}%) sepia(${v('se')}%) hue-rotate(${v('hu')}deg) blur(${v('bl')}px)`;
-const st=$('stage');
-st.style.filter=filt;$('camv').style.filter=filt;
-st.className='stage '+$('motion').value;
-st.style.setProperty('--mdur',Math.max(3,E()-S())+'s');
-const ph=$('phone').style;
-ph.setProperty('--grain',$('f_gr').value/100*0.6);
-ph.setProperty('--vig',$('f_vi').value/100);
-ph.setProperty('--scan',$('f_sc').value/100*0.5);
-ph.setProperty('--leak',$('f_lk').value/100*0.7);
-$('bars').style.display=$('f_bars').checked?'block':'none';
-const mk=$('mark');mk.textContent=$('wm').value;
-mk.classList.toggle('l',$('camon').checked&&!pickOn&&$('ccorner').value==='tr'&&L!=='stack');
+  const L=pickOn?'fit':$('layout').value;
+  const c=$('cap');
+  c.className='cap '+$('pos').value+' '+$('style').value+' '+$('font').value+' '+$('anim').value+($('up').checked?' up':'');
+  c.style.setProperty('--hl',$('hl').value);
+  c.style.setProperty('--fs',$('fs').value);
+  c.style.display=pickOn?'none':'';
+  let b='';
+  const pv=$('pos').value;
+  if(pv==='bottom'||pv==='lowmid'){
+    const base=pv==='bottom'?'15%':'30%';
+    if(L==='stack'){const pn=100-(+$('split').value);b=(pv==='bottom'?pn+2:pn+8)+'%'}
+    else{
+      const parts=[base];
+      if($('camon').checked&&!pickOn&&L!=='stackt'&&$('ccorner').value[0]==='b')parts.push(((+$('csize').value)/camAspect()+camBottom()+5)+'cqw');
+      if(ltTop()>0)parts.push(ltTop()+'cqw');
+      b=parts.length>1?'max('+parts.join(',')+')':'';
+    }
+  }
+  c.style.bottom=b;
+  const v=k=>+$('c_'+k).value;
+  const filt=`brightness(${v('br')}%) contrast(${v('co')}%) saturate(${v('sa')}%) sepia(${v('se')}%) hue-rotate(${v('hu')}deg) blur(${v('bl')}px)`;
+  const st=$('stage');
+  st.style.filter=filt;$('camv').style.filter=filt;
+  st.className='stage '+$('motion').value;
+  st.style.setProperty('--mdur',Math.max(3,E()-S())+'s');
+  const ph=$('phone').style;
+  ph.setProperty('--grain',$('f_gr').value/100*0.6);
+  ph.setProperty('--vig',$('f_vi').value/100);
+  ph.setProperty('--scan',$('f_sc').value/100*0.5);
+  ph.setProperty('--leak',$('f_lk').value/100*0.7);
+  $('bars').style.display=$('f_bars').checked?'block':'none';
+  const mk=$('mark');mk.textContent=$('wm').value;
+  mk.classList.toggle('l',$('camon').checked&&!pickOn&&$('ccorner').value==='tr'&&L!=='stack');
   const ct=$('cta');
   ct.style.bottom=(ltBottom()+(ltActive()?ltH()+1.5:0))+'cqw';
   ct.style.setProperty('--cts',ctaZ());
-const nn=$('neon');
-nn.style.display=$('neon_on').checked&&!pickOn?'block':'none';
-nn.style.setProperty('--nc',$('neon_col').value);
-nn.style.setProperty('--nw',$('neon_w').value);
-nn.style.setProperty('--ng',$('neon_g').value);
-nn.className='fx neon '+(($('neon_an').value==='steady')?'':$('neon_an').value);
-/* streamer name bar */
-const lt=$('lt'),al=$('lt_al').value,sub=$('lt_sub').value.trim();
-lt.style.setProperty('--lc',$('lt_col').value);
-lt.style.setProperty('--lts',(+$('lt_sz').value)/100);
-lt.style.bottom=ltBottom()+'cqw';
-lt.style.left=al==='l'?'5%':al==='c'?'50%':'auto';
-lt.style.right=al==='r'?'5%':'auto';
-lt.style.transform=al==='c'?'translateX(-50%)':'none';
-if($('ltN').textContent!==$('lt_name').value.trim())$('ltN').textContent=$('lt_name').value.trim();
-if($('ltS').textContent!==sub)$('ltS').textContent=sub;
-$('ltS').style.display=sub?'':'none';
-applyLayout();applyCam();
-if(pickOn)updatePick();
-document.querySelectorAll('.sl').forEach(s=>{const i=s.querySelector('input'),e=s.querySelector('em');if(i&&e&&i.id!=='fs')e.textContent=i.value});
-$('fs_v').textContent=$('fs').value;
-const pv2=String(100-(+$('split').value));if($('cpanel').value!==pv2){$('cpanel').value=pv2;const e=$('cpanel').parentNode.querySelector('em');if(e)e.textContent=pv2}
+  const nn=$('neon');
+  nn.style.display=$('neon_on').checked&&!pickOn?'block':'none';
+  nn.style.setProperty('--nc',$('neon_col').value);
+  nn.style.setProperty('--nw',$('neon_w').value);
+  nn.style.setProperty('--ng',$('neon_g').value);
+  nn.className='fx neon '+(($('neon_an').value==='steady')?'':$('neon_an').value);
+  /* streamer name bar */
+  const lt=$('lt'),al=$('lt_al').value,sub=$('lt_sub').value.trim();
+  lt.style.setProperty('--lc',$('lt_col').value);
+  lt.style.setProperty('--lts',(+$('lt_sz').value)/100);
+  lt.style.bottom=ltBottom()+'cqw';
+  lt.style.left=al==='l'?'5%':al==='c'?'50%':'auto';
+  lt.style.right=al==='r'?'5%':'auto';
+  lt.style.transform=al==='c'?'translateX(-50%)':'none';
+  if($('ltN').textContent!==$('lt_name').value.trim())$('ltN').textContent=$('lt_name').value.trim();
+  if($('ltS').textContent!==sub)$('ltS').textContent=sub;
+  $('ltS').style.display=sub?'':'none';
+  applyLayout();applyCam();
+  if(pickOn)updatePick();
+  document.querySelectorAll('.sl').forEach(s=>{const i=s.querySelector('input'),e=s.querySelector('em');if(i&&e&&i.id!=='fs')e.textContent=i.value});
+  $('fs_v').textContent=$('fs').value;
+  const pv2=String(100-(+$('split').value));if($('cpanel').value!==pv2){$('cpanel').value=pv2;const e=$('cpanel').parentNode.querySelector('em');if(e)e.textContent=pv2}
 }
-const LIVE=['split','style','font','anim','pos','hl','fs','up','xpos','motion','f_gr','f_vi','f_sc','f_lk','f_bars','wm','layout','bgc','camon','ccorner','cshape','csize','cbw','cbc','cglow','cz','cx','cy','lt_on','neon_on','neon_col','neon_w','neon_g','neon_an','lt_name','lt_sub','lt_style','lt_col','lt_al','lt_mode','lt_sz',...CIDS.map(k=>'c_'+k)];
 const LIVE=['split','style','font','anim','pos','hl','fs','up','xpos','motion','f_gr','f_vi','f_sc','f_lk','f_bars','wm','layout','bgc','camon','ccorner','cshape','csize','cbw','cbc','cglow','cneon','cz','cx','cy','lt_on','cta_on','cta_plat','cta_mode','cta_sz','neon_on','neon_col','neon_w','neon_g','neon_an','lt_name','lt_sub','lt_style','lt_col','lt_al','lt_mode','lt_sz',...CIDS.map(k=>'c_'+k)];
 LIVE.forEach(id=>$(id).addEventListener('input',applyAll));
 ['caps','rel','start','n'].forEach(id=>$(id).addEventListener('input',parseCaps));
@@ -942,206 +940,204 @@ $('end').addEventListener('input',applyAll);
 $('cta_shuf').onclick=()=>{ctaSig='';toast('Button times shuffled 🎲')};
 $('cpanel').addEventListener('input',()=>{$('split').value=100-(+$('cpanel').value);applyAll()});
 $('ccorner').addEventListener('input',()=>{
-const c=$('ccorner').value,l=$('layout');
-if(c==='ptop')l.value='stackt';else if(c==='pbot')l.value='stack';else if(l.value==='stack'||l.value==='stackt')l.value='fill';
-applyAll();
+  const c=$('ccorner').value,l=$('layout');
+  if(c==='ptop')l.value='stackt';else if(c==='pbot')l.value='stack';else if(l.value==='stack'||l.value==='stackt')l.value='fill';
+  applyAll();
 });
 $('layout').addEventListener('input',()=>{
-const l=$('layout').value,c=$('ccorner');
-if(l==='stackt')c.value='ptop';else if(l==='stack')c.value='pbot';else if(c.value==='ptop'||c.value==='pbot')c.value='br';
-applyAll();
+  const l=$('layout').value,c=$('ccorner');
+  if(l==='stackt')c.value='ptop';else if(l==='stack')c.value='pbot';else if(c.value==='ptop'||c.value==='pbot')c.value='br';
+  applyAll();
 });
 /* apply start/end edits to the player right away (on Enter or when leaving the field) */
 function applyTimes(which){
-if(!ready||!player)return;
-const sv=S(),ev=E();
-if(isNaN(pt($('start').value))||isNaN(pt($('end').value||'0'))){toast('Write times like 00:01:25');return}
-if(ev<=sv){toast('End time must be after start time');return}
-const t=player.getCurrentTime();
-if(which==='start'||t<sv||t>=ev){jump(sv);playTrans()}
-lastKey='';parseCaps();applyAll();
+  if(!ready||!player)return;
+  const sv=S(),ev=E();
+  if(isNaN(pt($('start').value))||isNaN(pt($('end').value||'0'))){toast('Write times like 00:01:25');return}
+  if(ev<=sv){toast('End time must be after start time');return}
+  const t=player.getCurrentTime();
+  if(which==='start'||t<sv||t>=ev){jump(sv);playTrans()}
+  lastKey='';parseCaps();applyAll();
 }
 ['start','end'].forEach(id=>{
-$(id).addEventListener('change',()=>applyTimes(id));
-$(id).addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$(id).blur();}});
+  $(id).addEventListener('change',()=>applyTimes(id));
+  $(id).addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$(id).blur();}});
 });
 $('camon').addEventListener('change',()=>{
-if($('camon').checked){if(curId)loadCam(curId)}
-else if(camReady&&camPlayer){try{camPlayer.pauseVideo()}catch(_){}}
+  if($('camon').checked){if(curId)loadCam(curId)}
+  else if(camReady&&camPlayer){try{camPlayer.pauseVideo()}catch(_){}}
 });
 if(window.ResizeObserver)new ResizeObserver(()=>{layoutCam();if(pickOn)updatePick()}).observe($('phone'));
 
 /* opening transition */
 function playTrans(){
-const t=$('trans').value,f=$('flash'),d=$('fade');
-f.style.transition=d.style.transition='none';f.style.opacity=d.style.opacity=0;
-if(!t)return;
-const el=t==='flash'?f:d;
-el.style.opacity=1;void el.offsetWidth;
-el.style.transition=t==='flash'?'opacity .45s ease-out':'opacity .9s ease-out';
-el.style.opacity=0;
+  const t=$('trans').value,f=$('flash'),d=$('fade');
+  f.style.transition=d.style.transition='none';f.style.opacity=d.style.opacity=0;
+  if(!t)return;
+  const el=t==='flash'?f:d;
+  el.style.opacity=1;void el.offsetWidth;
+  el.style.transition=t==='flash'?'opacity .45s ease-out':'opacity .9s ease-out';
+  el.style.opacity=0;
 }
 
 /* streamer name bar: decide when it animates in and out */
 function renderLT(t){
-const el=$('lt');
-let want='hide';
-  if(ltActive()&&curId){
+  const el=$('lt');
+  let want='hide';
   if(ltActive()){
-const rel=t-S(),mode=$('lt_mode').value;
-let vis=rel>=0.4&&t<E();
-if(vis&&mode==='first')vis=rel<6.9;
-else if(vis&&mode==='loop')vis=((rel-0.4)%14)<7;
-want=vis?'in':'out';
-}
-const st=$('lt_style').value,key=want+'|'+st;
-if(key===ltKey)return;
-const prev=ltKey.split('|')[0];
-ltKey=key;
-if(want==='out'&&prev!=='in')want='hide';
-el.className='lt '+st+(want==='hide'?'':' '+want);
+    const rel=t-S(),mode=$('lt_mode').value;
+    let vis=rel>=0.4&&t<E();
+    if(vis&&mode==='first')vis=rel<6.9;
+    else if(vis&&mode==='loop')vis=((rel-0.4)%14)<7;
+    want=vis?'in':'out';
+  }
+  const st=$('lt_style').value,key=want+'|'+st;
+  if(key===ltKey)return;
+  const prev=ltKey.split('|')[0];
+  ltKey=key;
+  if(want==='out'&&prev!=='in')want='hide';
+  el.className='lt '+st+(want==='hide'?'':' '+want);
 }
 
 /* caption render */
 function renderCap(t){
-const end=E();let i=-1;
-for(let k=0;k<caps.length;k++){if(caps[k].t<=t)i=k;else break}
-if(i<0||t>=end||t<S()){if(lastKey!==''){$('cap').innerHTML='';lastKey=''}return}
-const c=caps[i],cEnd=caps[i+1]?Math.min(caps[i+1].t,end):end;
-const words=c.text.split(/\s+/),n=+$('n').value;
-const dur=Math.max(.1,cEnd-c.t);
-const k=Math.min(words.length-1,Math.max(0,Math.floor((t-c.t)/dur*words.length)));
-const key=i+'-'+k+'-'+n+'-'+$('anim').value;
-if(key===lastKey)return;lastKey=key;
-const ch=Math.floor(k/n);
-$('cap').innerHTML=words.slice(ch*n,ch*n+n).map((w,j)=>`<span class="w${ch*n+j===k?' on':''}">${esc(w)}</span>`).join(' ');
+  const end=E();let i=-1;
+  for(let k=0;k<caps.length;k++){if(caps[k].t<=t)i=k;else break}
+  if(i<0||t>=end||t<S()){if(lastKey!==''){$('cap').innerHTML='';lastKey=''}return}
+  const c=caps[i],cEnd=caps[i+1]?Math.min(caps[i+1].t,end):end;
+  const words=c.text.split(/\s+/),n=+$('n').value;
+  const dur=Math.max(.1,cEnd-c.t);
+  const k=Math.min(words.length-1,Math.max(0,Math.floor((t-c.t)/dur*words.length)));
+  const key=i+'-'+k+'-'+n+'-'+$('anim').value;
+  if(key===lastKey)return;lastKey=key;
+  const ch=Math.floor(k/n);
+  $('cap').innerHTML=words.slice(ch*n,ch*n+n).map((w,j)=>`<span class="w${ch*n+j===k?' on':''}">${esc(w)}</span>`).join(' ');
 }
 
 /* playback helpers */
 function jump(t){
-player.seekTo(t,true);jumpAt=Date.now();
-if(camReady&&camPlayer){try{camPlayer.seekTo(t,true)}catch(_){}}
+  player.seekTo(t,true);jumpAt=Date.now();
+  if(camReady&&camPlayer){try{camPlayer.seekTo(t,true)}catch(_){}}
 }
 function syncCam(t){
-if(!camReady||!camPlayer||!$('camon').checked||pickOn||!playing)return;
-if(Date.now()-lastSync<700)return;
-try{const ct=camPlayer.getCurrentTime();if(Math.abs(ct-t)>0.45){camPlayer.seekTo(t,true);lastSync=Date.now()}}catch(_){}
+  if(!camReady||!camPlayer||!$('camon').checked||pickOn||!playing)return;
+  if(Date.now()-lastSync<700)return;
+  try{const ct=camPlayer.getCurrentTime();if(Math.abs(ct-t)>0.45){camPlayer.seekTo(t,true);lastSync=Date.now()}}catch(_){}
 }
 function tick(){
-  if(!ready||!player||!player.getCurrentTime)return;
   if(!ready||!player||!player.getCurrentTime){renderLT(S()+1);renderCTA(null);return}
-const t=player.getCurrentTime(),s=S(),e=E();
-const settled=Date.now()-jumpAt>800;
-if(playing&&e>s&&t>=e&&settled){
-if(recFinish){const f=recFinish;recFinish=null;f()}
-else if(plOn)nextPick();
-else if($('loop').checked){jump(s);playTrans()}
-else userPause();
-}
-/* if the gameplay got paused by the browser or YouTube while it should be playing, resume it */
-if(wantPlay){try{if(player.getPlayerState()===2&&Date.now()-jumpAt>600)player.playVideo()}catch(_){}}
-const len=Math.max(.1,e-s);
-$('prog').style.width=Math.min(100,Math.max(0,(t-s)/len*100))+'%';
-$('time').textContent=ft(Math.max(0,t-s))+' / '+ft(len)+'   (video: '+ft(t)+')';
-syncCam(t);
-renderCap(t);
-renderLT(t);
+  const t=player.getCurrentTime(),s=S(),e=E();
+  const settled=Date.now()-jumpAt>800;
+  if(playing&&e>s&&t>=e&&settled){
+    if(recFinish){const f=recFinish;recFinish=null;f()}
+    else if(plOn)nextPick();
+    else if($('loop').checked){jump(s);playTrans()}
+    else userPause();
+  }
+  /* if the gameplay got paused by the browser or YouTube while it should be playing, resume it */
+  if(wantPlay){try{if(player.getPlayerState()===2&&Date.now()-jumpAt>600)player.playVideo()}catch(_){}}
+  const len=Math.max(.1,e-s);
+  $('prog').style.width=Math.min(100,Math.max(0,(t-s)/len*100))+'%';
+  $('time').textContent=ft(Math.max(0,t-s))+' / '+ft(len)+'   (video: '+ft(t)+')';
+  syncCam(t);
+  renderCap(t);
+  renderLT(t);
   renderCTA(t);
 }
 setInterval(tick,80);
 
 /* YouTube players */
 function playerVars(extra){
-const pv=Object.assign({controls:0,rel:0,playsinline:1,modestbranding:1,disablekb:1,fs:0,iv_load_policy:3,start:Math.floor(S())},extra||{});
-if(location.protocol==='https:'||location.protocol==='http:'){pv.origin=location.origin;pv.enablejsapi=1}
-return pv;
+  const pv=Object.assign({controls:0,rel:0,playsinline:1,modestbranding:1,disablekb:1,fs:0,iv_load_policy:3,start:Math.floor(S())},extra||{});
+  if(location.protocol==='https:'||location.protocol==='http:'){pv.origin=location.origin;pv.enablejsapi=1}
+  return pv;
 }
 function onYouTubeIframeAPIReady(){apiReady=true;if(pendingLoad)loadClip(pendingLoad)}
 window.onYouTubeIframeAPIReady=onYouTubeIframeAPIReady;
 
 function loadCam(id){
-if(!apiReady||!$('camon').checked)return;
-const same=(camId===id);camId=id;
-if(camPlayer&&camReady){
-if(same)camPlayer.seekTo(S(),true);else camPlayer.loadVideoById({videoId:id,startSeconds:S()});
-camPlayer.mute();return;
-}
-if(camPlayer)return;
-camPlayer=new YT.Player('yt2',{
-videoId:id,
-playerVars:playerVars({mute:1}),
-events:{
-onReady:()=>{camReady=true;camPlayer.mute();layoutCam();if(playing)camPlayer.playVideo()},
-onStateChange:e=>{if(e.data===1&&!playing){try{camPlayer.pauseVideo()}catch(_){}}},
-onError:()=>{}
-}
-});
-setTimeout(layoutCam,60);
+  if(!apiReady||!$('camon').checked)return;
+  const same=(camId===id);camId=id;
+  if(camPlayer&&camReady){
+    if(same)camPlayer.seekTo(S(),true);else camPlayer.loadVideoById({videoId:id,startSeconds:S()});
+    camPlayer.mute();return;
+  }
+  if(camPlayer)return;
+  camPlayer=new YT.Player('yt2',{
+    videoId:id,
+    playerVars:playerVars({mute:1}),
+    events:{
+      onReady:()=>{camReady=true;camPlayer.mute();layoutCam();if(playing)camPlayer.playVideo()},
+      onStateChange:e=>{if(e.data===1&&!playing){try{camPlayer.pauseVideo()}catch(_){}}},
+      onError:()=>{}
+    }
+  });
+  setTimeout(layoutCam,60);
 }
 
 function loadClip(id){
-if(!apiReady){pendingLoad=id;return}
-pendingLoad=null;$('empty').style.display='none';parseCaps();applyAll();
-const same=(curId===id);curId=id;applyAll();
-if(player&&ready){
-if(same){jump(S());userPlay()}else{wantPlay=true; player.loadVideoById({videoId:id,startSeconds:S()})}
-playTrans();loadCam(id);return;
-}
-if(player)return;
-player=new YT.Player('yt',{
-videoId:id,
-playerVars:playerVars(),
-events:{
-onReady:()=>{ready=true;player.seekTo(S(),true)},
-onStateChange:e=>{
-playing=(e.data===1);
-$('play').textContent=playing?'⏸ Pause':'▶ Play clip';
-if(camReady&&camPlayer&&$('camon').checked){
-try{
-if(e.data===1)camPlayer.playVideo();
-else if(e.data===2||e.data===0){camPlayer.seekTo(player.getCurrentTime(),true);camPlayer.pauseVideo()}
-}catch(_){}
-}
-},
-onError:e=>toast(e.data===153||e.data===152
-?'Error '+e.data+': open this page from its live https link (GitHub Pages), not as a local file.'
-:(e.data===101||e.data===150
-?'The video owner has disabled embedding for this video.'
-:'Video could not play (error '+e.data+').'))
-}
-});
-loadCam(id);
+  if(!apiReady){pendingLoad=id;return}
+  pendingLoad=null;$('empty').style.display='none';parseCaps();applyAll();
+  const same=(curId===id);curId=id;applyAll();
+  if(player&&ready){
+    if(same){jump(S());userPlay()}else{wantPlay=true; player.loadVideoById({videoId:id,startSeconds:S()})}
+    playTrans();loadCam(id);return;
+  }
+  if(player)return;
+  player=new YT.Player('yt',{
+    videoId:id,
+    playerVars:playerVars(),
+    events:{
+      onReady:()=>{ready=true;player.seekTo(S(),true)},
+      onStateChange:e=>{
+        playing=(e.data===1);
+        $('play').textContent=playing?'⏸ Pause':'▶ Play clip';
+        if(camReady&&camPlayer&&$('camon').checked){
+          try{
+            if(e.data===1)camPlayer.playVideo();
+            else if(e.data===2||e.data===0){camPlayer.seekTo(player.getCurrentTime(),true);camPlayer.pauseVideo()}
+          }catch(_){}
+        }
+      },
+      onError:e=>toast(e.data===153||e.data===152
+        ?'Error '+e.data+': open this page from its live https link (GitHub Pages), not as a local file.'
+        :(e.data===101||e.data===150
+          ?'The video owner has disabled embedding for this video.'
+          :'Video could not play (error '+e.data+').'))
+    }
+  });
+  loadCam(id);
 }
 
 $('load').onclick=()=>{
-const id=vid($('url').value);
-if(!id){toast('Enter a valid YouTube link');return}
-if(!String($('start').value).trim())$('start').value='00:00:00';
-if(!String($('end').value).trim())$('end').value=ftd(S()+30);
-if(isNaN(pt($('start').value))||isNaN(pt($('end').value))){toast('Write times like 00:01:25');return}
-if(E()<=S()){toast('End time must be after start time');return}
-plOn=false;loadClip(id);
+  const id=vid($('url').value);
+  if(!id){toast('Enter a valid YouTube link');return}
+  if(!String($('start').value).trim())$('start').value='00:00:00';
+  if(!String($('end').value).trim())$('end').value=ftd(S()+30);
+  if(isNaN(pt($('start').value))||isNaN(pt($('end').value))){toast('Write times like 00:01:25');return}
+  if(E()<=S()){toast('End time must be after start time');return}
+  plOn=false;loadClip(id);
 };
 $('play').onclick=()=>{
-if(!ready){toast('Load a clip first');return}
-if(playing){userPause();return}
-const t=player.getCurrentTime();
-if(t<S()||t>=E()-.2){jump(S());playTrans()}
-userPlay();
+  if(!ready){toast('Load a clip first');return}
+  if(playing){userPause();return}
+  const t=player.getCurrentTime();
+  if(t<S()||t>=E()-.2){jump(S());playTrans()}
+  userPlay();
 };
 function skip(d){
-if(!ready||!player)return toast('Load a clip first');
-const s=S(),e=E(),t=player.getCurrentTime();
-jump(Math.min(Math.max(t+d,s),Math.max(s,e-0.3)));
-lastKey='';
+  if(!ready||!player)return toast('Load a clip first');
+  const s=S(),e=E(),t=player.getCurrentTime();
+  jump(Math.min(Math.max(t+d,s),Math.max(s,e-0.3)));
+  lastKey='';
 }
 $('back').onclick=()=>skip(-5);
 $('fwd').onclick=()=>skip(5);
 document.addEventListener('keydown',e=>{
-const tg=(e.target.tagName||'').toLowerCase();
-if(tg==='input'||tg==='textarea'||tg==='select')return;
-if(e.key==='ArrowLeft'){e.preventDefault();skip(-5)}
-else if(e.key==='ArrowRight'){e.preventDefault();skip(5)}
+  const tg=(e.target.tagName||'').toLowerCase();
+  if(tg==='input'||tg==='textarea'||tg==='select')return;
+  if(e.key==='ArrowLeft'){e.preventDefault();skip(-5)}
+  else if(e.key==='ArrowRight'){e.preventDefault();skip(5)}
 });
 $('restart').onclick=()=>{if(!ready)return;jump(S());userPlay();playTrans()};
 $('setStart').onclick=()=>{if(!ready)return toast('Load a video first');$('start').value=ftd(player.getCurrentTime());parseCaps()};
@@ -1149,220 +1145,218 @@ $('setEnd').onclick=()=>{if(!ready)return toast('Load a video first');$('end').v
 
 /* translate captions to English (free MyMemory service) */
 async function trOnce(text,pair){
-const u='https://api.mymemory.translated.net/get?q='+encodeURIComponent(text)+'&langpair='+pair;
-const r=await fetch(u);const j=await r.json();
-const out=j&&j.responseData&&j.responseData.translatedText;
-if(!out||/MYMEMORY WARNING|INVALID/i.test(out))throw new Error(out||'no result');
-return out;
+  const u='https://api.mymemory.translated.net/get?q='+encodeURIComponent(text)+'&langpair='+pair;
+  const r=await fetch(u);const j=await r.json();
+  const out=j&&j.responseData&&j.responseData.translatedText;
+  if(!out||/MYMEMORY WARNING|INVALID/i.test(out))throw new Error(out||'no result');
+  return out;
 }
 async function trLine(text){
-try{return await trOnce(text,'autodetect|en')}
-catch(e){return await trOnce(text,'hi|en')}
+  try{return await trOnce(text,'autodetect|en')}
+  catch(e){return await trOnce(text,'hi|en')}
 }
 $('tr').onclick=async()=>{
-const lines=$('caps').value.split('\n');
-if(!lines.some(l=>l.trim())){toast('Add some captions first');return}
-if(origText===null)origText=$('caps').value;
-const btn=$('tr');btn.disabled=true;const old=btn.textContent;
-const out=[];let fail=0;
-for(let i=0;i<lines.length;i++){
-btn.textContent='Translating '+(i+1)+'/'+lines.length+'...';
-const m=lines[i].match(/^(\s*\d+(?::\d+){0,2}(?:\.\d+)?)\s+(.+?)\s*$/);
-if(!m){out.push(lines[i]);continue}
-try{out.push(m[1]+' '+await trLine(m[2]))}
-catch(e){fail++;out.push(lines[i])}
-}
-$('caps').value=out.join('\n');parseCaps();
-btn.disabled=false;btn.textContent=old;
-toast(fail?('Done, but '+fail+' line(s) could not be translated (daily limit?).'):'Translated to English ✅');
+  const lines=$('caps').value.split('\n');
+  if(!lines.some(l=>l.trim())){toast('Add some captions first');return}
+  if(origText===null)origText=$('caps').value;
+  const btn=$('tr');btn.disabled=true;const old=btn.textContent;
+  const out=[];let fail=0;
+  for(let i=0;i<lines.length;i++){
+    btn.textContent='Translating '+(i+1)+'/'+lines.length+'...';
+    const m=lines[i].match(/^(\s*\d+(?::\d+){0,2}(?:\.\d+)?)\s+(.+?)\s*$/);
+    if(!m){out.push(lines[i]);continue}
+    try{out.push(m[1]+' '+await trLine(m[2]))}
+    catch(e){fail++;out.push(lines[i])}
+  }
+  $('caps').value=out.join('\n');parseCaps();
+  btn.disabled=false;btn.textContent=old;
+  toast(fail?('Done, but '+fail+' line(s) could not be translated (daily limit?).'):'Translated to English ✅');
 };
 $('orig').onclick=()=>{
-if(origText===null){toast('Nothing to restore yet');return}
-$('caps').value=origText;origText=null;parseCaps();toast('Original captions restored');
+  if(origText===null){toast('Nothing to restore yet');return}
+  $('caps').value=origText;origText=null;parseCaps();toast('Original captions restored');
 };
 
 /* best moments */
 const TAGLBL={energy:'🔥 High energy',hook:'🎣 Strong hook',laugh:'😂 Laughter',question:'❓ Curiosity',keyword:'🔑 Keyword',stat:'📊 Numbers'};
 const AUTO={
-energy:{style:'s1',font:'f-anton',anim:'a-pop',hl:'#ffd400',preset:'vibrant',motion:'m-zoom',gr:12,vi:35,lk:0,trans:'flash',n:2,fs:9.5},
-laugh:{style:'s5',font:'f-poppins',anim:'a-bounce',hl:'#ff3d81',preset:'warm',motion:'m-pulse',gr:8,vi:25,lk:25,trans:'flash',n:3,fs:8.5},
-hook:{style:'s2',font:'f-poppins',anim:'a-slide',hl:'#7c5cff',preset:'cinema',motion:'m-drift',gr:15,vi:45,lk:0,trans:'fade',n:3,fs:8},
-stat:{style:'s3',font:'f-bebas',anim:'a-fade',hl:'#00f0ff',preset:'cyber',motion:'m-zoom',gr:5,vi:30,lk:0,trans:'fade',n:3,fs:9.5},
-story:{style:'s6',font:'f-poppins',anim:'a-fade',hl:'#ffd400',preset:'moody',motion:'m-zoom',gr:18,vi:50,lk:0,trans:'fade',n:4,fs:7.5}
+  energy:{style:'s1',font:'f-anton',anim:'a-pop',hl:'#ffd400',preset:'vibrant',motion:'m-zoom',gr:12,vi:35,lk:0,trans:'flash',n:2,fs:9.5},
+  laugh:{style:'s5',font:'f-poppins',anim:'a-bounce',hl:'#ff3d81',preset:'warm',motion:'m-pulse',gr:8,vi:25,lk:25,trans:'flash',n:3,fs:8.5},
+  hook:{style:'s2',font:'f-poppins',anim:'a-slide',hl:'#7c5cff',preset:'cinema',motion:'m-drift',gr:15,vi:45,lk:0,trans:'fade',n:3,fs:8},
+  stat:{style:'s3',font:'f-bebas',anim:'a-fade',hl:'#00f0ff',preset:'cyber',motion:'m-zoom',gr:5,vi:30,lk:0,trans:'fade',n:3,fs:9.5},
+  story:{style:'s6',font:'f-poppins',anim:'a-fade',hl:'#ffd400',preset:'moody',motion:'m-zoom',gr:18,vi:50,lk:0,trans:'fade',n:4,fs:7.5}
 };
 function applyAuto(tags){
-const k=tags.includes('laugh')?'laugh':tags.includes('energy')?'energy':(tags.includes('hook')||tags.includes('question')||tags.includes('keyword'))?'hook':tags.includes('stat')?'stat':'story';
-const a=AUTO[k];
-$('style').value=a.style;$('font').value=a.font;$('anim').value=a.anim;$('hl').value=a.hl;
-$('motion').value=a.motion;$('f_gr').value=a.gr;$('f_vi').value=a.vi;$('f_lk').value=a.lk;
-$('trans').value=a.trans;$('n').value=a.n;$('fs').value=a.fs;
-selectChip(a.preset);setColor(PRESETS[a.preset]);
+  const k=tags.includes('laugh')?'laugh':tags.includes('energy')?'energy':(tags.includes('hook')||tags.includes('question')||tags.includes('keyword'))?'hook':tags.includes('stat')?'stat':'story';
+  const a=AUTO[k];
+  $('style').value=a.style;$('font').value=a.font;$('anim').value=a.anim;$('hl').value=a.hl;
+  $('motion').value=a.motion;$('f_gr').value=a.gr;$('f_vi').value=a.vi;$('f_lk').value=a.lk;
+  $('trans').value=a.trans;$('n').value=a.n;$('fs').value=a.fs;
+  selectChip(a.preset);setColor(PRESETS[a.preset]);
 }
 function useClip(c,auto){
-$('start').value=ftd(c.s);$('end').value=ftd(c.e);$('rel').checked=false;
-$('caps').value=segsAll.filter(s=>s.t>=c.s-0.01&&s.t<c.e).map(s=>ftd(s.t)+' '+s.text).join('\n');
-origText=null;
-if(auto)applyAuto(c.tags);
-parseCaps();applyAll();
-const id=vid($('url').value);
-if(id)loadClip(id);
-else toast('Times and captions are filled in. Add the video link in the Clip tab to preview.');
-window.scrollTo({top:0,behavior:'smooth'});
+  $('start').value=ftd(c.s);$('end').value=ftd(c.e);$('rel').checked=false;
+  $('caps').value=segsAll.filter(s=>s.t>=c.s-0.01&&s.t<c.e).map(s=>ftd(s.t)+' '+s.text).join('\n');
+  origText=null;
+  if(auto)applyAuto(c.tags);
+  parseCaps();applyAll();
+  const id=vid($('url').value);
+  if(id)loadClip(id);
+  else toast('Times and captions are filled in. Add the video link in the Clip tab to preview.');
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 function renderPicks(){
-const box=$('picks');
-if(!picks.length){box.innerHTML='<div class="hint">No moments found. Try a longer transcript or a different clip length.</div>';return}
-box.innerHTML=picks.map((c,i)=>
-`<div class="pcard"><div class="pc-top"><span class="rank">#${i+1}</span><span class="pc-time">${ft(c.s)} – ${ft(c.e)} · ${Math.round(c.e-c.s)}s</span><span class="score">${c.pct}</span></div>`+
-`<div class="pc-tags">${c.tags.length?c.tags.map(t=>`<span>${TAGLBL[t]}</span>`).join(''):'<span>💬 Steady talk</span>'}</div>`+
-`<div class="pc-text">“${esc(c.text.slice(0,140))}${c.text.length>140?'…':''}”</div>`+
-`<div class="row"><button data-a="use" data-i="${i}">▶ Preview</button><button class="pri" data-a="auto" data-i="${i}">✨ Auto-edit</button></div></div>`
-).join('')+'<div class="row" style="margin-top:10px"><button id="plbtn">▶ Play all picks</button><button id="cpbtn">📋 Copy timestamps</button></div>';
+  const box=$('picks');
+  if(!picks.length){box.innerHTML='<div class="hint">No moments found. Try a longer transcript or a different clip length.</div>';return}
+  box.innerHTML=picks.map((c,i)=>
+    `<div class="pcard"><div class="pc-top"><span class="rank">#${i+1}</span><span class="pc-time">${ft(c.s)} – ${ft(c.e)} · ${Math.round(c.e-c.s)}s</span><span class="score">${c.pct}</span></div>`+
+    `<div class="pc-tags">${c.tags.length?c.tags.map(t=>`<span>${TAGLBL[t]}</span>`).join(''):'<span>💬 Steady talk</span>'}</div>`+
+    `<div class="pc-text">“${esc(c.text.slice(0,140))}${c.text.length>140?'…':''}”</div>`+
+    `<div class="row"><button data-a="use" data-i="${i}">▶ Preview</button><button class="pri" data-a="auto" data-i="${i}">✨ Auto-edit</button></div></div>`
+  ).join('')+'<div class="row" style="margin-top:10px"><button id="plbtn">▶ Play all picks</button><button id="cpbtn">📋 Copy timestamps</button></div>';
 }
 $('picks').addEventListener('click',async e=>{
-const b=e.target.closest('button');if(!b)return;
-if(b.id==='plbtn'){
-if(!picks.length)return;
-if(!vid($('url').value)){toast('Add the video link in the Clip tab first');return}
-plOn=true;plList=picks.slice();plI=0;useClip(plList[0],true);toast('Playing all picks, each one auto-edited');return;
-}
-if(b.id==='cpbtn'){
-const txt=picks.map((c,i)=>`#${i+1} ${ft(c.s)}-${ft(c.e)} (score ${c.pct}) ${c.text.slice(0,70)}`).join('\n');
-try{await navigator.clipboard.writeText(txt);toast('Timestamps copied ✅')}catch(_){prompt('Copy this:',txt)}return;
-}
-if(b.dataset.a){plOn=false;useClip(picks[+b.dataset.i],b.dataset.a==='auto')}
+  const b=e.target.closest('button');if(!b)return;
+  if(b.id==='plbtn'){
+    if(!picks.length)return;
+    if(!vid($('url').value)){toast('Add the video link in the Clip tab first');return}
+    plOn=true;plList=picks.slice();plI=0;useClip(plList[0],true);toast('Playing all picks, each one auto-edited');return;
+  }
+  if(b.id==='cpbtn'){
+    const txt=picks.map((c,i)=>`#${i+1} ${ft(c.s)}-${ft(c.e)} (score ${c.pct}) ${c.text.slice(0,70)}`).join('\n');
+    try{await navigator.clipboard.writeText(txt);toast('Timestamps copied ✅')}catch(_){prompt('Copy this:',txt)}return;
+  }
+  if(b.dataset.a){plOn=false;useClip(picks[+b.dataset.i],b.dataset.a==='auto')}
 });
 function nextPick(){
-plI++;
-if(plI>=plList.length){plOn=false;userPause();toast('Finished all picks');return}
-useClip(plList[plI],true);
+  plI++;
+  if(plI>=plList.length){plOn=false;userPause();toast('Finished all picks');return}
+  useClip(plList[plI],true);
 }
 $('find').onclick=()=>{
-const segs=parseTranscript($('tx').value);
-if(segs.length<3){toast('Paste a transcript with timestamps first');return}
-plOn=false;segsAll=segs;
-picks=findMoments(segs,+$('mlen').value,+$('mcount').value,$('mkw').value);
-renderPicks();
-toast('Found '+picks.length+' moments');
+  const segs=parseTranscript($('tx').value);
+  if(segs.length<3){toast('Paste a transcript with timestamps first');return}
+  plOn=false;segsAll=segs;
+  picks=findMoments(segs,+$('mlen').value,+$('mcount').value,$('mkw').value);
+  renderPicks();
+  toast('Found '+picks.length+' moments');
 };
 $('tfile').onchange=e=>{
-const f=e.target.files&&e.target.files[0];if(!f)return;
-const r=new FileReader();r.onload=()=>{$('tx').value=String(r.result||'');toast('Transcript loaded')};r.readAsText(f);
+  const f=e.target.files&&e.target.files[0];if(!f)return;
+  const r=new FileReader();r.onload=()=>{$('tx').value=String(r.result||'');toast('Transcript loaded')};r.readAsText(f);
 };
 
 /* download: record the preview tab */
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const recSupported=()=>!!(navigator.mediaDevices&&navigator.mediaDevices.getDisplayMedia&&window.MediaRecorder);
 function pickMime(){
-const f=$('recfmt').value;
-const list=f==='webm'?['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm']
-:['video/mp4;codecs=avc1.640028,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
-return list.find(m=>MediaRecorder.isTypeSupported(m))||'';
+  const f=$('recfmt').value;
+  const list=f==='webm'?['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm']
+    :['video/mp4;codecs=avc1.640028,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
+  return list.find(m=>MediaRecorder.isTypeSupported(m))||'';
 }
 function recMsg(m){$('recmsg').textContent=m}
 function enterRec(){
-if(pickOn){pickOn=false;$('pick').style.display='none';$('pickbtn').textContent='🎯 Pick facecam area'}
-const rw=Math.max(240,Math.min(innerHeight*9/16,innerWidth-190,720));
-const ph=$('phone');ph.style.setProperty('--rw',rw+'px');ph.classList.add('rec');
-document.body.classList.add('recording');
-const b=$('recbar');b.style.display='flex';b.style.left=(rw+12)+'px';
-window.scrollTo(0,0);
-setTimeout(applyAll,80);
+  if(pickOn){pickOn=false;$('pick').style.display='none';$('pickbtn').textContent='🎯 Pick facecam area'}
+  const rw=Math.max(240,Math.min(innerHeight*9/16,innerWidth-190,720));
+  const ph=$('phone');ph.style.setProperty('--rw',rw+'px');ph.classList.add('rec');
+  document.body.classList.add('recording');
+  const b=$('recbar');b.style.display='flex';b.style.left=(rw+12)+'px';
+  window.scrollTo(0,0);
+  setTimeout(applyAll,80);
 }
 function exitRec(){
-$('phone').classList.remove('rec');document.body.classList.remove('recording');
-$('recbar').style.display='none';setTimeout(applyAll,80);
+  $('phone').classList.remove('rec');document.body.classList.remove('recording');
+  $('recbar').style.display='none';setTimeout(applyAll,80);
 }
 function dl(blob,name){
-const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;
-document.body.appendChild(a);a.click();
-setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},5000);
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;
+  document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},5000);
 }
 async function recordOne(stream,mime,br){
-const chunks=[];
-const mr=new MediaRecorder(stream,Object.assign({videoBitsPerSecond:br},mime?{mimeType:mime}:{}));
-mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
-const done=new Promise(r=>{mr.onstop=r});
-userPause();
-await sleep(300);
-jump(S());await sleep(900);
-const started=new Promise(res=>{const t0=Date.now();const iv=setInterval(()=>{if(playing||Date.now()-t0>9000){clearInterval(iv);res(playing)}},50)});
-userPlay();
-if(!(await started))throw new Error('The video did not start playing');
-playTrans();
-mr.start(250);
-const len=Math.max(.5,E()-S());
-await new Promise(res=>{recFinish=res;setTimeout(()=>{if(recFinish===res){recFinish=null;res()}},(len+10)*1000)});
-recFinish=null;
-if(mr.state!=='inactive')mr.stop();
-await done;
-userPause();
-return new Blob(chunks,{type:(mr.mimeType||mime||'video/webm').split(';')[0]});
+  const chunks=[];
+  const mr=new MediaRecorder(stream,Object.assign({videoBitsPerSecond:br},mime?{mimeType:mime}:{}));
+  mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+  const done=new Promise(r=>{mr.onstop=r});
+  userPause();
+  await sleep(300);
+  jump(S());await sleep(900);
+  const started=new Promise(res=>{const t0=Date.now();const iv=setInterval(()=>{if(playing||Date.now()-t0>9000){clearInterval(iv);res(playing)}},50)});
+  userPlay();
+  if(!(await started))throw new Error('The video did not start playing');
+  playTrans();
+  mr.start(250);
+  const len=Math.max(.5,E()-S());
+  await new Promise(res=>{recFinish=res;setTimeout(()=>{if(recFinish===res){recFinish=null;res()}},(len+10)*1000)});
+  recFinish=null;
+  if(mr.state!=='inactive')mr.stop();
+  await done;
+  userPause();
+  return new Blob(chunks,{type:(mr.mimeType||mime||'video/webm').split(';')[0]});
 }
 async function recSession(items){
-if(recBusy)return;
-if(!recSupported()){toast('Recording needs desktop Chrome or Edge. Phones cannot do it.');return}
-if(!ready){toast('Load a clip first (Clip tab)');return}
-if(E()<=S()){toast('End time must be after start time');return}
-recBusy=true;recCancel=false;plOn=false;
-enterRec();
-let stream=null,saved=0;
-try{
-recMsg('Choose this tab in the browser prompt');
-stream=await navigator.mediaDevices.getDisplayMedia({video:{frameRate:30},audio:true,preferCurrentTab:true,selfBrowserSurface:'include',systemAudio:'exclude'});
-const vt=stream.getVideoTracks()[0];
-let cropped=false;
-try{if(window.CropTarget&&vt.cropTo){await vt.cropTo(await CropTarget.fromElement($('phone')));cropped=true}}catch(_){}
-vt.addEventListener('ended',()=>{recCancel=true;if(recFinish){const f=recFinish;recFinish=null;f()}});
-const hasAudio=stream.getAudioTracks().length>0;
-const mime=pickMime(),br=+$('recbr').value;
-const list=items&&items.length?items:[null];
-for(let i=0;i<list.length&&!recCancel;i++){
-if(list[i]){useClip(list[i],true);await sleep(1600)}
-recMsg('Clip '+(i+1)+' of '+list.length+(cropped?'':' (full tab, not cropped)')+(hasAudio?'':' (no audio)'));
-const blob=await recordOne(stream,mime,br);
-if(blob.size>0){
-const ext=/mp4/.test(blob.type)?'mp4':'webm';
-dl(blob,'clip-'+(i+1)+'-'+Math.round(S())+'s-'+Math.round(E())+'s.'+ext);saved++;
-}
-}
-}catch(err){
-toast(err&&err.name==='NotAllowedError'?'Recording was cancelled.':('Recording failed: '+(err&&err.message||err)));
-}
-if(stream)stream.getTracks().forEach(t=>t.stop());
-exitRec();recBusy=false;recFinish=null;
-if(saved)toast('Saved '+saved+' clip'+(saved>1?'s':'')+' to your downloads ✅');
+  if(recBusy)return;
+  if(!recSupported()){toast('Recording needs desktop Chrome or Edge. Phones cannot do it.');return}
+  if(!ready){toast('Load a clip first (Clip tab)');return}
+  if(E()<=S()){toast('End time must be after start time');return}
+  recBusy=true;recCancel=false;plOn=false;
+  enterRec();
+  let stream=null,saved=0;
+  try{
+    recMsg('Choose this tab in the browser prompt');
+    stream=await navigator.mediaDevices.getDisplayMedia({video:{frameRate:30},audio:true,preferCurrentTab:true,selfBrowserSurface:'include',systemAudio:'exclude'});
+    const vt=stream.getVideoTracks()[0];
+    let cropped=false;
+    try{if(window.CropTarget&&vt.cropTo){await vt.cropTo(await CropTarget.fromElement($('phone')));cropped=true}}catch(_){}
+    vt.addEventListener('ended',()=>{recCancel=true;if(recFinish){const f=recFinish;recFinish=null;f()}});
+    const hasAudio=stream.getAudioTracks().length>0;
+    const mime=pickMime(),br=+$('recbr').value;
+    const list=items&&items.length?items:[null];
+    for(let i=0;i<list.length&&!recCancel;i++){
+      if(list[i]){useClip(list[i],true);await sleep(1600)}
+      recMsg('Clip '+(i+1)+' of '+list.length+(cropped?'':' (full tab, not cropped)')+(hasAudio?'':' (no audio)'));
+      const blob=await recordOne(stream,mime,br);
+      if(blob.size>0){
+        const ext=/mp4/.test(blob.type)?'mp4':'webm';
+        dl(blob,'clip-'+(i+1)+'-'+Math.round(S())+'s-'+Math.round(E())+'s.'+ext);saved++;
+      }
+    }
+  }catch(err){
+    toast(err&&err.name==='NotAllowedError'?'Recording was cancelled.':('Recording failed: '+(err&&err.message||err)));
+  }
+  if(stream)stream.getTracks().forEach(t=>t.stop());
+  exitRec();recBusy=false;recFinish=null;
+  if(saved)toast('Saved '+saved+' clip'+(saved>1?'s':'')+' to your downloads ✅');
 }
 $('rec').onclick=()=>recSession(null);
 $('recall').onclick=()=>{
-if(!picks.length){toast('Find moments first (Moments tab)');return}
-if(!vid($('url').value)){toast('Add the video link in the Clip tab first');return}
-recSession(picks.slice());
+  if(!picks.length){toast('Find moments first (Moments tab)');return}
+  if(!vid($('url').value)){toast('Add the video link in the Clip tab first');return}
+  recSession(picks.slice());
 };
 $('recstop').onclick=()=>{recCancel=true;if(recFinish){const f=recFinish;recFinish=null;f()}};
 $('lite').addEventListener('input',()=>document.body.classList.toggle('lite',$('lite').checked));
 document.body.classList.toggle('lite',$('lite').checked);
 
 /* share link */
-const SHARE=['url:v','start:s','end:e','caps:c','layout:ly','ccorner:cco','cshape:csh','csize:csz','cbw:cbw','cbc:cbc','cz:czz','cx:cxx','cy:cyy','bgc:bgc','style:st','font:fo','anim:an','pos:pos','hl:hl','n:n','fs:fs','xpos:x','motion:mo','trans:tr','f_gr:gr','f_vi:vi','f_sc:sc','f_lk:lk','wm:wm','split:sp','lt_name:ltn','lt_sub:lts','lt_style:lty','lt_col:ltc','lt_al:lta','lt_mode:ltm','lt_sz:ltz','neon_col:nc','neon_w:nw','neon_g:ng','neon_an:na',...CIDS.map(k=>'c_'+k+':k'+k)];
-const SHAREC=['rel:rel','up:up','loop:lp','f_bars:bars','camon:cam','cglow:glow','lt_on:lton','neon_on:non'];
 const SHARE=['url:v','start:s','end:e','caps:c','layout:ly','ccorner:cco','cshape:csh','csize:csz','cbw:cbw','cbc:cbc','cz:czz','cx:cxx','cy:cyy','bgc:bgc','style:st','font:fo','anim:an','pos:pos','hl:hl','n:n','fs:fs','xpos:x','motion:mo','trans:tr','f_gr:gr','f_vi:vi','f_sc:sc','f_lk:lk','wm:wm','split:sp','lt_name:ltn','lt_sub:lts','lt_style:lty','lt_col:ltc','lt_al:lta','lt_mode:ltm','lt_sz:ltz','cta_plat:cpl','cta_mode:cmo','cta_sz:ctz','neon_col:nc','neon_w:nw','neon_g:ng','neon_an:na',...CIDS.map(k=>'c_'+k+':k'+k)];
 const SHAREC=['rel:rel','up:up','loop:lp','f_bars:bars','camon:cam','cglow:glow','lt_on:lton','cta_on:cta','cneon:cn','neon_on:non'];
 $('share').onclick=async()=>{
-const p=new URLSearchParams();
-SHARE.forEach(x=>{const[id,k]=x.split(':');p.set(k,$(id).value)});
-SHAREC.forEach(x=>{const[id,k]=x.split(':');p.set(k,$(id).checked?1:0)});
-const link=location.origin+location.pathname+'#'+p.toString();
-try{await navigator.clipboard.writeText(link);toast('Link copied ✅')}
-catch(e){prompt('Copy this link:',link)}
+  const p=new URLSearchParams();
+  SHARE.forEach(x=>{const[id,k]=x.split(':');p.set(k,$(id).value)});
+  SHAREC.forEach(x=>{const[id,k]=x.split(':');p.set(k,$(id).checked?1:0)});
+  const link=location.origin+location.pathname+'#'+p.toString();
+  try{await navigator.clipboard.writeText(link);toast('Link copied ✅')}
+  catch(e){prompt('Copy this link:',link)}
 };
 function fromHash(){
-if(location.hash.length<2)return;
-const p=new URLSearchParams(location.hash.slice(1));if(!p.get('v'))return;
-SHARE.forEach(x=>{const[id,k]=x.split(':');if(p.has(k))$(id).value=p.get(k)});
-SHAREC.forEach(x=>{const[id,k]=x.split(':');if(p.has(k))$(id).checked=p.get(k)==='1'});
-applyAll();parseCaps();
-const id=vid($('url').value);if(id)loadClip(id);
+  if(location.hash.length<2)return;
+  const p=new URLSearchParams(location.hash.slice(1));if(!p.get('v'))return;
+  SHARE.forEach(x=>{const[id,k]=x.split(':');if(p.has(k))$(id).value=p.get(k)});
+  SHAREC.forEach(x=>{const[id,k]=x.split(':');if(p.has(k))$(id).checked=p.get(k)==='1'});
+  applyAll();parseCaps();
+  const id=vid($('url').value);if(id)loadClip(id);
 }
 applyAll();parseCaps();fromHash();
 </script>
