@@ -299,10 +299,13 @@ oh my god did you see that?!"></textarea>
             <option value="mm">Middle (center)</option>
             <option value="rm">Right middle</option><option value="lm">Left middle</option>
             <option value="ac">Bottom middle, just above captions</option>
+            <option value="ptop">Full panel on TOP (stacked)</option>
+            <option value="pbot">Full panel at BOTTOM (stacked)</option>
           </select></div>
         <div><label>Shape</label>
           <select id="cshape"><option value="round" selected>Rounded square</option><option value="circle">Circle</option><option value="wide">Wide 4:3</option><option value="wide169">Wider 16:9</option><option value="ultra">Ultra wide 21:9</option><option value="strip">Strip 3:1</option></select></div>
       </div>
+      <div class="sl"><span>Panel height % (stacked)</span><input type="range" id="cpanel" min="10" max="60" value="30"><em></em></div>
       <div class="sl"><span>Size</span><input type="range" id="csize" min="18" max="92" value="32"><em></em></div>
       <div class="sl"><span>Border</span><input type="range" id="cbw" min="0" max="8" value="3"><em></em></div>
       <div class="row">
@@ -808,11 +811,23 @@ function applyAll(){
   if(pickOn)updatePick();
   document.querySelectorAll('.sl').forEach(s=>{const i=s.querySelector('input'),e=s.querySelector('em');if(i&&e&&i.id!=='fs')e.textContent=i.value});
   $('fs_v').textContent=$('fs').value;
+  const pv2=String(100-(+$('split').value));if($('cpanel').value!==pv2){$('cpanel').value=pv2;const e=$('cpanel').parentNode.querySelector('em');if(e)e.textContent=pv2}
 }
 const LIVE=['split','style','font','anim','pos','hl','fs','up','xpos','motion','f_gr','f_vi','f_sc','f_lk','f_bars','wm','layout','bgc','camon','ccorner','cshape','csize','cbw','cbc','cglow','cz','cx','cy','lt_on','lt_name','lt_sub','lt_style','lt_col','lt_al','lt_mode','lt_sz',...CIDS.map(k=>'c_'+k)];
 LIVE.forEach(id=>$(id).addEventListener('input',applyAll));
 ['caps','rel','start','n'].forEach(id=>$(id).addEventListener('input',parseCaps));
 $('end').addEventListener('input',applyAll);
+$('cpanel').addEventListener('input',()=>{$('split').value=100-(+$('cpanel').value);applyAll()});
+$('ccorner').addEventListener('input',()=>{
+  const c=$('ccorner').value,l=$('layout');
+  if(c==='ptop')l.value='stackt';else if(c==='pbot')l.value='stack';else if(l.value==='stack'||l.value==='stackt')l.value='fill';
+  applyAll();
+});
+$('layout').addEventListener('input',()=>{
+  const l=$('layout').value,c=$('ccorner');
+  if(l==='stackt')c.value='ptop';else if(l==='stack')c.value='pbot';else if(c.value==='ptop'||c.value==='pbot')c.value='br';
+  applyAll();
+});
 /* apply start/end edits to the player right away (on Enter or when leaving the field) */
 function applyTimes(which){
   if(!ready||!player)return;
