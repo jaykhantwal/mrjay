@@ -313,7 +313,6 @@ oh my god did you see that?!"></textarea>
       </div>
       <div class="sl"><span>Panel height % (stacked)</span><input type="range" id="cpanel" min="10" max="60" value="30"><em></em></div>
       <div class="sl"><span>Size</span><input type="range" id="csize" min="18" max="92" value="32"><em></em></div>
-      <label class="chk"><input type="checkbox" id="cneon" checked> Neon glow border on the facecam (uses the neon color from Effects)</label>
       <div class="sl"><span>Border</span><input type="range" id="cbw" min="0" max="8" value="3"><em></em></div>
       <div class="row">
         <div><label>Border color</label><input type="color" id="cbc" value="#ffffff"></div>
@@ -720,12 +719,11 @@ function camBottom(){return Math.max(4,ltTop())}
 function applyCam(){
   const cam=$('cam'),on=$('camon').checked&&!pickOn&&!!curId;
   if(!on){cam.style.cssText='display:none';return}
-  const L=$('layout').value,bw=+$('cbw').value,cn=$('cneon').checked,col=cn?$('neon_col').value:$('cbc').value;
-  const neonSh='0 0 1.2cqw '+col+',0 0 3.5cqw '+col+',0 0 7cqw '+col+',inset 0 0 2.5cqw '+col;
+  const L=$('layout').value,bw=+$('cbw').value,col=$('cbc').value;
   let css='display:block;';
   if(L==='stack'||L==='stackt'){
     const tp=L==='stackt';
-    css+='left:0;right:0;'+(tp?'top:0;':'bottom:0;')+'height:'+(100-(+$('split').value))+'%;border-radius:0;'+(tp?'border-bottom:':'border-top:')+(bw*0.4)+'cqw solid '+col+';'+(cn?'box-shadow:'+neonSh+';':'');
+    css+='left:0;right:0;'+(tp?'top:0;':'bottom:0;')+'height:'+(100-(+$('split').value))+'%;border-radius:0;'+(tp?'border-bottom:':'border-top:')+(bw*0.4)+'cqw solid '+col+';';
   }else{
     const size=+$('csize').value,r=camAspect(),corner=$('ccorner').value,shape=$('cshape').value;
     css+='width:'+size+'cqw;aspect-ratio:'+r+';';
@@ -738,7 +736,7 @@ function applyCam(){
     css+='max-width:92cqw;';
     css+='border-radius:'+(shape==='circle'?'50%':shape==='round'?'6cqw':shape==='wide'?'4cqw':'3cqw')+';';
     css+='border:'+(bw*0.4)+'cqw solid '+col+';';
-    css+=cn?'box-shadow:'+neonSh+',0 2cqw 6cqw rgba(0,0,0,.6);':($('cglow').checked?'box-shadow:0 0 5cqw '+col+',0 2cqw 6cqw rgba(0,0,0,.6);':'box-shadow:0 2cqw 6cqw rgba(0,0,0,.6);');
+    css+=$('cglow').checked?'box-shadow:0 0 5cqw '+col+',0 2cqw 6cqw rgba(0,0,0,.6);':'box-shadow:0 2cqw 6cqw rgba(0,0,0,.6);';
   }
   cam.style.cssText=css;
   layoutCam();
@@ -840,7 +838,7 @@ function applyAll(){
   $('fs_v').textContent=$('fs').value;
   const pv2=String(100-(+$('split').value));if($('cpanel').value!==pv2){$('cpanel').value=pv2;const e=$('cpanel').parentNode.querySelector('em');if(e)e.textContent=pv2}
 }
-const LIVE=['split','style','font','anim','pos','hl','fs','up','xpos','motion','f_gr','f_vi','f_sc','f_lk','f_bars','wm','layout','bgc','camon','ccorner','cshape','csize','cbw','cbc','cglow','cneon','cz','cx','cy','lt_on','neon_on','neon_col','neon_w','neon_g','neon_an','lt_name','lt_sub','lt_style','lt_col','lt_al','lt_mode','lt_sz',...CIDS.map(k=>'c_'+k)];
+const LIVE=['split','style','font','anim','pos','hl','fs','up','xpos','motion','f_gr','f_vi','f_sc','f_lk','f_bars','wm','layout','bgc','camon','ccorner','cshape','csize','cbw','cbc','cglow','cz','cx','cy','lt_on','neon_on','neon_col','neon_w','neon_g','neon_an','lt_name','lt_sub','lt_style','lt_col','lt_al','lt_mode','lt_sz',...CIDS.map(k=>'c_'+k)];
 LIVE.forEach(id=>$(id).addEventListener('input',applyAll));
 ['caps','rel','start','n'].forEach(id=>$(id).addEventListener('input',parseCaps));
 $('end').addEventListener('input',applyAll);
@@ -890,7 +888,7 @@ function playTrans(){
 function renderLT(t){
   const el=$('lt');
   let want='hide';
-  if(ltActive()){
+  if(ltActive()&&curId){
     const rel=t-S(),mode=$('lt_mode').value;
     let vis=rel>=0.4&&t<E();
     if(vis&&mode==='first')vis=rel<6.9;
@@ -931,7 +929,7 @@ function syncCam(t){
   try{const ct=camPlayer.getCurrentTime();if(Math.abs(ct-t)>0.45){camPlayer.seekTo(t,true);lastSync=Date.now()}}catch(_){}
 }
 function tick(){
-  if(!ready||!player||!player.getCurrentTime){renderLT(S()+1);return}
+  if(!ready||!player||!player.getCurrentTime)return;
   const t=player.getCurrentTime(),s=S(),e=E();
   const settled=Date.now()-jumpAt>800;
   if(playing&&e>s&&t>=e&&settled){
@@ -1246,7 +1244,7 @@ document.body.classList.toggle('lite',$('lite').checked);
 
 /* share link */
 const SHARE=['url:v','start:s','end:e','caps:c','layout:ly','ccorner:cco','cshape:csh','csize:csz','cbw:cbw','cbc:cbc','cz:czz','cx:cxx','cy:cyy','bgc:bgc','style:st','font:fo','anim:an','pos:pos','hl:hl','n:n','fs:fs','xpos:x','motion:mo','trans:tr','f_gr:gr','f_vi:vi','f_sc:sc','f_lk:lk','wm:wm','split:sp','lt_name:ltn','lt_sub:lts','lt_style:lty','lt_col:ltc','lt_al:lta','lt_mode:ltm','lt_sz:ltz','neon_col:nc','neon_w:nw','neon_g:ng','neon_an:na',...CIDS.map(k=>'c_'+k+':k'+k)];
-const SHAREC=['rel:rel','up:up','loop:lp','f_bars:bars','camon:cam','cglow:glow','lt_on:lton','cneon:cn','neon_on:non'];
+const SHAREC=['rel:rel','up:up','loop:lp','f_bars:bars','camon:cam','cglow:glow','lt_on:lton','neon_on:non'];
 $('share').onclick=async()=>{
   const p=new URLSearchParams();
   SHARE.forEach(x=>{const[id,k]=x.split(':');p.set(k,$(id).value)});
