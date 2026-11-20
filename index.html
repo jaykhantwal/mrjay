@@ -615,6 +615,9 @@ let camPlayer=null,camReady=false,camId=null,lastSync=0,jumpAt=0,pickOn=false;
 let segsAll=[],picks=[],plOn=false,plList=[],plI=0;
 let recFinish=null,recCancel=false,recBusy=false;
 let ltKey='';
+let wantPlay=false;
+function userPause(){wantPlay=false;try{player.pauseVideo()}catch(_){}}
+function userPlay(){wantPlay=true;try{player.playVideo()}catch(_){}}
 
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2800)}
@@ -911,8 +914,10 @@ function tick(){
     if(recFinish){const f=recFinish;recFinish=null;f()}
     else if(plOn)nextPick();
     else if($('loop').checked){jump(s);playTrans()}
-    else player.pauseVideo();
+    else userPause();
   }
+  /* if the gameplay got paused by the browser or YouTube while it should be playing, resume it */
+  if(wantPlay){try{if(player.getPlayerState()===2&&Date.now()-jumpAt>600)player.playVideo()}catch(_){}}
   const len=Math.max(.1,e-s);
   $('prog').style.width=Math.min(100,Math.max(0,(t-s)/len*100))+'%';
   $('time').textContent=ft(Math.max(0,t-s))+' / '+ft(len)+'   (video: '+ft(t)+')';
@@ -956,7 +961,7 @@ function loadClip(id){
   pendingLoad=null;$('empty').style.display='none';parseCaps();applyAll();
   const same=(curId===id);curId=id;applyAll();
   if(player&&ready){
-    if(same){jump(S());player.playVideo()}else player.loadVideoById({videoId:id,startSeconds:S()});
+    if(same){jump(S());userPlay()}else{wantPlay=true; player.loadVideoById({videoId:id,startSeconds:S()})}
     playTrans();loadCam(id);return;
   }
   if(player)return;
@@ -996,10 +1001,10 @@ $('load').onclick=()=>{
 };
 $('play').onclick=()=>{
   if(!ready){toast('Load a clip first');return}
-  if(playing){player.pauseVideo();return}
+  if(playing){userPause();return}
   const t=player.getCurrentTime();
   if(t<S()||t>=E()-.2){jump(S());playTrans()}
-  player.playVideo();
+  userPlay();
 };
 function skip(d){
   if(!ready||!player)return toast('Load a clip first');
@@ -1015,7 +1020,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowLeft'){e.preventDefault();skip(-5)}
   else if(e.key==='ArrowRight'){e.preventDefault();skip(5)}
 });
-$('restart').onclick=()=>{if(!ready)return;jump(S());player.playVideo();playTrans()};
+$('restart').onclick=()=>{if(!ready)return;jump(S());userPlay();playTrans()};
 $('setStart').onclick=()=>{if(!ready)return toast('Load a video first');$('start').value=ftd(player.getCurrentTime());parseCaps()};
 $('setEnd').onclick=()=>{if(!ready)return toast('Load a video first');$('end').value=ftd(player.getCurrentTime());applyAll()};
 
@@ -1106,7 +1111,7 @@ $('picks').addEventListener('click',async e=>{
 });
 function nextPick(){
   plI++;
-  if(plI>=plList.length){plOn=false;try{player.pauseVideo()}catch(_){}toast('Finished all picks');return}
+  if(plI>=plList.length){plOn=false;userPause();toast('Finished all picks');return}
   useClip(plList[plI],true);
 }
 $('find').onclick=()=>{
@@ -1155,11 +1160,11 @@ async function recordOne(stream,mime,br){
   const mr=new MediaRecorder(stream,Object.assign({videoBitsPerSecond:br},mime?{mimeType:mime}:{}));
   mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
   const done=new Promise(r=>{mr.onstop=r});
-  try{player.pauseVideo()}catch(_){}
+  userPause();
   await sleep(300);
   jump(S());await sleep(900);
   const started=new Promise(res=>{const t0=Date.now();const iv=setInterval(()=>{if(playing||Date.now()-t0>9000){clearInterval(iv);res(playing)}},50)});
-  player.playVideo();
+  userPlay();
   if(!(await started))throw new Error('The video did not start playing');
   playTrans();
   mr.start(250);
@@ -1168,7 +1173,7 @@ async function recordOne(stream,mime,br){
   recFinish=null;
   if(mr.state!=='inactive')mr.stop();
   await done;
-  try{player.pauseVideo()}catch(_){}
+  userPause();
   return new Blob(chunks,{type:(mr.mimeType||mime||'video/webm').split(';')[0]});
 }
 async function recSession(items){
