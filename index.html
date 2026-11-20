@@ -161,29 +161,6 @@ button:disabled{opacity:.6}
 .neon.cycle{animation:ncycle 6s linear infinite}
 @keyframes npulse{0%,100%{opacity:.55}50%{opacity:1}}
 @keyframes ncycle{from{filter:hue-rotate(0)}to{filter:hue-rotate(360deg)}}
-.cta{position:absolute;z-index:6;left:50%;transform:translateX(-50%);scale:var(--cts,1);transform-origin:50% 100%;display:none;gap:2.4cqw;white-space:nowrap;pointer-events:none;--subc:#e62117;--likec:#2f6fed;font-family:'Poppins','Noto Sans Devanagari',sans-serif}
-.cta.show{display:flex}
-.cta-b{position:relative;height:9cqw;padding:0 4cqw;border-radius:5cqw;display:flex;align-items:center;justify-content:center;gap:1.6cqw;font-size:4cqw;font-weight:800;color:#fff;background:rgba(20,22,31,.94);border:.4cqw solid rgba(255,255,255,.3);box-shadow:0 1cqw 3cqw rgba(0,0,0,.55);opacity:0;transform:translateY(8cqw) scale(.7)}
-.cta-b::after{content:"";position:absolute;inset:-.4cqw;border-radius:inherit;border:.6cqw solid #fff;opacity:0}
-.cta-b.sub{display:grid;background:var(--subc);border-color:transparent}
-.cta-b.sub span{grid-area:1/1;display:flex;align-items:center;justify-content:center;gap:1.6cqw}
-.cta-b .s2{opacity:0}
-.cta-b .ic{display:inline-block}
-.cta.show .like{animation:ctaIn .5s cubic-bezier(.2,1.6,.4,1) calc(var(--cd,0s) + 0s) forwards,ctaOut .4s ease-in calc(var(--cd,0s) + 4.2s) forwards,likeFill .2s ease-out calc(var(--cd,0s) + 1.5s) forwards}
-.cta.show .sub{animation:ctaIn .5s cubic-bezier(.2,1.6,.4,1) calc(var(--cd,0s) + .15s) forwards,ctaOut .4s ease-in calc(var(--cd,0s) + 4.2s) forwards,subDone .2s ease-out calc(var(--cd,0s) + 2.5s) forwards}
-.cta.show .like .ic{animation:icPress .6s ease-out calc(var(--cd,0s) + 1.5s)}
-.cta.show .like::after{animation:ripple .55s ease-out calc(var(--cd,0s) + 1.5s)}
-.cta.show .sub::after{animation:ripple .55s ease-out calc(var(--cd,0s) + 2.5s)}
-.cta.show .sub .s1{animation:fOut .15s linear calc(var(--cd,0s) + 2.5s) forwards}
-.cta.show .sub .s2{animation:fIn .15s linear calc(var(--cd,0s) + 2.5s) forwards}
-@keyframes ctaIn{from{opacity:0;transform:translateY(8cqw) scale(.7)}to{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes ctaOut{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(5cqw) scale(.85)}}
-@keyframes likeFill{to{background:var(--likec);border-color:transparent}}
-@keyframes subDone{to{background:#3a3d4a;border-color:rgba(255,255,255,.25)}}
-@keyframes icPress{0%{transform:scale(1)}40%{transform:scale(1.7) rotate(-12deg)}100%{transform:scale(1)}}
-@keyframes ripple{from{transform:scale(1);opacity:.9}to{transform:scale(1.35);opacity:0}}
-@keyframes fOut{to{opacity:0}}
-@keyframes fIn{to{opacity:1}}
 .bar{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.18);z-index:9}
 .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--ac3))}
 .pick{position:absolute;inset:0;z-index:10;display:none;touch-action:none;cursor:crosshair}
@@ -237,7 +214,6 @@ body.recording .toast{display:none}
       <div class="fx fade" id="fade"></div>
       <div class="empty" id="empty">Paste a YouTube link and<br>press "Load clip"</div>
       <div class="cap bottom s1 up" id="cap"></div>
-      <div class="cta" id="cta"><div class="cta-b like"><span class="ic" id="ctaIc">👍</span><span id="ctaL">Like</span></div><div class="cta-b sub"><span class="s1" id="ctaS1">🔔 Subscribe</span><span class="s2" id="ctaS2">✔ Subscribed</span></div></div>
       <div class="lt cine" id="lt"><div class="ln-line"></div><div class="ln-panel"><div class="ln-name"><span id="ltN"></span></div><div class="ln-sub" id="ltS"></div></div></div>
       <div class="mark" id="mark"></div>
       <div class="bar"><i id="prog"></i></div>
@@ -337,7 +313,6 @@ oh my god did you see that?!"></textarea>
       </div>
       <div class="sl"><span>Panel height % (stacked)</span><input type="range" id="cpanel" min="10" max="60" value="30"><em></em></div>
       <div class="sl"><span>Size</span><input type="range" id="csize" min="18" max="92" value="32"><em></em></div>
-      <label class="chk"><input type="checkbox" id="cneon" checked> Neon glow border on the facecam (uses the neon color from Effects)</label>
       <div class="sl"><span>Border</span><input type="range" id="cbw" min="0" max="8" value="3"><em></em></div>
       <div class="row">
         <div><label>Border color</label><input type="color" id="cbc" value="#ffffff"></div>
@@ -444,18 +419,6 @@ oh my god did you see that?!"></textarea>
       </div>
       <div class="sl"><span>Thickness</span><input type="range" id="neon_w" min="0.4" max="3" step="0.1" value="1.2"><em></em></div>
       <div class="sl"><span>Glow</span><input type="range" id="neon_g" min="2" max="14" step="0.5" value="6"><em></em></div>
-
-      <h3>Like and Subscribe / Follow buttons</h3>
-      <label class="chk"><input type="checkbox" id="cta_on" checked> Show animated Like and Subscribe / Follow buttons at the bottom</label>
-      <div class="row">
-        <div><label>Platform</label>
-          <select id="cta_plat"><option value="yt">YouTube: Like + Subscribe</option><option value="ig">Instagram: Like + Follow</option><option value="mix">Mix: random per appearance</option></select></div>
-        <div><label>When</label>
-          <select id="cta_mode"><option value="random">Random times</option><option value="start">Once near the start</option><option value="end">Once near the end</option></select></div>
-      </div>
-      <div class="sl"><span>Button size</span><input type="range" id="cta_sz" min="60" max="140" value="100"><em></em></div>
-      <button class="mini" id="cta_shuf">🎲 Shuffle the times</button>
-      <div class="hint">Each appearance lasts about 5 seconds: the buttons pop up, Like gets pressed, then Subscribe or Follow gets pressed. Times are random each time you load or shuffle. These are plain styled buttons, not the platform logos.</div>
 
       <h3>Streamer name bar</h3>
       <label class="chk"><input type="checkbox" id="lt_on" checked> Show the animated name bar at the bottom</label>
@@ -719,59 +682,10 @@ $('c_reset').onclick=()=>{selectChip('none');setColor(PRESETS.none)};
 function isStk(){const l=$('layout').value;return l==='stack'||l==='stackt'}
 function ltActive(){return !!($('lt_on').checked&&$('lt_name').value.trim()&&!pickOn)}
 function ltBottom(){return $('f_bars').checked?21:3.5}
-function ltH(){const z=(+$('lt_sz').value)/100,sub=$('lt_sub').value.trim();return (5.8+(sub?3.8:0))*z+5.4*z}
-function ctaOn(){return $('cta_on').checked&&!pickOn}
-function ctaZ(){return (+$('cta_sz').value)/100}
-function stackH(){return (ltActive()?ltH()+1.5:0)+(ctaOn()?10*ctaZ()+1:0)}
 function ltTop(){
-  if($('layout').value==='stack')return 0;
-  const hh=stackH();
-  return hh>0?Math.round((ltBottom()+hh+3)*10)/10:0;
-}
-/* like / subscribe buttons */
-const CTAD=4.6;
-let ctaItems=[],ctaSig='',ctaKey='';
-function genCta(){
-  const s=S(),len=Math.max(1,E()-s),mode=$('cta_mode').value,pl=$('cta_plat').value;
-  const plat=()=>pl==='mix'?(Math.random()<.5?'yt':'ig'):pl;
-  let ts=[];
-  if(len<7)ts=[Math.max(.3,len/2-CTAD/2)];
-  else{
-    const lo=.8,hi=Math.max(lo,len-CTAD-.4);
-    if(mode==='start')ts=[Math.min(1.2,hi)];
-    else if(mode==='end')ts=[hi];
-    else{
-      const n=Math.max(1,Math.min(6,Math.floor(len/14),Math.floor((hi-lo)/5.4)+1));
-      for(let i=0;i<n;i++)ts.push(lo+Math.random()*(hi-lo));
-      ts.sort((a,b)=>a-b);
-      for(let i=1;i<ts.length;i++)ts[i]=Math.max(ts[i],ts[i-1]+5.4);
-      ts=ts.filter(x=>x<=hi+.01);
-    }
-  }
-  ctaItems=ts.map(t=>({t,plat:plat()}));
-}
-function ctaSetPlat(pl){
-  const el=$('cta');
-  if(pl==='ig'){$('ctaIc').textContent='❤️';$('ctaS1').textContent='➕ Follow';$('ctaS2').textContent='✔ Following';el.style.setProperty('--subc','#3b82f6');el.style.setProperty('--likec','#ff3d81')}
-  else{$('ctaIc').textContent='👍';$('ctaS1').textContent='🔔 Subscribe';$('ctaS2').textContent='✔ Subscribed';el.style.setProperty('--subc','#e62117');el.style.setProperty('--likec','#2f6fed')}
-}
-function renderCTA(t){
-  const el=$('cta');
-  if(!ctaOn()){if(ctaKey!==''){el.classList.remove('show');ctaKey=''}return}
-  const sig=S()+'|'+E()+'|'+$('cta_mode').value+'|'+$('cta_plat').value;
-  if(sig!==ctaSig){ctaSig=sig;genCta();ctaKey=''}
-  let idx='-',elp=0,pl=$('cta_plat').value==='ig'?'ig':'yt';
-  if(t===null){const c=(Date.now()/1000)%7;if(c<CTAD){idx='p';elp=c}}
-  else{
-    const rel=t-S();
-    if(t<E())for(let i=0;i<ctaItems.length;i++){const it=ctaItems[i];if(rel>=it.t&&rel<it.t+CTAD){idx=String(i);elp=rel-it.t;pl=it.plat;break}}
-  }
-  if(idx===ctaKey)return;
-  ctaKey=idx;
-  if(idx==='-'){el.classList.remove('show');return}
-  ctaSetPlat(pl);
-  el.style.setProperty('--cd',(-elp)+'s');
-  el.classList.remove('show');void el.offsetWidth;el.classList.add('show');
+  if(!ltActive()||$('layout').value==='stack')return 0;
+  const z=(+$('lt_sz').value)/100,sub=$('lt_sub').value.trim();
+  return Math.round((ltBottom()+(5.8+(sub?3.8:0))*z+5.4*z+3)*10)/10;
 }
 
 /* layout + facecam */
@@ -805,12 +719,11 @@ function camBottom(){return Math.max(4,ltTop())}
 function applyCam(){
   const cam=$('cam'),on=$('camon').checked&&!pickOn&&!!curId;
   if(!on){cam.style.cssText='display:none';return}
-  const L=$('layout').value,bw=+$('cbw').value,cn=$('cneon').checked,col=cn?$('neon_col').value:$('cbc').value;
-  const neonSh='0 0 1.2cqw '+col+',0 0 3.5cqw '+col+',0 0 7cqw '+col+',inset 0 0 2.5cqw '+col;
+  const L=$('layout').value,bw=+$('cbw').value,col=$('cbc').value;
   let css='display:block;';
   if(L==='stack'||L==='stackt'){
     const tp=L==='stackt';
-    css+='left:0;right:0;'+(tp?'top:0;':'bottom:0;')+'height:'+(100-(+$('split').value))+'%;border-radius:0;'+(tp?'border-bottom:':'border-top:')+(bw*0.4)+'cqw solid '+col+';'+(cn?'box-shadow:'+neonSh+';':'');
+    css+='left:0;right:0;'+(tp?'top:0;':'bottom:0;')+'height:'+(100-(+$('split').value))+'%;border-radius:0;'+(tp?'border-bottom:':'border-top:')+(bw*0.4)+'cqw solid '+col+';';
   }else{
     const size=+$('csize').value,r=camAspect(),corner=$('ccorner').value,shape=$('cshape').value;
     css+='width:'+size+'cqw;aspect-ratio:'+r+';';
@@ -823,7 +736,7 @@ function applyCam(){
     css+='max-width:92cqw;';
     css+='border-radius:'+(shape==='circle'?'50%':shape==='round'?'6cqw':shape==='wide'?'4cqw':'3cqw')+';';
     css+='border:'+(bw*0.4)+'cqw solid '+col+';';
-    css+=cn?'box-shadow:'+neonSh+',0 2cqw 6cqw rgba(0,0,0,.6);':($('cglow').checked?'box-shadow:0 0 5cqw '+col+',0 2cqw 6cqw rgba(0,0,0,.6);':'box-shadow:0 2cqw 6cqw rgba(0,0,0,.6);');
+    css+=$('cglow').checked?'box-shadow:0 0 5cqw '+col+',0 2cqw 6cqw rgba(0,0,0,.6);':'box-shadow:0 2cqw 6cqw rgba(0,0,0,.6);';
   }
   cam.style.cssText=css;
   layoutCam();
@@ -902,9 +815,6 @@ function applyAll(){
   $('bars').style.display=$('f_bars').checked?'block':'none';
   const mk=$('mark');mk.textContent=$('wm').value;
   mk.classList.toggle('l',$('camon').checked&&!pickOn&&$('ccorner').value==='tr'&&L!=='stack');
-  const ct=$('cta');
-  ct.style.bottom=(ltBottom()+(ltActive()?ltH()+1.5:0))+'cqw';
-  ct.style.setProperty('--cts',ctaZ());
   const nn=$('neon');
   nn.style.display=$('neon_on').checked&&!pickOn?'block':'none';
   nn.style.setProperty('--nc',$('neon_col').value);
@@ -928,11 +838,10 @@ function applyAll(){
   $('fs_v').textContent=$('fs').value;
   const pv2=String(100-(+$('split').value));if($('cpanel').value!==pv2){$('cpanel').value=pv2;const e=$('cpanel').parentNode.querySelector('em');if(e)e.textContent=pv2}
 }
-const LIVE=['split','style','font','anim','pos','hl','fs','up','xpos','motion','f_gr','f_vi','f_sc','f_lk','f_bars','wm','layout','bgc','camon','ccorner','cshape','csize','cbw','cbc','cglow','cneon','cz','cx','cy','lt_on','cta_on','cta_plat','cta_mode','cta_sz','neon_on','neon_col','neon_w','neon_g','neon_an','lt_name','lt_sub','lt_style','lt_col','lt_al','lt_mode','lt_sz',...CIDS.map(k=>'c_'+k)];
+const LIVE=['split','style','font','anim','pos','hl','fs','up','xpos','motion','f_gr','f_vi','f_sc','f_lk','f_bars','wm','layout','bgc','camon','ccorner','cshape','csize','cbw','cbc','cglow','cz','cx','cy','lt_on','neon_on','neon_col','neon_w','neon_g','neon_an','lt_name','lt_sub','lt_style','lt_col','lt_al','lt_mode','lt_sz',...CIDS.map(k=>'c_'+k)];
 LIVE.forEach(id=>$(id).addEventListener('input',applyAll));
 ['caps','rel','start','n'].forEach(id=>$(id).addEventListener('input',parseCaps));
 $('end').addEventListener('input',applyAll);
-$('cta_shuf').onclick=()=>{ctaSig='';toast('Button times shuffled 🎲')};
 $('cpanel').addEventListener('input',()=>{$('split').value=100-(+$('cpanel').value);applyAll()});
 $('ccorner').addEventListener('input',()=>{
   const c=$('ccorner').value,l=$('layout');
@@ -979,7 +888,7 @@ function playTrans(){
 function renderLT(t){
   const el=$('lt');
   let want='hide';
-  if(ltActive()){
+  if(ltActive()&&curId){
     const rel=t-S(),mode=$('lt_mode').value;
     let vis=rel>=0.4&&t<E();
     if(vis&&mode==='first')vis=rel<6.9;
@@ -1020,7 +929,7 @@ function syncCam(t){
   try{const ct=camPlayer.getCurrentTime();if(Math.abs(ct-t)>0.45){camPlayer.seekTo(t,true);lastSync=Date.now()}}catch(_){}
 }
 function tick(){
-  if(!ready||!player||!player.getCurrentTime){renderLT(S()+1);renderCTA(null);return}
+  if(!ready||!player||!player.getCurrentTime)return;
   const t=player.getCurrentTime(),s=S(),e=E();
   const settled=Date.now()-jumpAt>800;
   if(playing&&e>s&&t>=e&&settled){
@@ -1037,7 +946,6 @@ function tick(){
   syncCam(t);
   renderCap(t);
   renderLT(t);
-  renderCTA(t);
 }
 setInterval(tick,80);
 
@@ -1335,8 +1243,8 @@ $('lite').addEventListener('input',()=>document.body.classList.toggle('lite',$('
 document.body.classList.toggle('lite',$('lite').checked);
 
 /* share link */
-const SHARE=['url:v','start:s','end:e','caps:c','layout:ly','ccorner:cco','cshape:csh','csize:csz','cbw:cbw','cbc:cbc','cz:czz','cx:cxx','cy:cyy','bgc:bgc','style:st','font:fo','anim:an','pos:pos','hl:hl','n:n','fs:fs','xpos:x','motion:mo','trans:tr','f_gr:gr','f_vi:vi','f_sc:sc','f_lk:lk','wm:wm','split:sp','lt_name:ltn','lt_sub:lts','lt_style:lty','lt_col:ltc','lt_al:lta','lt_mode:ltm','lt_sz:ltz','cta_plat:cpl','cta_mode:cmo','cta_sz:ctz','neon_col:nc','neon_w:nw','neon_g:ng','neon_an:na',...CIDS.map(k=>'c_'+k+':k'+k)];
-const SHAREC=['rel:rel','up:up','loop:lp','f_bars:bars','camon:cam','cglow:glow','lt_on:lton','cta_on:cta','cneon:cn','neon_on:non'];
+const SHARE=['url:v','start:s','end:e','caps:c','layout:ly','ccorner:cco','cshape:csh','csize:csz','cbw:cbw','cbc:cbc','cz:czz','cx:cxx','cy:cyy','bgc:bgc','style:st','font:fo','anim:an','pos:pos','hl:hl','n:n','fs:fs','xpos:x','motion:mo','trans:tr','f_gr:gr','f_vi:vi','f_sc:sc','f_lk:lk','wm:wm','split:sp','lt_name:ltn','lt_sub:lts','lt_style:lty','lt_col:ltc','lt_al:lta','lt_mode:ltm','lt_sz:ltz','neon_col:nc','neon_w:nw','neon_g:ng','neon_an:na',...CIDS.map(k=>'c_'+k+':k'+k)];
+const SHAREC=['rel:rel','up:up','loop:lp','f_bars:bars','camon:cam','cglow:glow','lt_on:lton','neon_on:non'];
 $('share').onclick=async()=>{
   const p=new URLSearchParams();
   SHARE.forEach(x=>{const[id,k]=x.split(':');p.set(k,$(id).value)});
