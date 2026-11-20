@@ -280,9 +280,10 @@ oh my god did you see that?!"></textarea>
         <option value="fill">Fill: gameplay fills the vertical frame</option>
         <option value="fit">Fit: whole 16:9 frame, no cropping</option>
         <option value="stack">Stacked: gameplay on top, facecam panel below</option>
+        <option value="stackt">Stacked: facecam panel on top, gameplay below</option>
       </select>
       <div class="sl"><span>Gameplay position</span><input type="range" id="xpos" min="0" max="100" value="50"><em></em></div>
-      <div class="sl"><span>Stacked: gameplay height %</span><input type="range" id="split" min="40" max="90" value="72"><em></em></div>
+      <div class="sl"><span>Stacked: gameplay height %</span><input type="range" id="split" min="40" max="90" value="70"><em></em></div>
       <div class="hint">In Stacked layout, the gameplay takes this much of the height and the facecam panel gets the rest. Drag it up for bigger gameplay, down for a bigger facecam.</div>
       <label>Background color (shows in Fit mode)</label>
       <input type="color" id="bgc" value="#0a0b10">
@@ -656,6 +657,7 @@ document.querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{selectChip(ch.dat
 $('c_reset').onclick=()=>{selectChip('none');setColor(PRESETS.none)};
 
 /* streamer name bar geometry (all in cqw; phone height = 177.8cqw) */
+function isStk(){const l=$('layout').value;return l==='stack'||l==='stackt'}
 function ltActive(){return !!($('lt_on').checked&&$('lt_name').value.trim()&&!pickOn)}
 function ltBottom(){return $('f_bars').checked?21:3.5}
 function ltTop(){
@@ -666,7 +668,7 @@ function ltTop(){
 
 /* layout + facecam */
 function camAspect(){
-  if($('layout').value==='stack'){const ph=$('phone');return ph.clientWidth/Math.max(1,ph.clientHeight*(100-(+$('split').value))/100)}
+  if(isStk()){const ph=$('phone');return ph.clientWidth/Math.max(1,ph.clientHeight*(100-(+$('split').value))/100)}
   return ({wide:4/3,wide169:16/9,ultra:21/9,strip:3}[$('cshape').value])||1;
 }
 /* where the caption block sits (bottom edge, in cqw) */
@@ -686,7 +688,8 @@ function aboveCapBottom(){
 function applyLayout(){
   const L=pickOn?'fit':$('layout').value,st=$('stage'),vw=$('vwrap'),x=$('xpos').value;
   st.style.background=$('bgc').value;
-  st.style.height=L==='stack'?$('split').value+'%':'100%';
+  const sp=+$('split').value,stk=(L==='stack'||L==='stackt');
+  st.style.height=stk?sp+'%':'100%';st.style.top=L==='stackt'?(100-sp)+'%':'0';
   if(L==='fit')vw.style.cssText='width:100%;height:auto;left:0;top:50%;transform:translateY(-50%)';
   else vw.style.cssText='height:100%;width:auto;left:'+x+'%;top:50%;transform:translate(-'+x+'%,-50%)';
 }
@@ -696,8 +699,9 @@ function applyCam(){
   if(!on){cam.style.cssText='display:none';return}
   const L=$('layout').value,bw=+$('cbw').value,col=$('cbc').value;
   let css='display:block;';
-  if(L==='stack'){
-    css+='left:0;right:0;bottom:0;height:'+(100-(+$('split').value))+'%;border-radius:0;border-top:'+(bw*0.4)+'cqw solid '+col+';';
+  if(L==='stack'||L==='stackt'){
+    const tp=L==='stackt';
+    css+='left:0;right:0;'+(tp?'top:0;':'bottom:0;')+'height:'+(100-(+$('split').value))+'%;border-radius:0;'+(tp?'border-bottom:':'border-top:')+(bw*0.4)+'cqw solid '+col+';';
   }else{
     const size=+$('csize').value,r=camAspect(),corner=$('ccorner').value,shape=$('cshape').value;
     css+='width:'+size+'cqw;aspect-ratio:'+r+';';
@@ -769,7 +773,7 @@ function applyAll(){
     if(L==='stack'){const pn=100-(+$('split').value);b=(pv==='bottom'?pn+2:pn+8)+'%'}
     else{
       const parts=[base];
-      if($('camon').checked&&!pickOn&&$('ccorner').value[0]==='b')parts.push(((+$('csize').value)/camAspect()+camBottom()+5)+'cqw');
+      if($('camon').checked&&!pickOn&&L!=='stackt'&&$('ccorner').value[0]==='b')parts.push(((+$('csize').value)/camAspect()+camBottom()+5)+'cqw');
       if(ltTop()>0)parts.push(ltTop()+'cqw');
       b=parts.length>1?'max('+parts.join(',')+')':'';
     }
