@@ -677,6 +677,7 @@ function userPause(){wantPlay=false;try{player.pauseVideo()}catch(_){}}
 function userPlay(){wantPlay=true;try{player.playVideo()}catch(_){}}
 
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function showErr(m){toast(m);const e=$('empty');e.style.display='grid';e.textContent=m}
 function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2800)}
 function vid(u){u=(u||'').trim();const m=u.match(/(?:youtu\.be\/|v=|shorts\/|live\/|embed\/)([\w-]{11})/);if(m)return m[1];return /^[\w-]{11}$/.test(u)?u:null}
 const S=()=>{const v=pt($('start').value);return isNaN(v)?0:v};
@@ -1091,6 +1092,7 @@ function loadClip(id){
       onReady:()=>{ready=true;player.seekTo(S(),true)},
       onStateChange:e=>{
         playing=(e.data===1);
+        if(e.data===1)$('empty').style.display='none';
         $('play').textContent=playing?'⏸ Pause':'▶ Play clip';
         if(camReady&&camPlayer&&$('camon').checked){
           try{
@@ -1099,7 +1101,7 @@ function loadClip(id){
           }catch(_){}
         }
       },
-      onError:e=>toast(e.data===153||e.data===152
+      onError:e=>showErr(e.data===153||e.data===152
         ?'Error '+e.data+': open this page from its live https link (GitHub Pages), not as a local file.'
         :(e.data===101||e.data===150
           ?'The video owner has disabled embedding for this video.'
@@ -1117,6 +1119,7 @@ $('load').onclick=()=>{
   if(isNaN(pt($('start').value))||isNaN(pt($('end').value))){toast('Write times like 00:01:25');return}
   if(E()<=S()){toast('End time must be after start time');return}
   plOn=false;loadClip(id);
+  if(!apiReady)setTimeout(()=>{if(!apiReady)showErr('The YouTube player could not load. Check your internet, turn off any ad blocker for this page, then reload.')},6000);
 };
 $('play').onclick=()=>{
   if(!ready){toast('Load a clip first');return}
@@ -1358,6 +1361,7 @@ function fromHash(){
   applyAll();parseCaps();
   const id=vid($('url').value);if(id)loadClip(id);
 }
+if(location.protocol==='file:')$('empty').innerHTML='Open this page from its https link (for example GitHub Pages).<br>YouTube will not play it as a local file.';
 applyAll();parseCaps();fromHash();
 </script>
 </body>
