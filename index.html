@@ -525,13 +525,15 @@ oh my god did you see that?!"></textarea>
       <div class="row" style="margin-top:10px">
         <div><label>Format</label>
           <select id="recfmt"><option value="auto">Auto (MP4 if your browser can)</option><option value="webm">WebM</option></select></div>
+        <div><label>Output size</label>
+          <select id="recsize"><option value="1080" selected>1080 × 1920 (best for Shorts and Reels)</option><option value="native">Screen size, no resizing</option></select></div>
         <div><label>Quality</label>
-          <select id="recbr"><option value="10000000">High</option><option value="5000000" selected>Standard</option></select></div>
+          <select id="recbr"><option value="25000000" selected>Maximum (25 Mbps)</option><option value="12000000">High (12 Mbps)</option><option value="6000000">Standard (6 Mbps)</option></select></div>
       </div>
       <div style="margin-top:10px"><button id="recall" style="width:100%">⏺ Record all moment picks (one file each)</button></div>
       <div class="hint">
         <ol>
-          <li>Use desktop Chrome or Edge. Phones can't record the screen from a web page.</li>
+          <li>Use desktop Chrome or Edge. Phones can't record the screen from a web page. For the sharpest file, press <b>F11</b> (full screen) and keep browser zoom at 100%, because the recording can never be bigger than your screen.</li>
           <li>Press Record. When the browser asks, choose <b>this tab</b> and keep "Share tab audio" ticked, or the file will have no sound.</li>
           <li>The preview grows to full height, plays the clip once from start to end, and the file downloads by itself. The recording is cropped to just the vertical frame, with captions, facecam, name bar, color and effects included.</li>
           <li>Leave the tab open and in front while it records. For "Record all picks", Chrome may ask once to allow multiple downloads.</li>
@@ -1089,7 +1091,7 @@ function loadClip(id){
     videoId:id,
     playerVars:playerVars(),
     events:{
-      onReady:()=>{ready=true;player.seekTo(S(),true)},
+      onReady:()=>{ready=true;player.seekTo(S(),true);setHQ()},
       onStateChange:e=>{
         playing=(e.data===1);
         if(e.data===1)$('empty').style.display='none';
@@ -1258,10 +1260,23 @@ function pickMime(){
     :['video/mp4;codecs=avc1.640028,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
   return list.find(m=>MediaRecorder.isTypeSupported(m))||'';
 }
+function setHQ(){try{player.setPlaybackQuality('hd1080')}catch(_){}try{player.setPlaybackQualityRange('hd1080','hd1080')}catch(_){}}
+function makeUpscaler(stream){
+  const vt=stream.getVideoTracks()[0];
+  const v=document.createElement('video');v.muted=true;v.playsInline=true;v.srcObject=new MediaStream([vt]);v.play().catch(()=>{});
+  const c=document.createElement('canvas');c.width=1080;c.height=1920;
+  const ctx=c.getContext('2d',{alpha:false});ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
+  let alive=true;
+  const draw=()=>{if(!alive)return;if(v.readyState>=2&&v.videoWidth)ctx.drawImage(v,0,0,1080,1920);requestAnimationFrame(draw)};
+  draw();
+  const out=c.captureStream(60);
+  stream.getAudioTracks().forEach(a=>out.addTrack(a));
+  return {stream:out,stop(){alive=false;try{v.srcObject=null}catch(_){}}};
+}
 function recMsg(m){$('recmsg').textContent=m}
 function enterRec(){
   if(pickOn){pickOn=false;$('pick').style.display='none';$('pickbtn').textContent='🎯 Pick facecam area'}
-  const rw=Math.max(240,Math.min(innerHeight*9/16,innerWidth-190,720));
+  const rw=Math.max(240,Math.min(innerHeight*9/16,innerWidth-190,1080));
   const ph=$('phone');ph.style.setProperty('--rw',rw+'px');ph.classList.add('rec');
   document.body.classList.add('recording');
   const b=$('recbar');b.style.display='flex';b.style.left=(rw+12)+'px';
@@ -1279,14 +1294,14 @@ function dl(blob,name){
 }
 async function recordOne(stream,mime,br){
   const chunks=[];
-  const mr=new MediaRecorder(stream,Object.assign({videoBitsPerSecond:br},mime?{mimeType:mime}:{}));
+  const mr=new MediaRecorder(stream,Object.assign({videoBitsPerSecond:br,audioBitsPerSecond:192000},mime?{mimeType:mime}:{}));
   mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
   const done=new Promise(r=>{mr.onstop=r});
   userPause();
   await sleep(300);
   jump(S());await sleep(900);
   const started=new Promise(res=>{const t0=Date.now();const iv=setInterval(()=>{if(playing||Date.now()-t0>9000){clearInterval(iv);res(playing)}},50)});
-  userPlay();
+  setHQ();userPlay();
   if(!(await started))throw new Error('The video did not start playing');
   playTrans();
   mr.start(250);
@@ -1305,21 +1320,22 @@ async function recSession(items){
   if(E()<=S()){toast('End time must be after start time');return}
   recBusy=true;recCancel=false;plOn=false;
   enterRec();
-  let stream=null,saved=0;
+  let stream=null,saved=0,up=null;
   try{
     recMsg('Choose this tab in the browser prompt');
-    stream=await navigator.mediaDevices.getDisplayMedia({video:{frameRate:30},audio:true,preferCurrentTab:true,selfBrowserSurface:'include',systemAudio:'exclude'});
+    stream=await navigator.mediaDevices.getDisplayMedia({video:{frameRate:{ideal:60,max:60},width:{ideal:3840},height:{ideal:2160}},audio:true,preferCurrentTab:true,selfBrowserSurface:'include',systemAudio:'exclude'});
     const vt=stream.getVideoTracks()[0];
     let cropped=false;
     try{if(window.CropTarget&&vt.cropTo){await vt.cropTo(await CropTarget.fromElement($('phone')));cropped=true}}catch(_){}
     vt.addEventListener('ended',()=>{recCancel=true;if(recFinish){const f=recFinish;recFinish=null;f()}});
     const hasAudio=stream.getAudioTracks().length>0;
+    if(cropped&&$('recsize').value==='1080')up=makeUpscaler(stream);
     const mime=pickMime(),br=+$('recbr').value;
     const list=items&&items.length?items:[null];
     for(let i=0;i<list.length&&!recCancel;i++){
       if(list[i]){useClip(list[i],true);await sleep(1600)}
       recMsg('Clip '+(i+1)+' of '+list.length+(cropped?'':' (full tab, not cropped)')+(hasAudio?'':' (no audio)'));
-      const blob=await recordOne(stream,mime,br);
+      const blob=await recordOne(up?up.stream:stream,mime,br);
       if(blob.size>0){
         const ext=/mp4/.test(blob.type)?'mp4':'webm';
         dl(blob,'clip-'+(i+1)+'-'+Math.round(S())+'s-'+Math.round(E())+'s.'+ext);saved++;
@@ -1328,6 +1344,7 @@ async function recSession(items){
   }catch(err){
     toast(err&&err.name==='NotAllowedError'?'Recording was cancelled.':('Recording failed: '+(err&&err.message||err)));
   }
+  try{if(up)up.stop()}catch(_){}
   if(stream)stream.getTracks().forEach(t=>t.stop());
   exitRec();recBusy=false;recFinish=null;
   if(saved)toast('Saved '+saved+' clip'+(saved>1?'s':'')+' to your downloads ✅');
