@@ -86,19 +86,19 @@ button:disabled{opacity:.6}
 .f-anton{font-family:'Anton','Noto Sans Devanagari',sans-serif;letter-spacing:.02em}
 .f-bebas{font-family:'Bebas Neue','Noto Sans Devanagari',sans-serif;letter-spacing:.04em}
 .f-marker{font-family:'Permanent Marker','Noto Sans Devanagari',cursive}
-.s1 .w{color:#fff;-webkit-text-stroke:.14em #000;paint-order:stroke fill}
+.s1 .w{color:var(--tc,#fff);-webkit-text-stroke:.14em #000;paint-order:stroke fill}
 .s1 .w.on{color:var(--hl);transform:scale(1.12)}
-.s2 .w{color:#fff;-webkit-text-stroke:.14em #000;paint-order:stroke fill;padding:0 .14em;border-radius:.2em}
+.s2 .w{color:var(--tc,#fff);-webkit-text-stroke:.14em #000;paint-order:stroke fill;padding:0 .14em;border-radius:.2em}
 .s2 .w.on{background:var(--hl);color:#000;-webkit-text-stroke:0;transform:scale(1.08)}
-.s3 .w{color:#fff;text-shadow:0 0 .15em rgba(255,255,255,.3)}
+.s3 .w{color:var(--tc,#fff);text-shadow:0 0 .15em rgba(255,255,255,.3)}
 .s3 .w.on{text-shadow:0 0 .1em var(--hl),0 0 .3em var(--hl),0 0 .7em var(--hl);transform:scale(1.1)}
-.s4 .w{color:rgba(255,255,255,.45);text-shadow:0 .05em .2em rgba(0,0,0,.8)}
-.s4 .w.on{color:#fff}
-.s5 .w{color:#fff;-webkit-text-stroke:.16em #000;paint-order:stroke fill;text-shadow:.07em .09em 0 var(--hl)}
+.s4 .w{color:var(--tc,#fff);opacity:.55;text-shadow:0 .05em .2em rgba(0,0,0,.8)}
+.s4 .w.on{color:var(--tc,#fff);opacity:1}
+.s5 .w{color:var(--tc,#fff);-webkit-text-stroke:.16em #000;paint-order:stroke fill;text-shadow:.07em .09em 0 var(--hl)}
 .s5 .w.on{color:var(--hl);text-shadow:.07em .09em 0 #fff;transform:scale(1.12) rotate(-2deg)}
-.s6 .w{color:#fff;background:rgba(0,0,0,.6);padding:.02em .18em;border-radius:.25em;-webkit-box-decoration-break:clone}
+.s6 .w{color:var(--tc,#fff);background:rgba(0,0,0,.6);padding:.02em .18em;border-radius:.25em;-webkit-box-decoration-break:clone}
 .s6 .w.on{background:var(--hl);color:#000}
-.s7 .w{color:transparent;-webkit-text-stroke:.05em #fff}
+.s7 .w{color:transparent;-webkit-text-stroke:.05em var(--tc,#fff)}
 .s7 .w.on{color:var(--hl);-webkit-text-stroke:.05em var(--hl);transform:scale(1.1)}
 .a-pop .w.on{animation:pop .22s cubic-bezier(.2,1.6,.4,1)}
 @keyframes pop{0%{transform:scale(.6)}100%{transform:scale(1.12)}}
@@ -157,6 +157,8 @@ button:disabled{opacity:.6}
 .lite .ln-panel::after{animation:none!important}
 
 .neon{z-index:7;border-radius:inherit;border:calc(var(--nw,1.2) * 1cqw) solid var(--nc,#00f0ff);box-shadow:inset 0 0 calc(var(--ng,6) * 1cqw) var(--nc,#00f0ff),inset 0 0 calc(var(--ng,6) * .35cqw) #fff,0 0 calc(var(--ng,6) * .8cqw) var(--nc,#00f0ff);display:none}
+.neon.insta{border:0;box-shadow:inset 0 0 calc(var(--ng,6) * 1cqw) rgba(214,41,118,.75),inset 0 0 calc(var(--ng,6) * 2cqw) rgba(250,126,30,.35),inset 0 0 calc(var(--ng,6) * .4cqw) rgba(255,255,255,.6)}
+.neon.insta::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:calc(var(--nw,1.2) * 1cqw);background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);mask-composite:exclude}
 .neon.pulse{animation:npulse 1.6s ease-in-out infinite}
 .neon.cycle{animation:ncycle 6s linear infinite}
 @keyframes npulse{0%,100%{opacity:.55}50%{opacity:1}}
@@ -184,10 +186,19 @@ button:disabled{opacity:.6}
 @keyframes ripple{from{transform:scale(1);opacity:.9}to{transform:scale(1.35);opacity:0}}
 @keyframes fOut{to{opacity:0}}
 @keyframes fIn{to{opacity:1}}
+.cam.cinsta::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:var(--cbw,1.2cqw);background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);mask-composite:exclude;pointer-events:none;z-index:3}
+.cam.cinsta.stkt::before,.cam.cinsta.stkb::before{padding:0;-webkit-mask:none;mask:none;left:0;right:0;height:var(--cbw,1.2cqw);background:linear-gradient(90deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)}
+.cam.cinsta.stkt::before{top:auto;bottom:0}
+.cam.cinsta.stkb::before{bottom:auto;top:0}
 .cam.cneon::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:2;box-shadow:inset 0 0 3cqw currentColor,inset 0 0 1cqw #fff}
 .cam.cneon.pulse::after{animation:npulse 1.6s ease-in-out infinite}
 .cam.cneon.cycle{animation:camcycle 6s linear infinite}
 @keyframes camcycle{0%,100%{color:#00f0ff}25%{color:#7c5cff}50%{color:#ff3d81}75%{color:#ffd400}}
+.mid{position:absolute;z-index:7;left:50%;transform:translate(-50%,-50%);display:none;max-width:94%;pointer-events:none;text-align:center;white-space:nowrap;font-family:'Poppins','Noto Sans Devanagari',sans-serif;font-weight:900;letter-spacing:.05em;line-height:1.15;padding:1.6cqw 5cqw;border-radius:6cqw;color:var(--mtc,#fff)}
+.mid.up{text-transform:uppercase}
+.mid.k-insta{background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);box-shadow:0 0 3cqw rgba(214,41,118,.7),0 0 6cqw rgba(250,126,30,.45);text-shadow:0 .3cqw 1cqw rgba(0,0,0,.35)}
+.mid.k-dark{background:rgba(8,9,14,.88);border:.4cqw solid rgba(255,255,255,.25);box-shadow:0 1cqw 3cqw rgba(0,0,0,.5)}
+.mid.k-none{background:none;text-shadow:0 .4cqw 1.6cqw #000,0 0 .6cqw #000}
 .bar{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.18);z-index:9}
 .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--ac3))}
 .pick{position:absolute;inset:0;z-index:10;display:none;touch-action:none;cursor:crosshair}
@@ -245,6 +256,7 @@ body.recording .toast{display:none}
       <div class="fx leak"></div>
       <div class="fx bars" id="bars"></div>
       <div class="fx neon" id="neon"></div>
+      <div class="mid k-insta" id="mid"></div>
       <div class="fx flash" id="flash"></div>
       <div class="fx fade" id="fade"></div>
       <div class="empty" id="empty">Paste a YouTube link and<br>press "Load clip"</div>
@@ -378,6 +390,7 @@ oh my god did you see that?!"></textarea>
 
     <section class="card pane" id="p-style">
       <h2><b>5</b> Caption style</h2>
+      <label class="chk" style="margin:0 0 8px"><input type="checkbox" id="cap_on" checked> Show captions on the video</label>
       <div class="row">
         <div><label>Style</label>
           <select id="style">
@@ -417,6 +430,10 @@ oh my god did you see that?!"></textarea>
       </div>
       <div class="sl"><span>Text size</span><input type="range" id="fs" min="5" max="13" step="0.5" value="8"><em id="fs_v">8</em></div>
       <label class="chk"><input type="checkbox" id="up" checked> Uppercase English words</label>
+      <div class="row">
+        <div><label>Caption text color</label><input type="color" id="cap_col" value="#ffffff"></div>
+        <div><label>Highlight color</label><input type="color" id="hl2" value="#ffd400"></div>
+      </div>
     </section>
 
     <section class="card pane" id="p-color">
@@ -454,8 +471,24 @@ oh my god did you see that?!"></textarea>
         <div><label>Animation</label>
           <select id="neon_an"><option value="steady">Steady</option><option value="pulse" selected>Pulse</option><option value="cycle">Color cycle</option></select></div>
       </div>
+      <label>Light style</label>
+      <select id="neon_style"><option value="insta" selected>Instagram colors (yellow, orange, pink, purple)</option><option value="solid">Single neon color</option></select>
       <div class="sl"><span>Thickness</span><input type="range" id="neon_w" min="0.4" max="3" step="0.1" value="1.2"><em></em></div>
       <div class="sl"><span>Glow</span><input type="range" id="neon_g" min="2" max="14" step="0.5" value="6"><em></em></div>
+
+      <h3>Text between facecam and gameplay</h3>
+      <label class="chk"><input type="checkbox" id="mid_on" checked> Show a line of text where the facecam meets the gameplay</label>
+      <label>Your text</label>
+      <input type="text" id="mid_txt" placeholder="e.g. Follow for more" autocomplete="off">
+      <div class="row">
+        <div><label>Background</label>
+          <select id="mid_k"><option value="insta" selected>Instagram gradient</option><option value="dark">Dark pill</option><option value="none">No background</option></select></div>
+        <div><label>Text color</label><input type="color" id="mid_col" value="#ffffff"></div>
+      </div>
+      <div class="sl"><span>Text size</span><input type="range" id="mid_sz" min="30" max="90" value="55"><em></em></div>
+      <div class="sl"><span>Move up / down</span><input type="range" id="mid_y" min="-20" max="20" value="0"><em></em></div>
+      <label class="chk"><input type="checkbox" id="mid_up" checked> Uppercase</label>
+      <div class="hint">In both Stacked layouts the text sits exactly on the line between the facecam panel and the gameplay. In the other layouts it sits in the middle of the video, and you can move it with the slider. Nothing shows until you type some text.</div>
 
       <h3>Like and Subscribe / Follow buttons</h3>
       <label class="chk"><input type="checkbox" id="cta_on" checked> Show animated Like and Subscribe / Follow buttons at the bottom</label>
@@ -808,7 +841,7 @@ function camAspect(){
 /* where the caption block sits (bottom edge, in cqw) */
 function capBottomCqw(){
   const p=$('pos').value,L=$('layout').value;
-  if(L==='stack'){const pn=100-(+$('split').value);return (p==='lowmid'?pn+8:pn+2)*1.778}
+  if(L==='stack'){const pn=100-(+$('split').value)+(midOn()?6:0);return (p==='lowmid'?pn+8:pn+2)*1.778}
   if(p==='bottom')return Math.max(15*1.778,ltTop());
   if(p==='lowmid')return Math.max(30*1.778,ltTop());
   return 0;
@@ -828,16 +861,37 @@ function applyLayout(){
   else vw.style.cssText='height:100%;width:auto;left:'+x+'%;top:50%;transform:translate(-'+x+'%,-50%)';
 }
 function camBottom(){return Math.max(4,ltTop())}
+function midOn(){return !!($('mid_on').checked&&$('mid_txt').value.trim())}
+function midTop(){
+  const L=$('layout').value,sp=+$('split').value,nudge=+$('mid_y').value;
+  let top=50;
+  if(L==='stack')top=sp;else if(L==='stackt')top=100-sp;
+  return Math.min(96,Math.max(4,top+nudge));
+}
+function applyMid(){
+  const m=$('mid'),t=$('mid_txt').value.trim(),on=midOn()&&!pickOn;
+  if(!on){m.style.display='none';return}
+  m.className='mid k-'+$('mid_k').value+($('mid_up').checked?' up':'');
+  m.textContent=t;
+  m.style.display='block';
+  m.style.fontSize=((+$('mid_sz').value)/10)+'cqw';
+  m.style.setProperty('--mtc',$('mid_col').value);
+  m.style.top=midTop()+'%';
+}
 function applyCam(){
   const cam=$('cam'),on=$('camon').checked&&!pickOn&&!!curId;
   if(!on){cam.style.cssText='display:none';return}
   const L=$('layout').value,bw=+$('cbw').value,cn=$('cneon').checked,col=cn?$('neon_col').value:$('cbc').value;
   const neonSh='0 0 1.2cqw currentColor,0 0 3.5cqw currentColor,0 0 7cqw currentColor,inset 0 0 3cqw currentColor',bcol=cn?'currentColor':col;
-  let css='display:block;color:'+col+';';
-  cam.className='cam'+(cn?' cneon '+($('neon_an').value==='steady'?'':$('neon_an').value):'');
+  const insta=cn&&$('neon_style').value==='insta';
+  let css='display:block;color:'+(insta?'#d62976':col)+';';
+  if(insta)css+='--cbw:'+(bw*0.4)+'cqw;';
+  const instaSh='0 0 1.4cqw rgba(214,41,118,.9),0 0 4cqw rgba(250,126,30,.65),0 0 8cqw rgba(150,47,191,.55),inset 0 0 3cqw rgba(214,41,118,.6)';
+  const an=$('neon_an').value,anc=insta&&an==='cycle'?'pulse':(an==='steady'?'':an);
+  cam.className='cam'+(cn?' cneon '+anc+(insta?' cinsta'+(L==='stack'?' stkt':L==='stackt'?' stkb':''):''):'');
   if(L==='stack'||L==='stackt'){
     const tp=L==='stackt';
-    css+='left:0;right:0;'+(tp?'top:0;':'bottom:0;')+'height:'+(100-(+$('split').value))+'%;border-radius:0;'+(tp?'border-bottom:':'border-top:')+(bw*0.4)+'cqw solid '+bcol+';'+(cn?'box-shadow:'+neonSh+';':'');
+    css+='left:0;right:0;'+(tp?'top:0;':'bottom:0;')+'height:'+(100-(+$('split').value))+'%;border-radius:0;'+(insta?'':(tp?'border-bottom:':'border-top:')+(bw*0.4)+'cqw solid '+bcol+';')+(cn?'box-shadow:'+(insta?instaSh:neonSh)+';':'');
   }else{
     const size=+$('csize').value,r=camAspect(),corner=$('ccorner').value,shape=$('cshape').value;
     css+='width:'+size+'cqw;aspect-ratio:'+r+';';
@@ -849,8 +903,8 @@ function applyCam(){
     else css+=(corner[0]==='b'?'bottom:'+camBottom()+'cqw;':'top:5cqw;')+(corner[1]==='r'?'right:4cqw;':'left:4cqw;');
     css+='max-width:92cqw;';
     css+='border-radius:'+(shape==='circle'?'50%':shape==='round'?'6cqw':shape==='wide'?'4cqw':'3cqw')+';';
-    css+='border:'+(bw*0.4)+'cqw solid '+bcol+';';
-    css+=cn?'box-shadow:'+neonSh+',0 2cqw 6cqw rgba(0,0,0,.6);':($('cglow').checked?'box-shadow:0 0 5cqw '+col+',0 2cqw 6cqw rgba(0,0,0,.6);':'box-shadow:0 2cqw 6cqw rgba(0,0,0,.6);');
+    css+=insta?'border:0;':'border:'+(bw*0.4)+'cqw solid '+bcol+';';
+    css+=cn?'box-shadow:'+(insta?instaSh:neonSh)+',0 2cqw 6cqw rgba(0,0,0,.6);':($('cglow').checked?'box-shadow:0 0 5cqw '+col+',0 2cqw 6cqw rgba(0,0,0,.6);':'box-shadow:0 2cqw 6cqw rgba(0,0,0,.6);');
   }
   cam.style.cssText=css;
   layoutCam();
@@ -901,12 +955,14 @@ function applyAll(){
   c.className='cap '+$('pos').value+' '+$('style').value+' '+$('font').value+' '+$('anim').value+($('up').checked?' up':'');
   c.style.setProperty('--hl',$('hl').value);
   c.style.setProperty('--fs',$('fs').value);
-  c.style.display=pickOn?'none':'';
+  c.style.display=(pickOn||!$('cap_on').checked)?'none':'';
+  c.style.setProperty('--tc',$('cap_col').value);
+  $('hl2').value=$('hl').value;
   let b='';
   const pv=$('pos').value;
   if(pv==='bottom'||pv==='lowmid'){
     const base=pv==='bottom'?'15%':'30%';
-    if(L==='stack'){const pn=100-(+$('split').value);b=(pv==='bottom'?pn+2:pn+8)+'%'}
+    if(L==='stack'){const pn=100-(+$('split').value)+(midOn()?6:0);b=(pv==='bottom'?pn+2:pn+8)+'%'}
     else{
       const parts=[base];
       if($('camon').checked&&!pickOn&&L!=='stackt'&&$('ccorner').value[0]==='b')parts.push(((+$('csize').value)/camAspect()+camBottom()+5)+'cqw');
@@ -937,7 +993,8 @@ function applyAll(){
   nn.style.setProperty('--nc',$('neon_col').value);
   nn.style.setProperty('--nw',$('neon_w').value);
   nn.style.setProperty('--ng',$('neon_g').value);
-  nn.className='fx neon '+(($('neon_an').value==='steady')?'':$('neon_an').value);
+  const nIns=$('neon_style').value==='insta',nan=$('neon_an').value;
+  nn.className='fx neon '+(nIns?'insta ':'')+((nan==='steady')?'':(nIns&&nan==='cycle'?'pulse':nan));
   /* streamer name bar */
   const lt=$('lt'),al=$('lt_al').value,sub=$('lt_sub').value.trim();
   lt.style.setProperty('--lc',$('lt_col').value);
@@ -949,16 +1006,17 @@ function applyAll(){
   if($('ltN').textContent!==$('lt_name').value.trim())$('ltN').textContent=$('lt_name').value.trim();
   if($('ltS').textContent!==sub)$('ltS').textContent=sub;
   $('ltS').style.display=sub?'':'none';
-  applyLayout();applyCam();
+  applyLayout();applyCam();applyMid();
   if(pickOn)updatePick();
   document.querySelectorAll('.sl').forEach(s=>{const i=s.querySelector('input'),e=s.querySelector('em');if(i&&e&&i.id!=='fs')e.textContent=i.value});
   $('fs_v').textContent=$('fs').value;
   const pv2=String(100-(+$('split').value));if($('cpanel').value!==pv2){$('cpanel').value=pv2;const e=$('cpanel').parentNode.querySelector('em');if(e)e.textContent=pv2}
 }
-const LIVE=['split','style','font','anim','pos','hl','fs','up','xpos','motion','f_gr','f_vi','f_sc','f_lk','f_bars','wm','layout','bgc','camon','ccorner','cshape','csize','cbw','cbc','cglow','cneon','cz','cx','cy','lt_on','cta_on','cta_plat','cta_mode','cta_sz','neon_on','neon_col','neon_w','neon_g','neon_an','lt_name','lt_sub','lt_style','lt_col','lt_al','lt_mode','lt_sz',...CIDS.map(k=>'c_'+k)];
+const LIVE=['cap_on','cap_col','mid_on','mid_txt','mid_k','mid_col','mid_sz','mid_y','mid_up','neon_style','split','style','font','anim','pos','hl','fs','up','xpos','motion','f_gr','f_vi','f_sc','f_lk','f_bars','wm','layout','bgc','camon','ccorner','cshape','csize','cbw','cbc','cglow','cneon','cz','cx','cy','lt_on','cta_on','cta_plat','cta_mode','cta_sz','neon_on','neon_col','neon_w','neon_g','neon_an','lt_name','lt_sub','lt_style','lt_col','lt_al','lt_mode','lt_sz',...CIDS.map(k=>'c_'+k)];
 LIVE.forEach(id=>$(id).addEventListener('input',applyAll));
 ['caps','rel','start','n'].forEach(id=>$(id).addEventListener('input',parseCaps));
 $('end').addEventListener('input',applyAll);
+$('hl2').addEventListener('input',()=>{$('hl').value=$('hl2').value;applyAll()});
 $('cta_shuf').onclick=()=>{ctaSig='';toast('Button times shuffled 🎲')};
 $('cpanel').addEventListener('input',()=>{$('split').value=100-(+$('cpanel').value);applyAll()});
 $('ccorner').addEventListener('input',()=>{
@@ -1428,8 +1486,8 @@ $('lite').addEventListener('input',()=>document.body.classList.toggle('lite',$('
 document.body.classList.toggle('lite',$('lite').checked);
 
 /* share link */
-const SHARE=['url:v','start:s','end:e','caps:c','layout:ly','ccorner:cco','cshape:csh','csize:csz','cbw:cbw','cbc:cbc','cz:czz','cx:cxx','cy:cyy','bgc:bgc','style:st','font:fo','anim:an','pos:pos','hl:hl','n:n','fs:fs','xpos:x','motion:mo','trans:tr','f_gr:gr','f_vi:vi','f_sc:sc','f_lk:lk','wm:wm','split:sp','lt_name:ltn','lt_sub:lts','lt_style:lty','lt_col:ltc','lt_al:lta','lt_mode:ltm','lt_sz:ltz','cta_plat:cpl','cta_mode:cmo','cta_sz:ctz','neon_col:nc','neon_w:nw','neon_g:ng','neon_an:na',...CIDS.map(k=>'c_'+k+':k'+k)];
-const SHAREC=['rel:rel','up:up','loop:lp','f_bars:bars','camon:cam','cglow:glow','lt_on:lton','cta_on:cta','cneon:cn','neon_on:non'];
+const SHARE=['url:v','start:s','end:e','caps:c','layout:ly','ccorner:cco','cshape:csh','csize:csz','cbw:cbw','cbc:cbc','cz:czz','cx:cxx','cy:cyy','bgc:bgc','style:st','font:fo','anim:an','pos:pos','hl:hl','n:n','fs:fs','xpos:x','motion:mo','trans:tr','f_gr:gr','f_vi:vi','f_sc:sc','f_lk:lk','wm:wm','split:sp','lt_name:ltn','lt_sub:lts','lt_style:lty','lt_col:ltc','lt_al:lta','lt_mode:ltm','lt_sz:ltz','cap_col:ccl','mid_txt:mtx','mid_k:mk','mid_col:mcl','mid_sz:msz','mid_y:my','neon_style:nst','cta_plat:cpl','cta_mode:cmo','cta_sz:ctz','neon_col:nc','neon_w:nw','neon_g:ng','neon_an:na',...CIDS.map(k=>'c_'+k+':k'+k)];
+const SHAREC=['rel:rel','up:up','loop:lp','f_bars:bars','camon:cam','cglow:glow','lt_on:lton','cap_on:capon','mid_on:mon','mid_up:mup','cta_on:cta','cneon:cn','neon_on:non'];
 $('share').onclick=async()=>{
   const p=new URLSearchParams();
   SHARE.forEach(x=>{const[id,k]=x.split(':');p.set(k,$(id).value)});
