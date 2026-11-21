@@ -376,10 +376,11 @@ oh my god did you see that?!"></textarea>
 
     <section class="card pane" id="p-caps">
       <h2><b>4</b> Captions</h2>
-      <label>One caption per line: time, then text</label>
+      <label>One caption per line: time, then text (or just the text)</label>
       <textarea id="caps" placeholder="0:00 This clip is absolutely wild
 0:04 Watch what happens next
 0:09 And here comes the best part"></textarea>
+      <div class="hint" id="capstat" style="margin:6px 0 0"></div>
       <label class="chk"><input type="checkbox" id="rel"> Count times from clip start (0:00 = start of clip)</label>
       <div class="row" style="margin-top:10px">
         <button class="pri" id="tr">🌐 Translate to English</button>
@@ -390,7 +391,9 @@ oh my god did you see that?!"></textarea>
 
     <section class="card pane" id="p-style">
       <h2><b>5</b> Caption style</h2>
-      <label class="chk" style="margin:0 0 8px"><input type="checkbox" id="cap_on" checked> Show captions on the video</label>
+      <label class="chk" style="margin:0 0 4px"><input type="checkbox" id="cap_on" checked> Show my captions (the ones you type in the Captions tab)</label>
+      <label class="chk" style="margin:0 0 8px"><input type="checkbox" id="yt_cc"> Show YouTube's own captions (automatic subtitles from the video)</label>
+      <div class="hint" style="margin:0 0 8px">Leave the YouTube one off to avoid two captions on top of each other. Subtitles that the streamer burned into the video picture itself cannot be removed.</div>
       <div class="row">
         <div><label>Style</label>
           <select id="style">
@@ -727,6 +730,11 @@ let segsAll=[],picks=[],plOn=false,plList=[],plI=0;
 let recFinish=null,recCancel=false,recBusy=false;
 let ltKey='';
 let wantPlay=false;
+function ytCC(pl){
+  if(!pl)return;
+  const on=$('yt_cc').checked&&pl===player;
+  try{if(on){pl.loadModule('captions')}else{pl.unloadModule('captions');pl.unloadModule('cc')}}catch(_){}
+}
 function userPause(){wantPlay=false;try{player.pauseVideo()}catch(_){}}
 function userPlay(){wantPlay=true;try{player.playVideo()}catch(_){}}
 
@@ -746,14 +754,31 @@ document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
 
 /* captions */
 function parseCaps(){
-  const rel=$('rel').checked,s=S();
-  caps=$('caps').value.split('\n').map(l=>{
+  const rel=$('rel').checked,s=S(),e=E();
+  const lines=$('caps').value.split('\n').map(l=>l.trim()).filter(Boolean);
+  let timed=lines.map(l=>{
     const m=l.match(/^\s*(\d+(?::\d+){0,2}(?:\.\d+)?)\s+(.+?)\s*$/);
     if(!m)return null;
-    let t=pt(m[1]);if(rel)t+=s;
+    let t=pt(m[1]);if(isNaN(t))return null;if(rel)t+=s;
     return {t,text:m[2]};
-  }).filter(Boolean).sort((a,b)=>a.t-b.t);
+  }).filter(Boolean);
+  let mode='timed';
+  if(!timed.length&&lines.length){
+    /* no times typed: spread the lines evenly across the clip */
+    const len=Math.max(1,e-s);
+    timed=lines.map((x,i)=>({t:s+i*len/lines.length,text:x}));
+    mode='auto';
+  }
+  caps=timed.sort((a,b)=>a.t-b.t);
   lastKey='';
+  const st=$('capstat');
+  if(st){
+    const inside=caps.filter(c=>c.t>=s&&c.t<e).length;
+    if(!lines.length){st.textContent='No captions yet. Type one line per caption, like "0:03 your text", or just type the text and it is spread over the clip.';st.style.color='';}
+    else if(mode==='auto'){st.textContent=caps.length+' caption'+(caps.length>1?'s':'')+' spread evenly over the clip (no times typed).';st.style.color='#7ee787';}
+    else if(!inside){st.textContent='None of your '+caps.length+' caption times fall inside the clip ('+ft(s)+' to '+ft(e)+'), so nothing shows. Tick "Count times from clip start" below, or change the times.';st.style.color='#ff7b72';}
+    else{st.textContent=inside+' of '+caps.length+' captions are inside the clip and will show.';st.style.color='#7ee787';}
+  }
 }
 
 /* color presets */
@@ -1015,7 +1040,8 @@ function applyAll(){
 const LIVE=['cap_on','cap_col','mid_on','mid_txt','mid_k','mid_col','mid_sz','mid_y','mid_up','neon_style','split','style','font','anim','pos','hl','fs','up','xpos','motion','f_gr','f_vi','f_sc','f_lk','f_bars','wm','layout','bgc','camon','ccorner','cshape','csize','cbw','cbc','cglow','cneon','cz','cx','cy','lt_on','cta_on','cta_plat','cta_mode','cta_sz','neon_on','neon_col','neon_w','neon_g','neon_an','lt_name','lt_sub','lt_style','lt_col','lt_al','lt_mode','lt_sz',...CIDS.map(k=>'c_'+k)];
 LIVE.forEach(id=>$(id).addEventListener('input',applyAll));
 ['caps','rel','start','n'].forEach(id=>$(id).addEventListener('input',parseCaps));
-$('end').addEventListener('input',applyAll);
+$('end').addEventListener('input',()=>{applyAll();parseCaps()});
+$('yt_cc').addEventListener('change',()=>ytCC(player));
 $('hl2').addEventListener('input',()=>{$('hl').value=$('hl2').value;applyAll()});
 $('cta_shuf').onclick=()=>{ctaSig='';toast('Button times shuffled 🎲')};
 $('cpanel').addEventListener('input',()=>{$('split').value=100-(+$('cpanel').value);applyAll()});
@@ -1128,7 +1154,7 @@ setInterval(tick,80);
 
 /* YouTube players */
 function playerVars(extra){
-  const pv=Object.assign({controls:0,rel:0,playsinline:1,modestbranding:1,disablekb:1,fs:0,iv_load_policy:3,start:Math.floor(S())},extra||{});
+  const pv=Object.assign({cc_load_policy:0,controls:0,rel:0,playsinline:1,modestbranding:1,disablekb:1,fs:0,iv_load_policy:3,start:Math.floor(S())},extra||{});
   if(location.protocol==='https:'||location.protocol==='http:'){pv.origin=location.origin;pv.enablejsapi=1}
   return pv;
 }
@@ -1147,7 +1173,7 @@ function loadCam(id){
     videoId:id,
     playerVars:playerVars({mute:1}),
     events:{
-      onReady:()=>{camReady=true;camPlayer.mute();layoutCam();if(playing)camPlayer.playVideo()},
+      onReady:()=>{camReady=true;try{camPlayer.unloadModule('captions')}catch(_){}camPlayer.mute();layoutCam();if(playing)camPlayer.playVideo()},
       onStateChange:e=>{if(e.data===1&&!playing){try{camPlayer.pauseVideo()}catch(_){}}},
       onError:()=>{}
     }
@@ -1168,10 +1194,11 @@ function loadClip(id){
     videoId:id,
     playerVars:playerVars(),
     events:{
-      onReady:()=>{ready=true;player.seekTo(S(),true);setHQ()},
+      onReady:()=>{ready=true;player.seekTo(S(),true);setHQ();ytCC(player)},
+      onApiChange:()=>ytCC(player),
       onStateChange:e=>{
         playing=(e.data===1);
-        if(e.data===1)$('empty').style.display='none';
+        if(e.data===1){$('empty').style.display='none';ytCC(player)}
         $('play').textContent=playing?'⏸ Pause':'▶ Play clip';
         if(camReady&&camPlayer&&$('camon').checked){
           try{
@@ -1487,7 +1514,7 @@ document.body.classList.toggle('lite',$('lite').checked);
 
 /* share link */
 const SHARE=['url:v','start:s','end:e','caps:c','layout:ly','ccorner:cco','cshape:csh','csize:csz','cbw:cbw','cbc:cbc','cz:czz','cx:cxx','cy:cyy','bgc:bgc','style:st','font:fo','anim:an','pos:pos','hl:hl','n:n','fs:fs','xpos:x','motion:mo','trans:tr','f_gr:gr','f_vi:vi','f_sc:sc','f_lk:lk','wm:wm','split:sp','lt_name:ltn','lt_sub:lts','lt_style:lty','lt_col:ltc','lt_al:lta','lt_mode:ltm','lt_sz:ltz','cap_col:ccl','mid_txt:mtx','mid_k:mk','mid_col:mcl','mid_sz:msz','mid_y:my','neon_style:nst','cta_plat:cpl','cta_mode:cmo','cta_sz:ctz','neon_col:nc','neon_w:nw','neon_g:ng','neon_an:na',...CIDS.map(k=>'c_'+k+':k'+k)];
-const SHAREC=['rel:rel','up:up','loop:lp','f_bars:bars','camon:cam','cglow:glow','lt_on:lton','cap_on:capon','mid_on:mon','mid_up:mup','cta_on:cta','cneon:cn','neon_on:non'];
+const SHAREC=['rel:rel','up:up','loop:lp','f_bars:bars','camon:cam','cglow:glow','lt_on:lton','yt_cc:ycc','cap_on:capon','mid_on:mon','mid_up:mup','cta_on:cta','cneon:cn','neon_on:non'];
 $('share').onclick=async()=>{
   const p=new URLSearchParams();
   SHARE.forEach(x=>{const[id,k]=x.split(':');p.set(k,$(id).value)});
