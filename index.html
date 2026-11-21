@@ -241,7 +241,7 @@ body.recording .toast{display:none}
 </head>
 <body>
 <header>
-  <h1>🎬 Clip Studio Pro <span style="font-size:12px;font-weight:700;color:#111;background:#ffd400;border-radius:999px;padding:2px 10px;vertical-align:middle;-webkit-text-fill-color:#111">v21 · Instagram glow</span></h1>
+  <h1>🎬 Clip Studio Pro <span style="font-size:12px;font-weight:700;color:#111;background:#ffd400;border-radius:999px;padding:2px 10px;vertical-align:middle;-webkit-text-fill-color:#111">v22 · captions fix</span></h1>
   <p>Find the best moments, add a streamer facecam, color grade, add effects, a streamer name bar and animated captions, and translate them to English.</p>
 </header>
 
@@ -729,11 +729,11 @@ let camPlayer=null,camReady=false,camId=null,lastSync=0,jumpAt=0,pickOn=false;
 let segsAll=[],picks=[],plOn=false,plList=[],plI=0;
 let recFinish=null,recCancel=false,recBusy=false;
 let ltKey='';
-let wantPlay=false;
+let wantPlay=false,ccAt=0;
 function ytCC(pl){
   if(!pl)return;
   const on=$('yt_cc').checked&&pl===player;
-  try{if(on){pl.loadModule('captions')}else{pl.unloadModule('captions');pl.unloadModule('cc')}}catch(_){}
+  try{if(on){pl.loadModule('captions')}else{try{pl.setOption('captions','track',{})}catch(_){}pl.unloadModule('captions');pl.unloadModule('cc')}}catch(_){}
 }
 function userPause(){wantPlay=false;try{player.pauseVideo()}catch(_){}}
 function userPlay(){wantPlay=true;try{player.playVideo()}catch(_){}}
@@ -1132,6 +1132,7 @@ function syncCam(t){
 }
 function tick(){
   if(!ready||!player||!player.getCurrentTime){renderLT(S()+1);renderCTA(null);return}
+  if(playing&&!$('yt_cc').checked&&Date.now()-ccAt>1500){ccAt=Date.now();ytCC(player)}
   const t=player.getCurrentTime(),s=S(),e=E();
   const settled=Date.now()-jumpAt>800;
   if(playing&&e>s&&t>=e&&settled){
@@ -1170,6 +1171,7 @@ function loadCam(id){
   }
   if(camPlayer)return;
   camPlayer=new YT.Player('yt2',{
+    host:'https://www.youtube-nocookie.com',
     videoId:id,
     playerVars:playerVars({mute:1}),
     events:{
@@ -1191,6 +1193,7 @@ function loadClip(id){
   }
   if(player)return;
   player=new YT.Player('yt',{
+    host:'https://www.youtube-nocookie.com',
     videoId:id,
     playerVars:playerVars(),
     events:{
