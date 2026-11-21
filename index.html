@@ -213,6 +213,14 @@ html,body{overflow-x:hidden}
 .lite .m-glitch{animation:none}
 .phone.rec{position:fixed;left:0;top:0;margin:0;width:var(--rw,350px);max-width:none;border-radius:0;border:0;z-index:1000;box-shadow:none}
 body.recording{overflow:hidden}
+body.pmode{overflow:hidden}
+#pmback{position:fixed;inset:0;background:#000;z-index:999;display:none}
+body.pmode #pmback{display:block}
+.phone.pm{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100vw,calc(100vh * 9 / 16));width:min(100vw,calc(100dvh * 9 / 16));max-width:none;margin:0;border-radius:0;border:0;z-index:1000;box-shadow:none}
+.phone.pm.pmfull{width:100vw;height:100vh;height:100dvh;aspect-ratio:auto}
+#pmo{position:fixed;inset:0;z-index:1002;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:24px;background:rgba(0,0,0,.82);color:#fff}
+#pmo b{font-size:22px}#pmo .big{font-size:84px;font-weight:900;line-height:1;color:var(--ac)}
+#pmo p{margin:0;font-size:14px;color:#cfd3df;font-weight:500;max-width:320px}
 body.recording .toast{display:none}
 #recbar{position:fixed;top:12px;z-index:1001;display:none;flex-direction:column;gap:8px;width:170px;background:rgba(10,11,16,.94);border:1px solid var(--line);border-radius:12px;padding:10px;font-size:12px}
 #recbar b{color:#ff4d4d}
@@ -530,6 +538,15 @@ oh my god did you see that?!"></textarea>
         <div><label>Quality</label>
           <select id="recbr"><option value="25000000" selected>Maximum (25 Mbps)</option><option value="12000000">High (12 Mbps)</option><option value="6000000">Standard (6 Mbps)</option></select></div>
       </div>
+      <h3>On a phone</h3>
+      <div class="row">
+        <div><label>Frame</label>
+          <select id="pm_frame"><option value="916" selected>9:16, centered (black bars on tall phones)</option><option value="full">Fill the whole phone screen</option></select></div>
+        <div><label>Countdown</label>
+          <select id="pm_cd"><option value="5">5 seconds</option><option value="8" selected>8 seconds</option><option value="12">12 seconds</option></select></div>
+      </div>
+      <div style="margin-top:10px"><button class="pri" id="pmbtn" style="width:100%">📱 Phone recording mode</button></div>
+      <div class="hint">Phones can't record a web page by themselves, so this mode uses your phone's own screen recorder, which saves in your phone's full screen resolution with sound. Tap the button, then start your screen recorder during the countdown (iPhone: Control Center, record button. Android: quick settings, Screen record). The clip plays once in full screen with all your captions, facecam and effects. When it finishes, stop the recorder and trim the countdown off the start in your gallery. Double-tap the screen to quit early. Turn on Do Not Disturb first so no notification gets recorded.</div>
       <div style="margin-top:10px"><button id="recall" style="width:100%">⏺ Record all moment picks (one file each)</button></div>
       <div class="hint">
         <ol>
@@ -549,6 +566,8 @@ oh my god did you see that?!"></textarea>
     </section>
   </div>
 </main>
+<div id="pmback"></div>
+<div id="pmo"><b id="pmt"></b><div class="big" id="pmn"></div><p id="pmp"></p><div class="row" id="pmb" style="max-width:320px;width:100%"></div></div>
 <div id="recbar"><div><span class="dot"></span><b>Recording</b></div><div id="recmsg">Starting...</div><button id="recstop" class="pri">■ Stop and save</button></div>
 <div class="toast" id="toast"></div>
 
@@ -1315,7 +1334,7 @@ async function recordOne(stream,mime,br){
 }
 async function recSession(items){
   if(recBusy)return;
-  if(!recSupported()){toast('Recording needs desktop Chrome or Edge. Phones cannot do it.');return}
+  if(!recSupported()){toast('Direct recording needs desktop Chrome or Edge. On a phone, use Phone recording mode in this tab.');return}
   if(!ready){toast('Load a clip first (Clip tab)');return}
   if(E()<=S()){toast('End time must be after start time');return}
   recBusy=true;recCancel=false;plOn=false;
@@ -1349,6 +1368,55 @@ async function recSession(items){
   exitRec();recBusy=false;recFinish=null;
   if(saved)toast('Saved '+saved+' clip'+(saved>1?'s':'')+' to your downloads ✅');
 }
+/* phone recording mode */
+let pmOn=false;
+function pmShow(t,n,p,btns){
+  $('pmt').textContent=t;$('pmn').textContent=n||'';$('pmp').textContent=p||'';
+  const b=$('pmb');b.innerHTML='';
+  (btns||[]).forEach(x=>{const e=document.createElement('button');e.textContent=x[0];if(x[2])e.className='pri';e.onclick=x[1];b.appendChild(e)});
+  $('pmo').style.display='flex';
+}
+function pmExit(){
+  pmOn=false;
+  document.body.classList.remove('pmode');
+  $('phone').classList.remove('pm','pmfull');
+  $('pmo').style.display='none';
+  try{if(document.fullscreenElement)document.exitFullscreen()}catch(_){}
+  if(recFinish){const f=recFinish;recFinish=null;f()}
+  userPause();
+  setTimeout(applyAll,120);
+}
+async function phoneMode(){
+  if(pmOn)return;
+  if(!ready){toast('Load a clip first (Clip tab)');return}
+  if(E()<=S()){toast('End time must be after start time');return}
+  if(recBusy)return;
+  pmOn=true;plOn=false;
+  if(pickOn){pickOn=false;$('pick').style.display='none';$('pickbtn').textContent='🎯 Pick facecam area'}
+  document.body.classList.add('pmode');
+  $('phone').classList.add('pm');$('phone').classList.toggle('pmfull',$('pm_frame').value==='full');
+  try{await document.documentElement.requestFullscreen()}catch(_){}
+  setTimeout(applyAll,150);
+  userPause();jump(S());setHQ();
+  const wait=+$('pm_cd').value;
+  for(let c=wait;c>0&&pmOn;c--){
+    pmShow('Start your screen recorder now','',c+'s until the clip plays',[]);
+    $('pmn').textContent=c;
+    await sleep(1000);
+  }
+  if(!pmOn)return;
+  $('pmo').style.display='none';
+  const started=new Promise(res=>{const t0=Date.now();const iv=setInterval(()=>{if(playing||Date.now()-t0>9000){clearInterval(iv);res(playing)}},50)});
+  jump(S());playTrans();userPlay();
+  await started;
+  await new Promise(res=>{recFinish=res;setTimeout(()=>{if(recFinish===res){recFinish=null;res()}},(Math.max(.5,E()-S())+12)*1000)});
+  recFinish=null;
+  if(!pmOn)return;
+  userPause();
+  pmShow('Done. Stop your screen recorder now.','','Then trim the countdown at the start in your gallery.',[['↺ Play again',()=>{pmExit();setTimeout(phoneMode,300)}],['Close',pmExit,1]]);
+}
+$('pmbtn').onclick=phoneMode;
+document.addEventListener('dblclick',()=>{if(pmOn)pmExit()});
 $('rec').onclick=()=>recSession(null);
 $('recall').onclick=()=>{
   if(!picks.length){toast('Find moments first (Moments tab)');return}
