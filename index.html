@@ -61,8 +61,7 @@ button:disabled{opacity:.6}
 .phone{container-type:inline-size;position:relative;width:min(100%,350px);aspect-ratio:9/16;margin:auto;background:#000;border-radius:26px;overflow:hidden;border:2px solid var(--line);box-shadow:0 20px 60px rgba(124,92,255,.25)}
 .stage{position:absolute;left:0;right:0;top:0;height:100%;overflow:hidden;z-index:1}
 .vwrap{position:absolute;top:50%;left:50%;height:100%;aspect-ratio:16/9;transform:translate(-50%,-50%)}
-.vwrap{overflow:hidden}
-.vwrap iframe,.vwrap #yt{position:absolute;left:0;width:100%;top:calc(var(--ytm,0) * -100%);height:calc((1 + 2 * var(--ytm,0)) * 100%);border:0;pointer-events:none;display:block}
+.vwrap iframe,.vwrap #yt{width:100%;height:100%;border:0;pointer-events:none;display:block}
 .cam{position:absolute;z-index:4;overflow:hidden;display:none;background:#000}
 .camv{position:absolute;inset:0;overflow:hidden;border-radius:inherit}
 .camv iframe,.camv #yt2{position:absolute;max-width:none;border:0;pointer-events:none;display:block}
@@ -80,26 +79,26 @@ button:disabled{opacity:.6}
 .mark{position:absolute;z-index:6;top:3%;right:5%;font-size:calc(3.4*1cqw);font-weight:800;color:rgba(255,255,255,.85);text-shadow:0 1px 4px #000;pointer-events:none}
 .mark.l{right:auto;left:5%}
 .cap{position:absolute;left:4%;right:4%;text-align:center;font-weight:900;line-height:1.18;font-size:calc(var(--fs) * 1cqw);pointer-events:none;z-index:6;font-family:'Poppins','Noto Sans Devanagari',sans-serif}
-.cap.bottom{bottom:15%}.cap.lowmid{bottom:30%}.cap.middle{top:50%;transform:translateY(-50%)}.cap.top{top:12%}
+.cap.bottom{bottom:15%}.cap.bmid{bottom:25%}.cap.middle{top:50%;transform:translateY(-50%)}.cap.top{top:12%}
 .cap.up{text-transform:uppercase}
 .cap .w{display:inline-block;margin:0 .1em;will-change:transform}
 .f-poppins{font-family:'Poppins','Noto Sans Devanagari',sans-serif}
 .f-anton{font-family:'Anton','Noto Sans Devanagari',sans-serif;letter-spacing:.02em}
 .f-bebas{font-family:'Bebas Neue','Noto Sans Devanagari',sans-serif;letter-spacing:.04em}
 .f-marker{font-family:'Permanent Marker','Noto Sans Devanagari',cursive}
-.s1 .w{color:var(--tc,#fff);-webkit-text-stroke:.14em #000;paint-order:stroke fill}
+.s1 .w{color:#fff;-webkit-text-stroke:.14em #000;paint-order:stroke fill}
 .s1 .w.on{color:var(--hl);transform:scale(1.12)}
-.s2 .w{color:var(--tc,#fff);-webkit-text-stroke:.14em #000;paint-order:stroke fill;padding:0 .14em;border-radius:.2em}
+.s2 .w{color:#fff;-webkit-text-stroke:.14em #000;paint-order:stroke fill;padding:0 .14em;border-radius:.2em}
 .s2 .w.on{background:var(--hl);color:#000;-webkit-text-stroke:0;transform:scale(1.08)}
-.s3 .w{color:var(--tc,#fff);text-shadow:0 0 .15em rgba(255,255,255,.3)}
+.s3 .w{color:#fff;text-shadow:0 0 .15em rgba(255,255,255,.3)}
 .s3 .w.on{text-shadow:0 0 .1em var(--hl),0 0 .3em var(--hl),0 0 .7em var(--hl);transform:scale(1.1)}
-.s4 .w{color:var(--tc,#fff);opacity:.55;text-shadow:0 .05em .2em rgba(0,0,0,.8)}
-.s4 .w.on{color:var(--tc,#fff);opacity:1}
-.s5 .w{color:var(--tc,#fff);-webkit-text-stroke:.16em #000;paint-order:stroke fill;text-shadow:.07em .09em 0 var(--hl)}
+.s4 .w{color:rgba(255,255,255,.45);text-shadow:0 .05em .2em rgba(0,0,0,.8)}
+.s4 .w.on{color:#fff}
+.s5 .w{color:#fff;-webkit-text-stroke:.16em #000;paint-order:stroke fill;text-shadow:.07em .09em 0 var(--hl)}
 .s5 .w.on{color:var(--hl);text-shadow:.07em .09em 0 #fff;transform:scale(1.12) rotate(-2deg)}
-.s6 .w{color:var(--tc,#fff);background:rgba(0,0,0,.6);padding:.02em .18em;border-radius:.25em;-webkit-box-decoration-break:clone}
+.s6 .w{color:#fff;background:rgba(0,0,0,.6);padding:.02em .18em;border-radius:.25em;-webkit-box-decoration-break:clone}
 .s6 .w.on{background:var(--hl);color:#000}
-.s7 .w{color:transparent;-webkit-text-stroke:.05em var(--tc,#fff)}
+.s7 .w{color:transparent;-webkit-text-stroke:.05em #fff}
 .s7 .w.on{color:var(--hl);-webkit-text-stroke:.05em var(--hl);transform:scale(1.1)}
 .a-pop .w.on{animation:pop .22s cubic-bezier(.2,1.6,.4,1)}
 @keyframes pop{0%{transform:scale(.6)}100%{transform:scale(1.12)}}
@@ -121,107 +120,12 @@ button:disabled{opacity:.6}
 @keyframes mglitch{0%,88%,100%{transform:translate(0);filter:none}90%{transform:translate(-2%,0) skewX(4deg);filter:hue-rotate(90deg) saturate(2)}93%{transform:translate(2%,1%) skewX(-4deg);filter:hue-rotate(-90deg)}96%{transform:translate(-1%,-1%)}}
 .m-drift{animation:mdrift 12s ease-in-out infinite alternate}
 @keyframes mdrift{from{transform:scale(1.15) translateX(-3%)}to{transform:scale(1.15) translateX(3%)}}
-
-/* streamer name bar (animated lower third) */
-.lt{position:absolute;z-index:6;left:5%;bottom:3.5cqw;width:max-content;max-width:90%;pointer-events:none;display:flex;flex-direction:column;--lc:#ffd400;--lts:1;font-family:'Poppins','Noto Sans Devanagari',sans-serif}
-.ln-line{height:calc(.7cqw * var(--lts));background:var(--lc);transform:scaleX(0);transform-origin:left;box-shadow:0 0 3cqw var(--lc)}
-.ln-panel{position:relative;overflow:hidden;background:linear-gradient(90deg,rgba(8,9,14,.92),rgba(8,9,14,.6));border-left:calc(1.1cqw * var(--lts)) solid var(--lc);padding:calc(2cqw * var(--lts)) calc(4.5cqw * var(--lts)) calc(2cqw * var(--lts)) calc(3.2cqw * var(--lts));clip-path:inset(0 100% 0 0)}
-.ln-panel::after{content:"";position:absolute;top:0;bottom:0;left:0;width:30%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);transform:translateX(-160%) skewX(-20deg);opacity:0}
-.ln-name{overflow:hidden;font-size:calc(5.2cqw * var(--lts));font-weight:900;line-height:1.2;letter-spacing:.04em;text-transform:uppercase;color:#fff;white-space:nowrap}
-.ln-name span{display:block;transform:translateY(115%)}
-.ln-sub{font-size:calc(2.9cqw * var(--lts));font-weight:600;line-height:1.3;letter-spacing:.18em;text-transform:uppercase;color:var(--lc);opacity:0;margin-top:calc(.5cqw * var(--lts));white-space:nowrap}
-.lt.bold .ln-panel{background:var(--lc);border-left:0}
-.lt.bold .ln-name{color:#0a0b10}
-.lt.bold .ln-sub{color:#0a0b10}
-.lt.bold .ln-line{background:#fff;box-shadow:none}
-.lt.glass .ln-line{display:none}
-.lt.glass .ln-panel{background:rgba(255,255,255,.16);backdrop-filter:blur(2cqw);-webkit-backdrop-filter:blur(2cqw);border-left:0;border-bottom:calc(.7cqw * var(--lts)) solid var(--lc);border-radius:2cqw}
-.lt.glass .ln-sub{color:#fff}
-.lt.in .ln-line{animation:lnLine .55s cubic-bezier(.7,0,.2,1) forwards}
-.lt.in .ln-panel{animation:lnPanel .65s cubic-bezier(.7,0,.2,1) .25s forwards}
-.lt.in .ln-panel::after{animation:lnShine 4.5s ease-in-out 1s infinite}
-.lt.in .ln-name span{animation:lnUp .5s cubic-bezier(.2,.9,.2,1) .65s forwards}
-.lt.in .ln-sub{animation:lnFade .5s ease-out .9s forwards}
-.lt.out .ln-line{transform-origin:right;transform:scaleX(1);animation:lnLineOut .45s cubic-bezier(.7,0,.2,1) .15s forwards}
-.lt.out .ln-panel{clip-path:inset(0 0 0 0);animation:lnPanelOut .5s cubic-bezier(.7,0,.2,1) forwards}
-.lt.out .ln-name span{transform:translateY(0);animation:lnUpOut .3s ease-in forwards}
-.lt.out .ln-sub{opacity:1;animation:lnFadeOut .25s ease-in forwards}
-@keyframes lnLine{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@keyframes lnLineOut{from{transform:scaleX(1)}to{transform:scaleX(0)}}
-@keyframes lnPanel{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
-@keyframes lnPanelOut{from{clip-path:inset(0 0 0 0)}to{clip-path:inset(0 0 0 100%)}}
-@keyframes lnUp{from{transform:translateY(115%)}to{transform:translateY(0)}}
-@keyframes lnUpOut{from{transform:translateY(0)}to{transform:translateY(-115%)}}
-@keyframes lnFade{from{opacity:0}to{opacity:1}}
-@keyframes lnFadeOut{from{opacity:1}to{opacity:0}}
-@keyframes lnShine{0%{transform:translateX(-160%) skewX(-20deg);opacity:0}6%{opacity:1}28%{transform:translateX(480%) skewX(-20deg);opacity:1}30%,100%{transform:translateX(480%) skewX(-20deg);opacity:0}}
-.lite .ln-panel::after{animation:none!important}
-
-.neon{z-index:7;border-radius:inherit;border:calc(var(--nw,1.2) * 1cqw) solid var(--nc,#00f0ff);box-shadow:inset 0 0 calc(var(--ng,6) * 1cqw) var(--nc,#00f0ff),inset 0 0 calc(var(--ng,6) * .35cqw) #fff,0 0 calc(var(--ng,6) * .8cqw) var(--nc,#00f0ff);display:none}
-.neon.insta{border:0;box-shadow:inset 0 0 calc(var(--ng,6) * 1cqw) rgba(214,41,118,.75),inset 0 0 calc(var(--ng,6) * 2cqw) rgba(250,126,30,.35),inset 0 0 calc(var(--ng,6) * .4cqw) rgba(255,255,255,.6)}
-.neon.insta::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:calc(var(--nw,1.2) * 1cqw);background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);mask-composite:exclude}
-.neon.pulse{animation:npulse 1.6s ease-in-out infinite}
-.neon.cycle{animation:ncycle 6s linear infinite}
-@keyframes npulse{0%,100%{opacity:.55}50%{opacity:1}}
-@keyframes ncycle{from{filter:hue-rotate(0)}to{filter:hue-rotate(360deg)}}
-.cta{position:absolute;z-index:6;left:50%;transform:translateX(-50%);scale:var(--cts,1);transform-origin:50% 100%;display:none;gap:2.4cqw;white-space:nowrap;pointer-events:none;--subc:#e62117;--likec:#2f6fed;font-family:'Poppins','Noto Sans Devanagari',sans-serif}
-.cta.show{display:flex}
-.cta-b{position:relative;height:9cqw;padding:0 4cqw;border-radius:5cqw;display:flex;align-items:center;justify-content:center;gap:1.6cqw;font-size:4cqw;font-weight:800;color:#fff;background:rgba(20,22,31,.94);border:.4cqw solid rgba(255,255,255,.3);box-shadow:0 1cqw 3cqw rgba(0,0,0,.55);opacity:0;transform:translateY(8cqw) scale(.7)}
-.cta-b::after{content:"";position:absolute;inset:-.4cqw;border-radius:inherit;border:.6cqw solid #fff;opacity:0}
-.cta-b.sub{display:grid;background:var(--subc);border-color:transparent}
-.cta-b.sub span{grid-area:1/1;display:flex;align-items:center;justify-content:center;gap:1.6cqw}
-.cta-b .s2{opacity:0}
-.cta-b .ic{display:inline-block}
-.cta.show .like{animation:ctaIn .5s cubic-bezier(.2,1.6,.4,1) calc(var(--cd,0s) + 0s) forwards,ctaOut .4s ease-in calc(var(--cd,0s) + 4.2s) forwards,likeFill .2s ease-out calc(var(--cd,0s) + 1.5s) forwards}
-.cta.show .sub{animation:ctaIn .5s cubic-bezier(.2,1.6,.4,1) calc(var(--cd,0s) + .15s) forwards,ctaOut .4s ease-in calc(var(--cd,0s) + 4.2s) forwards,subDone .2s ease-out calc(var(--cd,0s) + 2.5s) forwards}
-.cta.show .like .ic{animation:icPress .6s ease-out calc(var(--cd,0s) + 1.5s)}
-.cta.show .like::after{animation:ripple .55s ease-out calc(var(--cd,0s) + 1.5s)}
-.cta.show .sub::after{animation:ripple .55s ease-out calc(var(--cd,0s) + 2.5s)}
-.cta.show .sub .s1{animation:fOut .15s linear calc(var(--cd,0s) + 2.5s) forwards}
-.cta.show .sub .s2{animation:fIn .15s linear calc(var(--cd,0s) + 2.5s) forwards}
-@keyframes ctaIn{from{opacity:0;transform:translateY(8cqw) scale(.7)}to{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes ctaOut{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(5cqw) scale(.85)}}
-@keyframes likeFill{to{background:var(--likec);border-color:transparent}}
-@keyframes subDone{to{background:#3a3d4a;border-color:rgba(255,255,255,.25)}}
-@keyframes icPress{0%{transform:scale(1)}40%{transform:scale(1.7) rotate(-12deg)}100%{transform:scale(1)}}
-@keyframes ripple{from{transform:scale(1);opacity:.9}to{transform:scale(1.35);opacity:0}}
-@keyframes fOut{to{opacity:0}}
-@keyframes fIn{to{opacity:1}}
-.cam.cinsta::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:var(--cbw,1.2cqw);background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);mask-composite:exclude;pointer-events:none;z-index:3}
-.cam.cinsta.stkt::before,.cam.cinsta.stkb::before{padding:0;-webkit-mask:none;mask:none;left:0;right:0;height:var(--cbw,1.2cqw);background:linear-gradient(90deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)}
-.cam.cinsta.stkt::before{top:auto;bottom:0}
-.cam.cinsta.stkb::before{bottom:auto;top:0}
-.cam.cneon::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:2;box-shadow:inset 0 0 3cqw currentColor,inset 0 0 1cqw #fff}
-.cam.cneon.pulse::after{animation:npulse 1.6s ease-in-out infinite}
-.cam.cneon.cycle{animation:camcycle 6s linear infinite}
-@keyframes camcycle{0%,100%{color:#00f0ff}25%{color:#7c5cff}50%{color:#ff3d81}75%{color:#ffd400}}
-.mid{position:absolute;z-index:7;left:50%;transform:translate(-50%,-50%);display:none;max-width:94%;pointer-events:none;text-align:center;white-space:nowrap;font-family:'Poppins','Noto Sans Devanagari',sans-serif;font-weight:900;letter-spacing:.05em;line-height:1.15;padding:1.6cqw 5cqw;border-radius:6cqw;color:var(--mtc,#fff)}
-.mid.up{text-transform:uppercase}
-.mid.k-insta{background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);box-shadow:0 0 3cqw rgba(214,41,118,.7),0 0 6cqw rgba(250,126,30,.45);text-shadow:0 .3cqw 1cqw rgba(0,0,0,.35)}
-.mid.k-dark{background:rgba(8,9,14,.88);border:.4cqw solid rgba(255,255,255,.25);box-shadow:0 1cqw 3cqw rgba(0,0,0,.5)}
-.mid.k-none{background:none;text-shadow:0 .4cqw 1.6cqw #000,0 0 .6cqw #000}
-#cens{position:absolute;inset:0;z-index:5;pointer-events:none}
-.cbox{position:absolute;display:none;pointer-events:none}
-.cbox.act{display:block}
-.cbox.rect{border-radius:1.5cqw}.cbox.oval{border-radius:50%}
-.cbox.m-blur.act{-webkit-backdrop-filter:blur(calc(var(--cs,14) * .35cqw));backdrop-filter:blur(calc(var(--cs,14) * .35cqw))}
-.cbox.m-mosaic.act{-webkit-backdrop-filter:blur(calc(var(--cs,14) * .2cqw));backdrop-filter:blur(calc(var(--cs,14) * .2cqw));background-image:linear-gradient(rgba(0,0,0,.28) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.28) 1px,transparent 1px);background-size:2.4cqw 2.4cqw}
-.cbox.m-color.act{-webkit-backdrop-filter:hue-rotate(var(--ch,120deg)) saturate(1.25) blur(.5cqw);backdrop-filter:hue-rotate(var(--ch,120deg)) saturate(1.25) blur(.5cqw)}
-.cbox.m-gray.act{-webkit-backdrop-filter:grayscale(1) blur(.5cqw);backdrop-filter:grayscale(1) blur(.5cqw)}
-.cbox.m-black.act{background:#000}
-body.censoring:not(.recording):not(.pmode) .cbox.cedit{display:block;outline:.5cqw dashed #ffd400;outline-offset:-.25cqw}
-body.censoring:not(.recording):not(.pmode) .cbox.cedit::after{content:attr(data-n);position:absolute;left:0;top:0;background:#ffd400;color:#111;font:800 3cqw/1 'Poppins',sans-serif;padding:.8cqw 1.4cqw;border-radius:0 0 1.2cqw 0}
-#cdraw{position:absolute;inset:0;z-index:10;display:none;touch-action:none;cursor:crosshair;background:rgba(0,0,0,.25)}
-#cdrawbox{position:absolute;border:2px solid #ffd400;background:rgba(255,212,0,.2);display:none}
-.cb-card{background:#0d1017;border:1px solid var(--line);border-radius:14px;padding:10px;margin-top:10px}
-.cb-h{display:flex;align-items:center;gap:8px}.cb-h b{flex:1}
-.cb-h button{padding:4px 8px;font-size:12px}
 .bar{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.18);z-index:9}
 .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--ac3))}
 .pick{position:absolute;inset:0;z-index:10;display:none;touch-action:none;cursor:crosshair}
 .pickbox{position:absolute;border:2px dashed var(--ac);background:rgba(255,212,0,.18);border-radius:6px;box-shadow:0 0 0 9999px rgba(0,0,0,.5);pointer-events:none}
 .pickmsg{position:absolute;top:8px;left:8px;right:8px;text-align:center;font-size:12px;background:rgba(0,0,0,.75);padding:6px;border-radius:8px;pointer-events:none}
-.ctrl{display:flex;gap:8px;justify-content:center;margin-top:12px}.ctrl button{flex:1;max-width:170px}.ctrl{flex-wrap:wrap}.ctrl .skip{flex:0 0 auto;min-width:64px}
+.ctrl{display:flex;gap:6px;justify-content:center;margin-top:12px}.ctrl button{flex:1;max-width:170px;padding:10px 6px;white-space:nowrap}.ctrl #play{flex:2}
 .time{font-variant-numeric:tabular-nums;text-align:center;color:var(--mut);font-size:12px;margin-top:8px}
 .pcard{background:#0d1017;border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:10px}
 .pc-top{display:flex;gap:8px;align-items:center}
@@ -235,77 +139,53 @@ body.censoring:not(.recording):not(.pmode) .cbox.cedit::after{content:attr(data-
 .toast.show{opacity:1}
 main>*{min-width:0}
 .tabs{min-width:0;max-width:100%}
-/* overflow-x:clip (not hidden) so position:sticky keeps working and the video stays put while you scroll the options */
-html{overflow-x:hidden}
-body{overflow-x:clip}
+html,body{overflow-x:hidden}
 .lite .grain,.lite .leak{animation:none}
 .lite .leak{mix-blend-mode:normal}
 .lite .m-glitch{animation:none}
 .phone.rec{position:fixed;left:0;top:0;margin:0;width:var(--rw,350px);max-width:none;border-radius:0;border:0;z-index:1000;box-shadow:none}
 body.recording{overflow:hidden}
-body.pmode{overflow:hidden}
-#pmback{position:fixed;inset:0;background:#000;z-index:999;display:none}
-body.pmode #pmback{display:block}
-.phone.pm{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100vw,calc(100vh * 9 / 16));width:min(100vw,calc(100dvh * 9 / 16));max-width:none;margin:0;border-radius:0;border:0;z-index:1000;box-shadow:none}
-.phone.pm.pmfull{width:100vw;height:100vh;height:100dvh;aspect-ratio:auto}
-#pmo{position:fixed;inset:0;z-index:1002;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:24px;background:rgba(0,0,0,.82);color:#fff}
-#pmo b{font-size:22px}#pmo .big{font-size:84px;font-weight:900;line-height:1;color:var(--ac)}
-#pmo p{margin:0;font-size:14px;color:#cfd3df;font-weight:500;max-width:320px}
 body.recording .toast{display:none}
 #recbar{position:fixed;top:12px;z-index:1001;display:none;flex-direction:column;gap:8px;width:170px;background:rgba(10,11,16,.94);border:1px solid var(--line);border-radius:12px;padding:10px;font-size:12px}
 #recbar b{color:#ff4d4d}
 .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#ff4d4d;margin-right:6px;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:.2}}
-
-/* desktop: vertical tab list on the left of the options, preview stays fixed on the left */
-@media(min-width:900px){
-  .ctl{display:grid;grid-template-columns:150px minmax(0,1fr);gap:12px;align-items:start}
-  .ctl>.tabs{grid-column:1;grid-row:1;flex-direction:column;overflow:visible;position:sticky;top:12px;margin:0;padding:0;gap:6px}
-  .ctl>.tabs .tab{width:100%;text-align:left;border-radius:12px}
-  .ctl>.pane{grid-column:2;grid-row:1}
-  .phone{width:min(100%,350px,max(180px,calc((100vh - 160px) * 9 / 16)))}
-}
 </style>
 </head>
 <body>
 <header>
-  <h1>🎬 Clip Studio Pro <span style="font-size:12px;font-weight:700;color:#111;background:#ffd400;border-radius:999px;padding:2px 10px;vertical-align:middle;-webkit-text-fill-color:#111">v27 · no gap + side tabs</span></h1>
-  <p>Find the best moments, add a streamer facecam, color grade, add effects, a streamer name bar and animated captions, and translate them to English.</p>
+  <h1>🎬 Clip Studio Pro</h1>
+  <p>Find the best moments, add a streamer facecam, color grade, add effects and animated captions, and translate them to English.</p>
 </header>
 
 <main>
   <section class="card prev">
     <div class="phone" id="phone">
-      <div class="stage" id="stage"><div class="vwrap" id="vwrap"><div id="yt"></div><div id="cens"></div></div></div>
+      <div class="stage" id="stage"><div class="vwrap" id="vwrap"><div id="yt"></div></div></div>
       <div class="cam" id="cam"><div class="camv" id="camv"><div id="yt2"></div></div></div>
       <div class="fx vig"></div>
       <div class="fx grain"></div>
       <div class="fx scan"></div>
       <div class="fx leak"></div>
       <div class="fx bars" id="bars"></div>
-      <div class="fx neon" id="neon"></div>
-      <div class="mid k-insta" id="mid"></div>
       <div class="fx flash" id="flash"></div>
       <div class="fx fade" id="fade"></div>
       <div class="empty" id="empty">Paste a YouTube link and<br>press "Load clip"</div>
       <div class="cap bottom s1 up" id="cap"></div>
-      <div class="cta" id="cta"><div class="cta-b like"><span class="ic" id="ctaIc">👍</span><span id="ctaL">Like</span></div><div class="cta-b sub"><span class="s1" id="ctaS1">🔔 Subscribe</span><span class="s2" id="ctaS2">✔ Subscribed</span></div></div>
-      <div class="lt cine" id="lt"><div class="ln-line"></div><div class="ln-panel"><div class="ln-name"><span id="ltN"></span></div><div class="ln-sub" id="ltS"></div></div></div>
       <div class="mark" id="mark"></div>
       <div class="bar"><i id="prog"></i></div>
-      <div id="cdraw"><div id="cdrawbox"></div><div class="pickmsg">Video par ungli ya mouse se box kheeniye</div></div>
       <div class="pick" id="pick"><div class="pickbox" id="pickbox"></div><div class="pickmsg">Tap or drag the box onto the streamer's facecam</div></div>
     </div>
-    <div class="time" id="time">00:00:00 / 00:00:00</div>
+    <div class="time" id="time">0:00 / 0:00</div>
     <div class="ctrl">
-      <button class="skip" id="back" title="Back 5 seconds (Left arrow)">⏪ 5s</button>
       <button class="pri" id="play">▶ Play clip</button>
-      <button class="skip" id="fwd" title="Forward 5 seconds (Right arrow)">5s ⏩</button>
-      <button id="restart">⏮ Restart</button>
+      <button id="back" title="Back 5 seconds">⏪ 5s</button>
+      <button id="fwd" title="Forward 5 seconds">5s ⏩</button>
+      <button id="restart" title="Restart clip">⏮</button>
     </div>
   </section>
 
-  <div class="ctl">
+  <div>
     <div class="tabs" id="tabs">
       <button class="tab on" data-t="clip">🎞 Clip</button>
       <button class="tab" data-t="moments">🎯 Moments</button>
@@ -315,7 +195,6 @@ body.recording .toast{display:none}
       <button class="tab" data-t="color">🎨 Color</button>
       <button class="tab" data-t="fx">✨ Effects</button>
       <button class="tab" data-t="export">⬇ Download</button>
-      <button class="tab" data-t="censor">🛡 Censor</button>
       <button class="tab" data-t="share">🔗 Share</button>
     </div>
 
@@ -324,14 +203,12 @@ body.recording .toast{display:none}
       <label>YouTube link (video, Shorts or livestream replay)</label>
       <input type="text" id="url" placeholder="https://www.youtube.com/watch?v=...">
       <div class="row">
-        <div><label>Start (HH:MM:SS)</label><input type="text" id="start" value="00:00:00" placeholder="00:00:00" inputmode="text" autocomplete="off">
+        <div><label>Start (min:sec)</label><input type="text" id="start" value="0:00">
           <button class="mini" id="setStart">Use current time as start</button></div>
-        <div><label>End (HH:MM:SS)</label><input type="text" id="end" value="00:00:30" placeholder="00:00:30" inputmode="text" autocomplete="off">
+        <div><label>End</label><input type="text" id="end" value="0:30">
           <button class="mini" id="setEnd">Use current time as end</button></div>
       </div>
       <label class="chk"><input type="checkbox" id="loop" checked> Loop the clip</label>
-      <label>Player type (agar video load na ho to dusra chuniye)</label>
-      <select id="yt_host"><option value="standard" selected>Normal YouTube player (pehle ye try kijiye)</option><option value="privacy">Privacy player (youtube-nocookie)</option></select>
       <div style="margin-top:12px"><button class="pri" id="load" style="width:100%">Load clip</button></div>
       <label class="chk"><input type="checkbox" id="lite" checked> Smooth mode (turns off animated grain, light leak and glitch)</label>
       <div class="hint">Hours work too, like 1:23:45. A stream that is still live stutters when you jump around in it, so use the replay link after the stream has ended. If playback is still choppy, turn off the facecam while you pick times (Layout tab), because it runs a second copy of the video.</div>
@@ -366,14 +243,8 @@ oh my god did you see that?!"></textarea>
         <option value="fill">Fill: gameplay fills the vertical frame</option>
         <option value="fit">Fit: whole 16:9 frame, no cropping</option>
         <option value="stack">Stacked: gameplay on top, facecam panel below</option>
-        <option value="stackt">Stacked: facecam panel on top, gameplay below</option>
       </select>
       <div class="sl"><span>Gameplay position</span><input type="range" id="xpos" min="0" max="100" value="50"><em></em></div>
-      <label class="chk"><input type="checkbox" id="ytcrop_on" checked> Hide YouTube's title, "More videos" and other overlays</label>
-      <div class="sl"><span>Hide strength %</span><input type="range" id="ytcrop" min="5" max="40" value="22"><em></em></div>
-      <div class="hint" style="margin:0 0 8px">YouTube draws its title at the top and "More videos" at the bottom of its player, mostly when the video is paused. This pushes them out of view without cutting the video picture. If any still show, raise the strength. The big play button in the middle only shows while paused.</div>
-      <div class="sl"><span>Stacked: gameplay height %</span><input type="range" id="split" min="40" max="90" value="70"><em></em></div>
-      <div class="hint">In Stacked layout, the gameplay takes this much of the height and the facecam panel gets the rest, with no border or gap between them. Drag it up for bigger gameplay, down for a bigger facecam.</div>
       <label>Background color (shows in Fit mode)</label>
       <input type="color" id="bgc" value="#0a0b10">
 
@@ -381,22 +252,11 @@ oh my god did you see that?!"></textarea>
       <label class="chk"><input type="checkbox" id="camon" checked> Show the streamer's facecam (cropped from the stream)</label>
       <div class="row">
         <div><label>Position</label>
-          <select id="ccorner">
-            <option value="br" selected>Bottom right</option><option value="bl">Bottom left</option>
-            <option value="tr">Top right</option><option value="tl">Top left</option>
-            <option value="tm">Top middle</option>
-            <option value="mm">Middle (center)</option>
-            <option value="rm">Right middle</option><option value="lm">Left middle</option>
-            <option value="ac">Bottom middle, just above captions</option>
-            <option value="ptop">Full panel on TOP (stacked)</option>
-            <option value="pbot">Full panel at BOTTOM (stacked)</option>
-          </select></div>
+          <select id="ccorner"><option value="br" selected>Bottom right</option><option value="bl">Bottom left</option><option value="tr">Top right</option><option value="tl">Top left</option><option value="tc">Top middle</option><option value="mc">Middle (center)</option><option value="mr">Right middle</option><option value="ml">Left middle</option><option value="ac">Just above captions</option></select></div>
         <div><label>Shape</label>
-          <select id="cshape"><option value="round" selected>Rounded square</option><option value="circle">Circle</option><option value="wide">Wide 4:3</option><option value="wide169">Wider 16:9</option><option value="ultra">Ultra wide 21:9</option><option value="strip">Strip 3:1</option></select></div>
+          <select id="cshape"><option value="round" selected>Rounded square</option><option value="circle">Circle</option><option value="wide">Wide 4:3</option></select></div>
       </div>
-      <div class="sl"><span>Panel height % (stacked)</span><input type="range" id="cpanel" min="10" max="60" value="30"><em></em></div>
-      <div class="sl"><span>Size</span><input type="range" id="csize" min="18" max="92" value="32"><em></em></div>
-      <label class="chk"><input type="checkbox" id="cneon" checked> Neon glow border on the facecam (uses the neon color from Effects). Not used in Stacked layouts.</label>
+      <div class="sl"><span>Size</span><input type="range" id="csize" min="18" max="52" value="32"><em></em></div>
       <div class="sl"><span>Border</span><input type="range" id="cbw" min="0" max="8" value="3"><em></em></div>
       <div class="row">
         <div><label>Border color</label><input type="color" id="cbc" value="#ffffff"></div>
@@ -406,16 +266,15 @@ oh my god did you see that?!"></textarea>
       <div class="sl"><span>Cam zoom</span><input type="range" id="cz" min="1.5" max="8" step="0.1" value="4"><em></em></div>
       <div class="sl"><span>Cam left/right</span><input type="range" id="cx" min="0" max="100" step="0.5" value="88"><em></em></div>
       <div class="sl"><span>Cam up/down</span><input type="range" id="cy" min="0" max="100" step="0.5" value="80"><em></em></div>
-      <div class="hint">YouTube gives us one video, and the streamer's webcam is a small box inside it. The facecam here is a zoomed copy of that box, kept in sync and muted. Press "Pick facecam area", then tap or drag the box onto the webcam in the stream. Because it zooms into a small part of the picture, it looks softer than the main video. Captions and the facecam move up automatically so they don't sit on top of the streamer name bar.</div>
+      <div class="hint">YouTube gives us one video, and the streamer's webcam is a small box inside it. The facecam here is a zoomed copy of that box, kept in sync and muted. Press "Pick facecam area", then tap or drag the box onto the webcam in the stream. Because it zooms into a small part of the picture, it looks softer than the main video. Captions move up automatically so they don't sit under the facecam.</div>
     </section>
 
     <section class="card pane" id="p-caps">
       <h2><b>4</b> Captions</h2>
-      <label>One caption per line: time, then text (or just the text)</label>
+      <label>One caption per line: time, then text</label>
       <textarea id="caps" placeholder="0:00 This clip is absolutely wild
 0:04 Watch what happens next
 0:09 And here comes the best part"></textarea>
-      <div class="hint" id="capstat" style="margin:6px 0 0"></div>
       <label class="chk"><input type="checkbox" id="rel"> Count times from clip start (0:00 = start of clip)</label>
       <div class="row" style="margin-top:10px">
         <button class="pri" id="tr">🌐 Translate to English</button>
@@ -426,9 +285,6 @@ oh my god did you see that?!"></textarea>
 
     <section class="card pane" id="p-style">
       <h2><b>5</b> Caption style</h2>
-      <label class="chk" style="margin:0 0 4px"><input type="checkbox" id="cap_on" checked> Show my captions (the ones you type in the Captions tab)</label>
-      <label class="chk" style="margin:0 0 8px"><input type="checkbox" id="yt_cc"> Show YouTube's own captions (automatic subtitles from the video)</label>
-      <div class="hint" style="margin:0 0 8px">Leave the YouTube one off to avoid two captions on top of each other. Subtitles that the streamer burned into the video picture itself cannot be removed.</div>
       <div class="row">
         <div><label>Style</label>
           <select id="style">
@@ -459,7 +315,7 @@ oh my god did you see that?!"></textarea>
             <option value="">None</option>
           </select></div>
         <div><label>Position</label>
-          <select id="pos"><option value="bottom">Bottom</option><option value="lowmid">Bottom middle (a bit higher)</option><option value="middle">Middle</option><option value="top">Top</option></select></div>
+          <select id="pos"><option value="bottom">Bottom</option><option value="bmid" selected>Bottom middle</option><option value="middle">Middle</option><option value="top">Top</option></select></div>
       </div>
       <div class="row">
         <div><label>Highlight color</label><input type="color" id="hl" value="#ffd400"></div>
@@ -468,10 +324,6 @@ oh my god did you see that?!"></textarea>
       </div>
       <div class="sl"><span>Text size</span><input type="range" id="fs" min="5" max="13" step="0.5" value="8"><em id="fs_v">8</em></div>
       <label class="chk"><input type="checkbox" id="up" checked> Uppercase English words</label>
-      <div class="row">
-        <div><label>Caption text color</label><input type="color" id="cap_col" value="#ffffff"></div>
-        <div><label>Highlight color</label><input type="color" id="hl2" value="#ffd400"></div>
-      </div>
     </section>
 
     <section class="card pane" id="p-color">
@@ -501,74 +353,6 @@ oh my god did you see that?!"></textarea>
 
     <section class="card pane" id="p-fx">
       <h2><b>7</b> Effects</h2>
-
-      <h3 style="margin-top:4px">Neon border</h3>
-      <label class="chk"><input type="checkbox" id="neon_on" checked> Neon light around the whole video</label>
-      <div class="row">
-        <div><label>Neon color</label><input type="color" id="neon_col" value="#00f0ff"></div>
-        <div><label>Animation</label>
-          <select id="neon_an"><option value="steady">Steady</option><option value="pulse" selected>Pulse</option><option value="cycle">Color cycle</option></select></div>
-      </div>
-      <label>Light style</label>
-      <select id="neon_style"><option value="insta" selected>Instagram colors (yellow, orange, pink, purple)</option><option value="solid">Single neon color</option></select>
-      <div class="sl"><span>Thickness</span><input type="range" id="neon_w" min="0.4" max="3" step="0.1" value="1.2"><em></em></div>
-      <div class="sl"><span>Glow</span><input type="range" id="neon_g" min="2" max="14" step="0.5" value="6"><em></em></div>
-
-      <h3>Text between facecam and gameplay</h3>
-      <label class="chk"><input type="checkbox" id="mid_on" checked> Show a line of text where the facecam meets the gameplay</label>
-      <label>Your text</label>
-      <input type="text" id="mid_txt" placeholder="e.g. Follow for more" autocomplete="off">
-      <div class="row">
-        <div><label>Background</label>
-          <select id="mid_k"><option value="insta" selected>Instagram gradient</option><option value="dark">Dark pill</option><option value="none">No background</option></select></div>
-        <div><label>Text color</label><input type="color" id="mid_col" value="#ffffff"></div>
-      </div>
-      <div class="sl"><span>Text size</span><input type="range" id="mid_sz" min="30" max="90" value="55"><em></em></div>
-      <div class="sl"><span>Move up / down</span><input type="range" id="mid_y" min="-20" max="20" value="0"><em></em></div>
-      <label class="chk"><input type="checkbox" id="mid_up" checked> Uppercase</label>
-      <div class="hint">In both Stacked layouts the text sits exactly on the line between the facecam panel and the gameplay. In the other layouts it sits in the middle of the video, and you can move it with the slider. Nothing shows until you type some text. Leave the text empty if you want no bar at all between the two.</div>
-
-      <h3>Like and Subscribe / Follow buttons</h3>
-      <label class="chk"><input type="checkbox" id="cta_on" checked> Show animated Like and Subscribe / Follow buttons at the bottom</label>
-      <div class="row">
-        <div><label>Platform</label>
-          <select id="cta_plat"><option value="yt">YouTube: Like + Subscribe</option><option value="ig">Instagram: Like + Follow</option><option value="mix">Mix: random per appearance</option></select></div>
-        <div><label>When</label>
-          <select id="cta_mode"><option value="random">Random times</option><option value="start">Once near the start</option><option value="end">Once near the end</option></select></div>
-      </div>
-      <div class="sl"><span>Button size</span><input type="range" id="cta_sz" min="60" max="140" value="100"><em></em></div>
-      <button class="mini" id="cta_shuf">🎲 Shuffle the times</button>
-      <div class="hint">Each appearance lasts about 5 seconds: the buttons pop up, Like gets pressed, then Subscribe or Follow gets pressed. Times are random each time you load or shuffle. These are plain styled buttons, not the platform logos.</div>
-
-      <h3>Streamer name bar</h3>
-      <label class="chk"><input type="checkbox" id="lt_on" checked> Show the animated name bar at the bottom</label>
-      <label>Streamer name</label>
-      <input type="text" id="lt_name" placeholder="e.g. Mortal" autocomplete="off">
-      <label>Tagline (optional)</label>
-      <input type="text" id="lt_sub" placeholder="e.g. Live on YouTube" autocomplete="off">
-      <div class="row">
-        <div><label>Bar style</label>
-          <select id="lt_style">
-            <option value="cine">Cinematic (dark panel)</option>
-            <option value="bold">Solid color</option>
-            <option value="glass">Glass</option>
-          </select></div>
-        <div><label>Accent color</label><input type="color" id="lt_col" value="#ffd400"></div>
-      </div>
-      <div class="row">
-        <div><label>Align</label>
-          <select id="lt_al"><option value="l" selected>Left</option><option value="c">Center</option><option value="r">Right</option></select></div>
-        <div><label>When to show</label>
-          <select id="lt_mode">
-            <option value="always">Whole clip</option>
-            <option value="first">First 7 seconds</option>
-            <option value="loop">Every 14 seconds, for 7</option>
-          </select></div>
-      </div>
-      <div class="sl"><span>Size</span><input type="range" id="lt_sz" min="60" max="160" value="100"><em></em></div>
-      <div class="hint">The bar sweeps in with a glowing line, the panel opens, the name slides up and a light shine passes over it, then it sweeps out. It stays above the cinematic black bars if you turn those on.</div>
-
-      <h3>Look</h3>
       <div class="row">
         <div><label>Motion (gameplay only)</label>
           <select id="motion">
@@ -604,65 +388,36 @@ oh my god did you see that?!"></textarea>
       <div class="row" style="margin-top:10px">
         <div><label>Format</label>
           <select id="recfmt"><option value="auto">Auto (MP4 if your browser can)</option><option value="webm">WebM</option></select></div>
-        <div><label>Output size</label>
-          <select id="recsize"><option value="1080" selected>1080 × 1920 (best for Shorts and Reels)</option><option value="native">Screen size, no resizing</option></select></div>
         <div><label>Quality</label>
-          <select id="recbr"><option value="25000000" selected>Maximum (25 Mbps)</option><option value="12000000">High (12 Mbps)</option><option value="6000000">Standard (6 Mbps)</option></select></div>
+          <select id="recbr"><option value="10000000">High</option><option value="5000000" selected>Standard</option></select></div>
       </div>
-      <h3>On a phone</h3>
-      <div class="row">
-        <div><label>Frame</label>
-          <select id="pm_frame"><option value="916" selected>9:16, centered (black bars on tall phones)</option><option value="full">Fill the whole phone screen</option></select></div>
-        <div><label>Countdown</label>
-          <select id="pm_cd"><option value="5">5 seconds</option><option value="8" selected>8 seconds</option><option value="12">12 seconds</option></select></div>
-      </div>
-      <div style="margin-top:10px"><button class="pri" id="pmbtn" style="width:100%">📱 Phone recording mode</button></div>
-      <div class="hint">Phones can't record a web page by themselves, so this mode uses your phone's own screen recorder, which saves in your phone's full screen resolution with sound. Tap the button, then start your screen recorder during the countdown (iPhone: Control Center, record button. Android: quick settings, Screen record). The clip plays once in full screen with all your captions, facecam and effects. When it finishes, stop the recorder and trim the countdown off the start in your gallery. Double-tap the screen to quit early. Turn on Do Not Disturb first so no notification gets recorded.</div>
       <div style="margin-top:10px"><button id="recall" style="width:100%">⏺ Record all moment picks (one file each)</button></div>
       <div class="hint">
         <ol>
-          <li>Use desktop Chrome or Edge. Phones can't record the screen from a web page. For the sharpest file, press <b>F11</b> (full screen) and keep browser zoom at 100%, because the recording can never be bigger than your screen.</li>
+          <li>Use desktop Chrome or Edge. Phones can't record the screen from a web page.</li>
           <li>Press Record. When the browser asks, choose <b>this tab</b> and keep "Share tab audio" ticked, or the file will have no sound.</li>
-          <li>The preview grows to full height, plays the clip once from start to end, and the file downloads by itself. The recording is cropped to just the vertical frame, with captions, facecam, name bar, color and effects included.</li>
+          <li>The preview grows to full height, plays the clip once from start to end, and the file downloads by itself. The recording is cropped to just the vertical frame, with captions, facecam, color and effects included.</li>
           <li>Leave the tab open and in front while it records. For "Record all picks", Chrome may ask once to allow multiple downloads.</li>
         </ol>
         This records what plays in your own browser, so the quality depends on your computer and the stream. Only clip content you have the right to use, such as your own streams or ones with the streamer's permission. WebM files may not show a total length until they are played, which is normal.
       </div>
     </section>
 
-    <section class="card pane" id="p-censor">
-      <h2><b>9</b> Blur / censor boxes</h2>
-      <div class="hint" style="margin:0 0 8px">Video ke kisi hisse (jaise khoon) par box lagaiye. Us box me blur, mosaic, rang badalna, grayscale ya black ho sakta hai. Har box ka apna samay (clip ke shuru se) aur apni jagah hoti hai. Is tab me box peeli dotted line se dikhte hain; recording ya download me ye line nahi aati.</div>
-      <button class="pri" id="cb_add" style="width:100%">➕ Naya box jodiye</button>
-      <div id="cbList"></div>
-      <div class="hint">Ye kaam khud khoon pehchan kar nahi karta. Aap jagah aur samay chunte hain. Rang badalne wale box me us hisse ke saare rang badalte hain, sirf laal nahi. Box video ke saath hi hilta aur zoom hota hai.</div>
-    </section>
-
     <section class="card pane" id="p-share">
       <h2><b>9</b> Share</h2>
       <button class="pri" id="share" style="width:100%">🔗 Copy share link for this clip</button>
-      <div class="hint">The link saves the video, times, captions, layout, facecam, name bar, style, color and effects. It does not include the transcript. Whoever opens it sees exactly this clip.</div>
+      <div class="hint">The link saves the video, times, captions, layout, facecam, style, color and effects. It does not include the transcript. Whoever opens it sees exactly this clip.</div>
     </section>
   </div>
 </main>
-<div id="pmback"></div>
-<div id="pmo"><b id="pmt"></b><div class="big" id="pmn"></div><p id="pmp"></p><div class="row" id="pmb" style="max-width:320px;width:100%"></div></div>
 <div id="recbar"><div><span class="dot"></span><b>Recording</b></div><div id="recmsg">Starting...</div><button id="recstop" class="pri">■ Stop and save</button></div>
 <div class="toast" id="toast"></div>
 
 <script>
 /*PURE-START*/
-function pt(s){
-  s=String(s).trim().toLowerCase().replace(/[;,]/g,':').replace(/\s+/g,'');
-  if(!s)return 0;
-  let m=s.match(/^(?:(\d+)h)?(?:(\d+)m(?:in)?)?(?:(\d+(?:\.\d+)?)s(?:ec)?)?$/);
-  if(m&&/[hms]/.test(s))return (+m[1]||0)*3600+(+m[2]||0)*60+(+m[3]||0);
-  const p=s.split(':').map(x=>x===''?NaN:Number(x));
-  if(p.length>3||p.some(isNaN))return NaN;
-  return p.reduce((a,b)=>a*60+b,0);
-}
-function ft(t){t=Math.max(0,t||0);const h=Math.floor(t/3600),m=Math.floor(t%3600/60),sc=Math.floor(t%60);return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(sc).padStart(2,'0')}
-function ftd(t){t=Math.round(Math.max(0,t||0)*10)/10;const h=Math.floor(t/3600),m=Math.floor(t%3600/60),sc=Math.round((t%60)*10)/10;const ss=Number.isInteger(sc)?String(sc).padStart(2,'0'):sc.toFixed(1).padStart(4,'0');return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+ss}
+function pt(s){s=String(s).trim();if(!s)return 0;const p=s.split(':').map(Number);if(p.some(isNaN))return NaN;return p.reduce((a,b)=>a*60+b,0)}
+function ft(t){t=Math.max(0,t||0);const h=Math.floor(t/3600),m=Math.floor(t%3600/60),s=Math.floor(t%60);return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(s).padStart(2,'0')}
+function ftd(t){t=Math.round(Math.max(0,t||0)*10)/10;const h=Math.floor(t/3600),m=Math.floor(t%3600/60),s=t%60;const whole=Number.isInteger(s);const ss=whole?String(s).padStart(2,'0'):s.toFixed(1).padStart(4,'0');return (h?h+':'+String(m).padStart(2,'0'):m)+':'+ss}
 function tsToSec(s){s=String(s).trim().replace(',','.');const p=s.split(':').map(Number);if(p.some(isNaN))return NaN;return p.reduce((a,b)=>a*60+b,0)}
 
 function parseTranscript(raw){
@@ -771,61 +526,30 @@ let player=null,ready=false,apiReady=false,pendingLoad=null,playing=false,caps=[
 let camPlayer=null,camReady=false,camId=null,lastSync=0,jumpAt=0,pickOn=false;
 let segsAll=[],picks=[],plOn=false,plList=[],plI=0;
 let recFinish=null,recCancel=false,recBusy=false;
-let ltKey='';
-let wantPlay=false,ccAt=0;
-/* only scroll the page to the top on small screens; on desktop the preview is fixed so nothing needs to move */
-const toTop=()=>{if(window.innerWidth<900)window.scrollTo({top:0,behavior:'smooth'})};
-function ytHostVal(){return $('yt_host').value==='privacy'?'https://www.youtube-nocookie.com':'https://www.youtube.com'}
-function ytCC(pl){
-  if(!pl)return;
-  const on=$('yt_cc').checked&&pl===player;
-  try{if(on){pl.loadModule('captions')}else{try{pl.setOption('captions','track',{})}catch(_){}pl.unloadModule('captions');pl.unloadModule('cc')}}catch(_){}
-}
-function userPause(){wantPlay=false;try{player.pauseVideo()}catch(_){}}
-function userPlay(){wantPlay=true;try{player.playVideo()}catch(_){}}
 
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function showErr(m){toast(m);const e=$('empty');e.style.display='grid';e.textContent=m}
 function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2800)}
 function vid(u){u=(u||'').trim();const m=u.match(/(?:youtu\.be\/|v=|shorts\/|live\/|embed\/)([\w-]{11})/);if(m)return m[1];return /^[\w-]{11}$/.test(u)?u:null}
-const S=()=>{const v=pt($('start').value);return isNaN(v)?0:v};
-const E=()=>{const raw=String($('end').value).trim();if(!raw)return S()+30;const e=pt(raw);return isNaN(e)?S()+30:e};
+const S=()=>pt($('start').value)||0;
+const E=()=>{const e=pt($('end').value);return isNaN(e)?S()+30:e};
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
 
 /* tabs */
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
-  document.body.classList.toggle('censoring',b.dataset.t==='censor');
   document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===b));
   document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id==='p-'+b.dataset.t));
 });
 
 /* captions */
 function parseCaps(){
-  const rel=$('rel').checked,s=S(),e=E();
-  const lines=$('caps').value.split('\n').map(l=>l.trim()).filter(Boolean);
-  let timed=lines.map(l=>{
+  const rel=$('rel').checked,s=S();
+  caps=$('caps').value.split('\n').map(l=>{
     const m=l.match(/^\s*(\d+(?::\d+){0,2}(?:\.\d+)?)\s+(.+?)\s*$/);
     if(!m)return null;
-    let t=pt(m[1]);if(isNaN(t))return null;if(rel)t+=s;
+    let t=pt(m[1]);if(rel)t+=s;
     return {t,text:m[2]};
-  }).filter(Boolean);
-  let mode='timed';
-  if(!timed.length&&lines.length){
-    /* no times typed: spread the lines evenly across the clip */
-    const len=Math.max(1,e-s);
-    timed=lines.map((x,i)=>({t:s+i*len/lines.length,text:x}));
-    mode='auto';
-  }
-  caps=timed.sort((a,b)=>a.t-b.t);
+  }).filter(Boolean).sort((a,b)=>a.t-b.t);
   lastKey='';
-  const st=$('capstat');
-  if(st){
-    const inside=caps.filter(c=>c.t>=s&&c.t<e).length;
-    if(!lines.length){st.textContent='No captions yet. Type one line per caption, like "0:03 your text", or just type the text and it is spread over the clip.';st.style.color='';}
-    else if(mode==='auto'){st.textContent=caps.length+' caption'+(caps.length>1?'s':'')+' spread evenly over the clip (no times typed).';st.style.color='#7ee787';}
-    else if(!inside){st.textContent='None of your '+caps.length+' caption times fall inside the clip ('+ft(s)+' to '+ft(e)+'), so nothing shows. Tick "Count times from clip start" below, or change the times.';st.style.color='#ff7b72';}
-    else{st.textContent=inside+' of '+caps.length+' captions are inside the clip and will show.';st.style.color='#7ee787';}
-  }
 }
 
 /* color presets */
@@ -846,254 +570,42 @@ function setColor(p){CIDS.forEach(k=>$('c_'+k).value=p[k]);applyAll()}
 document.querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{selectChip(ch.dataset.p);setColor(PRESETS[ch.dataset.p])});
 $('c_reset').onclick=()=>{selectChip('none');setColor(PRESETS.none)};
 
-/* streamer name bar geometry (all in cqw; phone height = 177.8cqw) */
-function isStk(){const l=$('layout').value;return l==='stack'||l==='stackt'}
-function ltActive(){return !!($('lt_on').checked&&$('lt_name').value.trim()&&!pickOn)}
-function ltBottom(){return $('f_bars').checked?21:3.5}
-function ltH(){const z=(+$('lt_sz').value)/100,sub=$('lt_sub').value.trim();return (5.8+(sub?3.8:0))*z+5.4*z}
-function ctaOn(){return $('cta_on').checked&&!pickOn}
-function ctaZ(){return (+$('cta_sz').value)/100}
-function stackH(){return (ltActive()?ltH()+1.5:0)+(ctaOn()?10*ctaZ()+1:0)}
-function ltTop(){
-  if($('layout').value==='stack')return 0;
-  const hh=stackH();
-  return hh>0?Math.round((ltBottom()+hh+3)*10)/10:0;
-}
-/* like / subscribe buttons */
-const CTAD=4.6;
-let ctaItems=[],ctaSig='',ctaKey='';
-function genCta(){
-  const s=S(),len=Math.max(1,E()-s),mode=$('cta_mode').value,pl=$('cta_plat').value;
-  const plat=()=>pl==='mix'?(Math.random()<.5?'yt':'ig'):pl;
-  let ts=[];
-  if(len<7)ts=[Math.max(.3,len/2-CTAD/2)];
-  else{
-    const lo=.8,hi=Math.max(lo,len-CTAD-.4);
-    if(mode==='start')ts=[Math.min(1.2,hi)];
-    else if(mode==='end')ts=[hi];
-    else{
-      const n=Math.max(1,Math.min(6,Math.floor(len/14),Math.floor((hi-lo)/5.4)+1));
-      for(let i=0;i<n;i++)ts.push(lo+Math.random()*(hi-lo));
-      ts.sort((a,b)=>a-b);
-      for(let i=1;i<ts.length;i++)ts[i]=Math.max(ts[i],ts[i-1]+5.4);
-      ts=ts.filter(x=>x<=hi+.01);
-    }
-  }
-  ctaItems=ts.map(t=>({t,plat:plat()}));
-}
-function ctaSetPlat(pl){
-  const el=$('cta');
-  if(pl==='ig'){$('ctaIc').textContent='❤️';$('ctaS1').textContent='➕ Follow';$('ctaS2').textContent='✔ Following';el.style.setProperty('--subc','#3b82f6');el.style.setProperty('--likec','#ff3d81')}
-  else{$('ctaIc').textContent='👍';$('ctaS1').textContent='🔔 Subscribe';$('ctaS2').textContent='✔ Subscribed';el.style.setProperty('--subc','#e62117');el.style.setProperty('--likec','#2f6fed')}
-}
-function renderCTA(t){
-  const el=$('cta');
-  if(!ctaOn()){if(ctaKey!==''){el.classList.remove('show');ctaKey=''}return}
-  const sig=S()+'|'+E()+'|'+$('cta_mode').value+'|'+$('cta_plat').value;
-  if(sig!==ctaSig){ctaSig=sig;genCta();ctaKey=''}
-  let idx='-',elp=0,pl=$('cta_plat').value==='ig'?'ig':'yt';
-  if(t===null){const c=(Date.now()/1000)%7;if(c<CTAD){idx='p';elp=c}}
-  else{
-    const rel=t-S();
-    if(t<E())for(let i=0;i<ctaItems.length;i++){const it=ctaItems[i];if(rel>=it.t&&rel<it.t+CTAD){idx=String(i);elp=rel-it.t;pl=it.plat;break}}
-  }
-  if(idx===ctaKey)return;
-  ctaKey=idx;
-  if(idx==='-'){el.classList.remove('show');return}
-  ctaSetPlat(pl);
-  el.style.setProperty('--cd',(-elp)+'s');
-  el.classList.remove('show');void el.offsetWidth;el.classList.add('show');
-}
-
 /* layout + facecam */
 function camAspect(){
-  if(isStk()){const ph=$('phone');return ph.clientWidth/Math.max(1,ph.clientHeight*(100-(+$('split').value))/100)}
-  return ({wide:4/3,wide169:16/9,ultra:21/9,strip:3}[$('cshape').value])||1;
-}
-/* where the caption block sits (bottom edge, in cqw) */
-function capBottomCqw(){
-  const p=$('pos').value,L=$('layout').value;
-  if(L==='stack'){const pn=100-(+$('split').value)+(midOn()?6:0);return (p==='lowmid'?pn+8:pn+2)*1.778}
-  if(p==='bottom')return Math.max(15*1.778,ltTop());
-  if(p==='lowmid')return Math.max(30*1.778,ltTop());
-  return 0;
-}
-function aboveCapBottom(){
-  const p=$('pos').value;
-  const capH=(+$('fs').value)*1.18*2;
-  if(p==='bottom'||p==='lowmid')return Math.round((capBottomCqw()+capH+3)*10)/10;
-  return 12;
+  if($('layout').value==='stack'){const ph=$('phone');return ph.clientWidth/Math.max(1,ph.clientHeight*0.42)}
+  return $('cshape').value==='wide'?4/3:1;
 }
 function applyLayout(){
   const L=pickOn?'fit':$('layout').value,st=$('stage'),vw=$('vwrap'),x=$('xpos').value;
   st.style.background=$('bgc').value;
-  st.style.setProperty('--ytm',$('ytcrop_on').checked?((+$('ytcrop').value)/100).toFixed(3):'0');
-  const sp=+$('split').value,stk=(L==='stack'||L==='stackt');
-  st.style.height=stk?sp+'%':'100%';st.style.top=L==='stackt'?(100-sp)+'%':'0';
+  st.style.height=L==='stack'?'58%':'100%';
   if(L==='fit')vw.style.cssText='width:100%;height:auto;left:0;top:50%;transform:translateY(-50%)';
   else vw.style.cssText='height:100%;width:auto;left:'+x+'%;top:50%;transform:translate(-'+x+'%,-50%)';
 }
-function camBottom(){return Math.max(4,ltTop())}
-function midOn(){return !!($('mid_on').checked&&$('mid_txt').value.trim())}
-function midTop(){
-  const L=$('layout').value,sp=+$('split').value,nudge=+$('mid_y').value;
-  let top=50;
-  if(L==='stack')top=sp;else if(L==='stackt')top=100-sp;
-  return Math.min(96,Math.max(4,top+nudge));
-}
-/* ---------- censor boxes ---------- */
-let boxes=[],lastT=null,drawIdx=-1;
-const MODES={blood:'Sirf khoon ka laal rang badlo (sirf download me)',blur:'Blur',mosaic:'Mosaic (pixel jaisa)',color:'Rang badalna',gray:'Grayscale (rang hatana)',black:'Black box'};
-const HUES={'Hara':120,'Neela':220,'Baingani':280,'Peela':50,'Gulabi':330};
-function newBox(){
-  const len=Math.max(1,E()-S());
-  return {on:1,from:0,to:Math.min(5,len),mode:'blur',str:16,hue:120,sens:5,shape:'rect',x:35,y:35,w:30,h:30};
-}
-function buildCens(){
-  const c=$('cens');if(!c)return;
-  c.innerHTML='';
-  boxes.forEach((b,i)=>{
-    const d=document.createElement('div');
-    d.className='cbox cedit m-'+b.mode+' '+b.shape;
-    d.dataset.n=i+1;
-    d.style.left=b.x+'%';d.style.top=b.y+'%';d.style.width=b.w+'%';d.style.height=b.h+'%';
-    d.style.setProperty('--cs',b.str);d.style.setProperty('--ch',b.hue+'deg');
-    c.appendChild(d);
-  });
-  renderCensor(lastT,true);
-}
-function renderCensor(t,force){
-  const c=$('cens');if(!c)return;
-  lastT=t;
-  const rel=(t===null||t===undefined)?-1:t-S(),end=E();
-  [...c.children].forEach((el,i)=>{
-    const b=boxes[i];if(!b)return;
-    const act=!!(b.on&&t!==null&&t!==undefined&&rel>=b.from&&rel<b.to&&t<end);
-    if(el.classList.contains('act')!==act)el.classList.toggle('act',act);
-  });
-}
-const mmss=s=>{s=Math.max(0,Math.round(s*10)/10);const m=Math.floor(s/60),r=Math.round((s%60)*10)/10;return m+':'+(r<10?'0':'')+r};
-function renderCensorUI(){
-  const L=$('cbList');if(!L)return;
-  if(!boxes.length){L.innerHTML='<div class="hint">Abhi koi box nahi hai. "Naya box jodiye" dabaiye.</div>';return}
-  L.innerHTML=boxes.map((b,i)=>`<div class="cb-card" data-i="${i}">
-    <div class="cb-h"><b>Box ${i+1}</b><label class="chk" style="margin:0"><input type="checkbox" data-k="on" ${b.on?'checked':''}> On</label><button data-a="del">🗑 Hatao</button></div>
-    <div class="row">
-      <div><label>Kab se (clip shuru se)</label><input type="text" data-k="from" value="${mmss(b.from)}" inputmode="text" autocomplete="off"></div>
-      <div><label>Kab tak</label><input type="text" data-k="to" value="${mmss(b.to)}" inputmode="text" autocomplete="off"></div>
-    </div>
-    <div class="row">
-      <button data-a="now0">Abhi ka samay = shuru</button><button data-a="now1">Abhi ka samay = ant</button>
-    </div>
-    <div class="row">
-      <div><label>Kya lage</label><select data-k="mode">${Object.entries(MODES).map(([k,v])=>`<option value="${k}" ${b.mode===k?'selected':''}>${v}</option>`).join('')}</select></div>
-      <div><label>Aakar</label><select data-k="shape"><option value="rect" ${b.shape==='rect'?'selected':''}>Chaukor</option><option value="oval" ${b.shape==='oval'?'selected':''}>Gol / ovel</option></select></div>
-    </div>
-    ${b.mode==='blood'?`<label>Khoon ka naya rang</label><select data-k="hue">${[...Object.entries(HUES),['Kala (gehra)',-1]].map(([k,v])=>`<option value="${v}" ${+b.hue===v?'selected':''}>${k}</option>`).join('')}</select>
-      <div class="sl"><span>Kitna laal pakde</span><input type="range" data-k="sens" min="1" max="10" value="${b.sens||5}"><em>${b.sens||5}</em></div>
-      <div class="hint" style="margin:4px 0 0">Box ke andar sirf gehra laal rang badlega, baaki sab waisa hi rahega. Ye asar yahan preview me nahi dikhta, sirf Download tab se record ki hui file me aata hai (desktop Chrome ya Edge). Laal kapde ya laal cheez bhi box me hui to wo bhi badlegi, isliye box khoon par hi tight rakhiye.</div>`:
-      b.mode==='color'?`<label>Naya rang</label><select data-k="hue">${Object.entries(HUES).map(([k,v])=>`<option value="${v}" ${+b.hue===v?'selected':''}>${k}</option>`).join('')}</select>`:
-      (b.mode==='blur'||b.mode==='mosaic')?`<div class="sl"><span>Kitna blur</span><input type="range" data-k="str" min="4" max="40" value="${b.str}"><em>${b.str}</em></div>`:''}
-    <div class="sl"><span>Left %</span><input type="range" data-k="x" min="0" max="100" value="${b.x}"><em>${b.x}</em></div>
-    <div class="sl"><span>Upar %</span><input type="range" data-k="y" min="0" max="100" value="${b.y}"><em>${b.y}</em></div>
-    <div class="sl"><span>Chaudai %</span><input type="range" data-k="w" min="3" max="100" value="${b.w}"><em>${b.w}</em></div>
-    <div class="sl"><span>Ooncha %</span><input type="range" data-k="h" min="3" max="100" value="${b.h}"><em>${b.h}</em></div>
-    <button class="mini" data-a="draw">✏ Video par kheench kar lagaiye</button>
-  </div>`).join('');
-}
-(function(){
-  const L=$('cbList');
-  L.addEventListener('input',e=>{
-    const t=e.target,k=t.dataset.k,card=t.closest('.cb-card');if(!k||!card)return;
-    const b=boxes[+card.dataset.i];if(!b)return;
-    if(t.type==='checkbox')b.on=t.checked?1:0;
-    else if(['x','y','w','h','str','sens'].includes(k)){b[k]=+t.value;const em=t.parentNode.querySelector('em');if(em)em.textContent=t.value}
-    else if(k==='mode'||k==='shape'||k==='hue'){b[k]=k==='hue'?+t.value:t.value;if(k==='mode')renderCensorUI()}
-    else return;
-    buildCens();
-  });
-  L.addEventListener('change',e=>{
-    const t=e.target,k=t.dataset.k,card=t.closest('.cb-card');if(!k||!card||(k!=='from'&&k!=='to'))return;
-    const b=boxes[+card.dataset.i];const v=pt(t.value);
-    if(isNaN(v)){toast('Samay aise likhiye: 0:05');t.value=mmss(b[k]);return}
-    b[k]=Math.max(0,v);if(b.to<=b.from){if(k==='from')b.to=b.from+3;else b.from=Math.max(0,b.to-3)}
-    t.value=mmss(b[k]);renderCensorUI();buildCens();
-  });
-  L.addEventListener('click',e=>{
-    const btn=e.target.closest('button');const card=e.target.closest('.cb-card');if(!btn||!card)return;
-    const i=+card.dataset.i,b=boxes[i],a=btn.dataset.a;
-    if(a==='del'){boxes.splice(i,1);renderCensorUI();buildCens()}
-    else if(a==='now0'||a==='now1'){
-      if(!ready||!player){toast('Pehle video load kijiye');return}
-      const r=Math.max(0,player.getCurrentTime()-S());
-      if(a==='now0'){b.from=r;if(b.to<=b.from)b.to=b.from+3}else{b.to=Math.max(r,b.from+.5)}
-      renderCensorUI();buildCens();
-    }
-    else if(a==='draw'){
-      if(!curId){toast('Pehle video load kijiye (Clip tab)');return}
-      drawIdx=i;$('cdraw').style.display='block';$('cdrawbox').style.display='none';
-      toTop();
-    }
-  });
-  $('cb_add').onclick=()=>{boxes.push(newBox());renderCensorUI();buildCens();toast('Box '+boxes.length+' jud gaya. Ab use video par kheenchiye')};
-  const dr=$('cdraw'),db=$('cdrawbox');let st=null;
-  const pos=e=>{const r=$('vwrap').getBoundingClientRect();return {x:Math.min(100,Math.max(0,(e.clientX-r.left)/r.width*100)),y:Math.min(100,Math.max(0,(e.clientY-r.top)/r.height*100)),r}};
-  dr.addEventListener('pointerdown',e=>{st=pos(e);try{dr.setPointerCapture(e.pointerId)}catch(_){}});
-  dr.addEventListener('pointermove',e=>{
-    if(!st)return;const p=pos(e),ph=dr.getBoundingClientRect();
-    const x1=Math.min(st.x,p.x),x2=Math.max(st.x,p.x),y1=Math.min(st.y,p.y),y2=Math.max(st.y,p.y);
-    db.style.display='block';
-    db.style.left=(st.r.left-ph.left+x1/100*st.r.width)+'px';db.style.top=(st.r.top-ph.top+y1/100*st.r.height)+'px';
-    db.style.width=((x2-x1)/100*st.r.width)+'px';db.style.height=((y2-y1)/100*st.r.height)+'px';
-  });
-  dr.addEventListener('pointerup',e=>{
-    if(!st)return;const p=pos(e),b=boxes[drawIdx];
-    const x1=Math.min(st.x,p.x),x2=Math.max(st.x,p.x),y1=Math.min(st.y,p.y),y2=Math.max(st.y,p.y);
-    st=null;dr.style.display='none';db.style.display='none';
-    if(b&&x2-x1>=2&&y2-y1>=2){b.x=Math.round(x1);b.y=Math.round(y1);b.w=Math.max(3,Math.round(x2-x1));b.h=Math.max(3,Math.round(y2-y1));renderCensorUI();buildCens();toast('Box lag gaya ✅')}
-    drawIdx=-1;
-  });
-  dr.addEventListener('pointercancel',()=>{st=null;dr.style.display='none';db.style.display='none';drawIdx=-1});
-})();
-function applyMid(){
-  const m=$('mid'),t=$('mid_txt').value.trim(),on=midOn()&&!pickOn;
-  if(!on){m.style.display='none';return}
-  m.className='mid k-'+$('mid_k').value+($('mid_up').checked?' up':'');
-  m.textContent=t;
-  m.style.display='block';
-  m.style.fontSize=((+$('mid_sz').value)/10)+'cqw';
-  m.style.setProperty('--mtc',$('mid_col').value);
-  m.style.top=midTop()+'%';
-}
+function capBaseCqw(){return ($('pos').value==='bmid'?25:15)*16/9}
 function applyCam(){
   const cam=$('cam'),on=$('camon').checked&&!pickOn&&!!curId;
   if(!on){cam.style.cssText='display:none';return}
-  const L=$('layout').value,bw=+$('cbw').value,cn=$('cneon').checked,col=cn?$('neon_col').value:$('cbc').value;
-  const neonSh='0 0 1.2cqw currentColor,0 0 3.5cqw currentColor,0 0 7cqw currentColor,inset 0 0 3cqw currentColor',bcol=cn?'currentColor':col;
-  const insta=cn&&$('neon_style').value==='insta';
-  let css='display:block;color:'+(insta?'#d62976':col)+';';
-  if(insta)css+='--cbw:'+(bw*0.4)+'cqw;';
-  const instaSh='0 0 1.4cqw rgba(214,41,118,.9),0 0 4cqw rgba(250,126,30,.65),0 0 8cqw rgba(150,47,191,.55),inset 0 0 3cqw rgba(214,41,118,.6)';
-  const an=$('neon_an').value,anc=insta&&an==='cycle'?'pulse':(an==='steady'?'':an);
-  cam.className='cam'+(cn?' cneon '+anc+(insta?' cinsta':''):'');
-  if(L==='stack'||L==='stackt'){
-    /* stacked: the facecam panel and the gameplay touch directly. No border, no glow, no strip, and 1px overlap so no hairline gap can show */
-    const tp=L==='stackt';
-    cam.className='cam';
-    css='display:block;left:0;right:0;'+(tp?'top:0;':'bottom:0;')+'height:calc('+(100-(+$('split').value))+'% + 1px);border-radius:0;border:0;box-shadow:none;';
+  const L=$('layout').value,bw=+$('cbw').value,col=$('cbc').value;
+  let css='display:block;';
+  if(L==='stack'){
+    css+='left:0;right:0;bottom:0;height:42%;border-radius:0;border-top:'+(bw*0.4)+'cqw solid '+col+';';
   }else{
     const size=+$('csize').value,r=camAspect(),corner=$('ccorner').value,shape=$('cshape').value;
     css+='width:'+size+'cqw;aspect-ratio:'+r+';';
-    if(corner==='tm')css+='top:5cqw;left:50%;transform:translateX(-50%);';
-    else if(corner==='mm')css+='top:50%;left:50%;transform:translate(-50%,-50%);';
-    else if(corner==='rm')css+='top:50%;right:4cqw;transform:translateY(-50%);';
-    else if(corner==='lm')css+='top:50%;left:4cqw;transform:translateY(-50%);';
-    else if(corner==='ac')css+='bottom:'+aboveCapBottom()+'cqw;left:50%;transform:translateX(-50%);';
-    else css+=(corner[0]==='b'?'bottom:'+camBottom()+'cqw;':'top:5cqw;')+(corner[1]==='r'?'right:4cqw;':'left:4cqw;');
-    css+='max-width:92cqw;';
-    css+='border-radius:'+(shape==='circle'?'50%':shape==='round'?'6cqw':shape==='wide'?'4cqw':'3cqw')+';';
-    css+=insta?'border:0;':'border:'+(bw*0.4)+'cqw solid '+bcol+';';
-    css+=cn?'box-shadow:'+(insta?instaSh:neonSh)+',0 2cqw 6cqw rgba(0,0,0,.6);':($('cglow').checked?'box-shadow:0 0 5cqw '+col+',0 2cqw 6cqw rgba(0,0,0,.6);':'box-shadow:0 2cqw 6cqw rgba(0,0,0,.6);');
+    if(corner==='tc')css+='top:5cqw;left:50%;transform:translateX(-50%);';
+    else if(corner==='mc')css+='top:50%;left:50%;transform:translate(-50%,-50%);';
+    else if(corner==='mr')css+='top:50%;right:4cqw;transform:translateY(-50%);';
+    else if(corner==='ml')css+='top:50%;left:4cqw;transform:translateY(-50%);';
+    else if(corner==='ac'){
+      const p=$('pos').value;
+      const bot=(p==='bottom'||p==='bmid')?capBaseCqw()+(+$('fs').value)*1.18*2+3:8;
+      css+='bottom:'+bot+'cqw;left:50%;transform:translateX(-50%);';
+    }
+    else css+=(corner[0]==='b'?'bottom:4cqw;':'top:5cqw;')+(corner[1]==='r'?'right:4cqw;':'left:4cqw;');
+    css+='border-radius:'+(shape==='circle'?'50%':shape==='wide'?'4cqw':'6cqw')+';';
+    css+='border:'+(bw*0.4)+'cqw solid '+col+';';
+    css+=$('cglow').checked?'box-shadow:0 0 5cqw '+col+',0 2cqw 6cqw rgba(0,0,0,.6);':'box-shadow:0 2cqw 6cqw rgba(0,0,0,.6);';
   }
   cam.style.cssText=css;
   layoutCam();
@@ -1134,7 +646,7 @@ $('pickbtn').onclick=()=>{
   $('pick').style.display=pickOn?'block':'none';
   $('pickbtn').textContent=pickOn?'✅ Done picking':'🎯 Pick facecam area';
   applyAll();
-  if(pickOn){updatePick();toTop()}
+  if(pickOn){updatePick();window.scrollTo({top:0,behavior:'smooth'})}
 };
 
 /* apply everything */
@@ -1144,22 +656,20 @@ function applyAll(){
   c.className='cap '+$('pos').value+' '+$('style').value+' '+$('font').value+' '+$('anim').value+($('up').checked?' up':'');
   c.style.setProperty('--hl',$('hl').value);
   c.style.setProperty('--fs',$('fs').value);
-  c.style.display=(pickOn||!$('cap_on').checked)?'none':'';
-  c.style.setProperty('--tc',$('cap_col').value);
-  $('hl2').value=$('hl').value;
-  let b='';
-  const pv=$('pos').value;
-  if(pv==='bottom'||pv==='lowmid'){
-    const base=pv==='bottom'?'15%':'30%';
-    if(L==='stack'){const pn=100-(+$('split').value)+(midOn()?6:0);b=(pv==='bottom'?pn+2:pn+8)+'%'}
-    else{
-      const parts=[base];
-      if($('camon').checked&&!pickOn&&L!=='stackt'&&$('ccorner').value[0]==='b')parts.push(((+$('csize').value)/camAspect()+camBottom()+5)+'cqw');
-      if(ltTop()>0)parts.push(ltTop()+'cqw');
-      b=parts.length>1?'max('+parts.join(',')+')':'';
-    }
+  c.style.display=pickOn?'none':'';
+  let b='',tp='',tf='';
+  const pv=$('pos').value,cor=$('ccorner').value;
+  const camVis=$('camon').checked&&!pickOn&&L!=='stack';
+  const camH=(+$('csize').value)/camAspect();
+  if(pv==='bottom'||pv==='bmid'){
+    if(L==='stack')b=pv==='bmid'?'50%':'44%';
+    else if(camVis&&(cor==='br'||cor==='bl'))b=Math.max(capBaseCqw(),camH+9)+'cqw';
+  }else if(pv==='top'){
+    if(camVis&&(cor==='tl'||cor==='tr'||cor==='tc'))tp=Math.max(12*16/9,5+camH+3)+'cqw';
+  }else if(pv==='middle'){
+    if(camVis&&(cor==='mc'||cor==='ml'||cor==='mr')){tp='calc(50% + '+(camH/2+3)+'cqw)';tf='none'}
   }
-  c.style.bottom=b;
+  c.style.bottom=b;c.style.top=tp;c.style.transform=tf;
   const v=k=>+$('c_'+k).value;
   const filt=`brightness(${v('br')}%) contrast(${v('co')}%) saturate(${v('sa')}%) sepia(${v('se')}%) hue-rotate(${v('hu')}deg) blur(${v('bl')}px)`;
   const st=$('stage');
@@ -1174,74 +684,15 @@ function applyAll(){
   $('bars').style.display=$('f_bars').checked?'block':'none';
   const mk=$('mark');mk.textContent=$('wm').value;
   mk.classList.toggle('l',$('camon').checked&&!pickOn&&$('ccorner').value==='tr'&&L!=='stack');
-  const ct=$('cta');
-  ct.style.bottom=(ltBottom()+(ltActive()?ltH()+1.5:0))+'cqw';
-  ct.style.setProperty('--cts',ctaZ());
-  const nn=$('neon');
-  nn.style.display=$('neon_on').checked&&!pickOn?'block':'none';
-  nn.style.setProperty('--nc',$('neon_col').value);
-  nn.style.setProperty('--nw',$('neon_w').value);
-  nn.style.setProperty('--ng',$('neon_g').value);
-  const nIns=$('neon_style').value==='insta',nan=$('neon_an').value;
-  nn.className='fx neon '+(nIns?'insta ':'')+((nan==='steady')?'':(nIns&&nan==='cycle'?'pulse':nan));
-  /* streamer name bar */
-  const lt=$('lt'),al=$('lt_al').value,sub=$('lt_sub').value.trim();
-  lt.style.setProperty('--lc',$('lt_col').value);
-  lt.style.setProperty('--lts',(+$('lt_sz').value)/100);
-  lt.style.bottom=ltBottom()+'cqw';
-  lt.style.left=al==='l'?'5%':al==='c'?'50%':'auto';
-  lt.style.right=al==='r'?'5%':'auto';
-  lt.style.transform=al==='c'?'translateX(-50%)':'none';
-  if($('ltN').textContent!==$('lt_name').value.trim())$('ltN').textContent=$('lt_name').value.trim();
-  if($('ltS').textContent!==sub)$('ltS').textContent=sub;
-  $('ltS').style.display=sub?'':'none';
-  applyLayout();applyCam();applyMid();
+  applyLayout();applyCam();
   if(pickOn)updatePick();
   document.querySelectorAll('.sl').forEach(s=>{const i=s.querySelector('input'),e=s.querySelector('em');if(i&&e&&i.id!=='fs')e.textContent=i.value});
   $('fs_v').textContent=$('fs').value;
-  const pv2=String(100-(+$('split').value));if($('cpanel').value!==pv2){$('cpanel').value=pv2;const e=$('cpanel').parentNode.querySelector('em');if(e)e.textContent=pv2}
 }
-const LIVE=['ytcrop_on','ytcrop','cap_on','cap_col','mid_on','mid_txt','mid_k','mid_col','mid_sz','mid_y','mid_up','neon_style','split','style','font','anim','pos','hl','fs','up','xpos','motion','f_gr','f_vi','f_sc','f_lk','f_bars','wm','layout','bgc','camon','ccorner','cshape','csize','cbw','cbc','cglow','cneon','cz','cx','cy','lt_on','cta_on','cta_plat','cta_mode','cta_sz','neon_on','neon_col','neon_w','neon_g','neon_an','lt_name','lt_sub','lt_style','lt_col','lt_al','lt_mode','lt_sz',...CIDS.map(k=>'c_'+k)];
+const LIVE=['style','font','anim','pos','hl','fs','up','xpos','motion','f_gr','f_vi','f_sc','f_lk','f_bars','wm','layout','bgc','camon','ccorner','cshape','csize','cbw','cbc','cglow','cz','cx','cy',...CIDS.map(k=>'c_'+k)];
 LIVE.forEach(id=>$(id).addEventListener('input',applyAll));
 ['caps','rel','start','n'].forEach(id=>$(id).addEventListener('input',parseCaps));
-$('end').addEventListener('input',()=>{applyAll();parseCaps()});
-$('yt_cc').addEventListener('change',()=>ytCC(player));
-$('yt_host').addEventListener('change',()=>{
-  try{if(player&&player.destroy)player.destroy()}catch(_){}
-  try{if(camPlayer&&camPlayer.destroy)camPlayer.destroy()}catch(_){}
-  player=null;ready=false;playing=false;camPlayer=null;camReady=false;camId=null;curId=null;
-  if(!$('yt')){const d=document.createElement('div');d.id='yt';$('vwrap').insertBefore(d,$('cens'))}
-  if(!$('yt2')){const d=document.createElement('div');d.id='yt2';$('camv').appendChild(d)}
-  const id=vid($('url').value);
-  if(id){toast('Player badal gaya, video dobara load ho raha hai');loadClip(id)}
-});
-$('hl2').addEventListener('input',()=>{$('hl').value=$('hl2').value;applyAll()});
-$('cta_shuf').onclick=()=>{ctaSig='';toast('Button times shuffled 🎲')};
-$('cpanel').addEventListener('input',()=>{$('split').value=100-(+$('cpanel').value);applyAll()});
-$('ccorner').addEventListener('input',()=>{
-  const c=$('ccorner').value,l=$('layout');
-  if(c==='ptop')l.value='stackt';else if(c==='pbot')l.value='stack';else if(l.value==='stack'||l.value==='stackt')l.value='fill';
-  applyAll();
-});
-$('layout').addEventListener('input',()=>{
-  const l=$('layout').value,c=$('ccorner');
-  if(l==='stackt')c.value='ptop';else if(l==='stack')c.value='pbot';else if(c.value==='ptop'||c.value==='pbot')c.value='br';
-  applyAll();
-});
-/* apply start/end edits to the player right away (on Enter or when leaving the field) */
-function applyTimes(which){
-  if(!ready||!player)return;
-  const sv=S(),ev=E();
-  if(isNaN(pt($('start').value))||isNaN(pt($('end').value||'0'))){toast('Write times like 00:01:25');return}
-  if(ev<=sv){toast('End time must be after start time');return}
-  const t=player.getCurrentTime();
-  if(which==='start'||t<sv||t>=ev){jump(sv);playTrans()}
-  lastKey='';parseCaps();applyAll();
-}
-['start','end'].forEach(id=>{
-  $(id).addEventListener('change',()=>applyTimes(id));
-  $(id).addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$(id).blur();}});
-});
+$('end').addEventListener('input',applyAll);
 $('camon').addEventListener('change',()=>{
   if($('camon').checked){if(curId)loadCam(curId)}
   else if(camReady&&camPlayer){try{camPlayer.pauseVideo()}catch(_){}}
@@ -1257,25 +708,6 @@ function playTrans(){
   el.style.opacity=1;void el.offsetWidth;
   el.style.transition=t==='flash'?'opacity .45s ease-out':'opacity .9s ease-out';
   el.style.opacity=0;
-}
-
-/* streamer name bar: decide when it animates in and out */
-function renderLT(t){
-  const el=$('lt');
-  let want='hide';
-  if(ltActive()){
-    const rel=t-S(),mode=$('lt_mode').value;
-    let vis=rel>=0.4&&t<E();
-    if(vis&&mode==='first')vis=rel<6.9;
-    else if(vis&&mode==='loop')vis=((rel-0.4)%14)<7;
-    want=vis?'in':'out';
-  }
-  const st=$('lt_style').value,key=want+'|'+st;
-  if(key===ltKey)return;
-  const prev=ltKey.split('|')[0];
-  ltKey=key;
-  if(want==='out'&&prev!=='in')want='hide';
-  el.className='lt '+st+(want==='hide'?'':' '+want);
 }
 
 /* caption render */
@@ -1304,32 +736,26 @@ function syncCam(t){
   try{const ct=camPlayer.getCurrentTime();if(Math.abs(ct-t)>0.45){camPlayer.seekTo(t,true);lastSync=Date.now()}}catch(_){}
 }
 function tick(){
-  if(!ready||!player||!player.getCurrentTime){renderLT(S()+1);renderCTA(null);renderCensor(null);return}
-  if(playing&&!$('yt_cc').checked&&Date.now()-ccAt>1500){ccAt=Date.now();ytCC(player)}
+  if(!ready||!player||!player.getCurrentTime)return;
   const t=player.getCurrentTime(),s=S(),e=E();
   const settled=Date.now()-jumpAt>800;
   if(playing&&e>s&&t>=e&&settled){
     if(recFinish){const f=recFinish;recFinish=null;f()}
     else if(plOn)nextPick();
     else if($('loop').checked){jump(s);playTrans()}
-    else userPause();
+    else player.pauseVideo();
   }
-  /* if the gameplay got paused by the browser or YouTube while it should be playing, resume it */
-  if(wantPlay){try{if(player.getPlayerState()===2&&Date.now()-jumpAt>600)player.playVideo()}catch(_){}}
   const len=Math.max(.1,e-s);
   $('prog').style.width=Math.min(100,Math.max(0,(t-s)/len*100))+'%';
   $('time').textContent=ft(Math.max(0,t-s))+' / '+ft(len)+'   (video: '+ft(t)+')';
   syncCam(t);
   renderCap(t);
-  renderLT(t);
-  renderCTA(t);
-  renderCensor(t);
 }
 setInterval(tick,80);
 
 /* YouTube players */
 function playerVars(extra){
-  const pv=Object.assign({cc_load_policy:0,controls:0,rel:0,playsinline:1,modestbranding:1,disablekb:1,fs:0,iv_load_policy:3,start:Math.floor(S())},extra||{});
+  const pv=Object.assign({controls:0,rel:0,playsinline:1,modestbranding:1,disablekb:1,fs:0,iv_load_policy:3,start:Math.floor(S())},extra||{});
   if(location.protocol==='https:'||location.protocol==='http:'){pv.origin=location.origin;pv.enablejsapi=1}
   return pv;
 }
@@ -1345,11 +771,10 @@ function loadCam(id){
   }
   if(camPlayer)return;
   camPlayer=new YT.Player('yt2',{
-    host:ytHostVal(),
     videoId:id,
     playerVars:playerVars({mute:1}),
     events:{
-      onReady:()=>{camReady=true;try{camPlayer.unloadModule('captions')}catch(_){}camPlayer.mute();layoutCam();if(playing)camPlayer.playVideo()},
+      onReady:()=>{camReady=true;camPlayer.mute();layoutCam();if(playing)camPlayer.playVideo()},
       onStateChange:e=>{if(e.data===1&&!playing){try{camPlayer.pauseVideo()}catch(_){}}},
       onError:()=>{}
     }
@@ -1362,20 +787,17 @@ function loadClip(id){
   pendingLoad=null;$('empty').style.display='none';parseCaps();applyAll();
   const same=(curId===id);curId=id;applyAll();
   if(player&&ready){
-    if(same){jump(S());userPlay()}else{wantPlay=true; player.loadVideoById({videoId:id,startSeconds:S()})}
+    if(same){jump(S());player.playVideo()}else player.loadVideoById({videoId:id,startSeconds:S()});
     playTrans();loadCam(id);return;
   }
   if(player)return;
   player=new YT.Player('yt',{
-    host:ytHostVal(),
     videoId:id,
     playerVars:playerVars(),
     events:{
-      onReady:()=>{ready=true;player.seekTo(S(),true);setHQ();ytCC(player)},
-      onApiChange:()=>ytCC(player),
+      onReady:()=>{ready=true;player.seekTo(S(),true)},
       onStateChange:e=>{
         playing=(e.data===1);
-        if(e.data===1){$('empty').style.display='none';ytCC(player)}
         $('play').textContent=playing?'⏸ Pause':'▶ Play clip';
         if(camReady&&camPlayer&&$('camon').checked){
           try{
@@ -1384,7 +806,7 @@ function loadClip(id){
           }catch(_){}
         }
       },
-      onError:e=>showErr(e.data===153||e.data===152
+      onError:e=>toast(e.data===153||e.data===152
         ?'Error '+e.data+': open this page from its live https link (GitHub Pages), not as a local file.'
         :(e.data===101||e.data===150
           ?'The video owner has disabled embedding for this video.'
@@ -1397,35 +819,25 @@ function loadClip(id){
 $('load').onclick=()=>{
   const id=vid($('url').value);
   if(!id){toast('Enter a valid YouTube link');return}
-  if(!String($('start').value).trim())$('start').value='00:00:00';
-  if(!String($('end').value).trim())$('end').value=ftd(S()+30);
-  if(isNaN(pt($('start').value))||isNaN(pt($('end').value))){toast('Write times like 00:01:25');return}
+  if(isNaN(pt($('start').value))||isNaN(pt($('end').value))){toast('Write times like 1:25');return}
   if(E()<=S()){toast('End time must be after start time');return}
   plOn=false;loadClip(id);
-  if(!apiReady)setTimeout(()=>{if(!apiReady)showErr('The YouTube player could not load. Check your internet, turn off any ad blocker for this page, then reload.')},6000);
 };
 $('play').onclick=()=>{
   if(!ready){toast('Load a clip first');return}
-  if(playing){userPause();return}
+  if(playing){player.pauseVideo();return}
   const t=player.getCurrentTime();
   if(t<S()||t>=E()-.2){jump(S());playTrans()}
-  userPlay();
+  player.playVideo();
 };
-function skip(d){
+function seekBy(d){
   if(!ready||!player)return toast('Load a clip first');
   const s=S(),e=E(),t=player.getCurrentTime();
-  jump(Math.min(Math.max(t+d,s),Math.max(s,e-0.3)));
-  lastKey='';
+  jump(clamp(t+d,s,Math.max(s,e-0.3)));
 }
-$('back').onclick=()=>skip(-5);
-$('fwd').onclick=()=>skip(5);
-document.addEventListener('keydown',e=>{
-  const tg=(e.target.tagName||'').toLowerCase();
-  if(tg==='input'||tg==='textarea'||tg==='select')return;
-  if(e.key==='ArrowLeft'){e.preventDefault();skip(-5)}
-  else if(e.key==='ArrowRight'){e.preventDefault();skip(5)}
-});
-$('restart').onclick=()=>{if(!ready)return;jump(S());userPlay();playTrans()};
+$('back').onclick=()=>seekBy(-5);
+$('fwd').onclick=()=>seekBy(5);
+$('restart').onclick=()=>{if(!ready)return;jump(S());player.playVideo();playTrans()};
 $('setStart').onclick=()=>{if(!ready)return toast('Load a video first');$('start').value=ftd(player.getCurrentTime());parseCaps()};
 $('setEnd').onclick=()=>{if(!ready)return toast('Load a video first');$('end').value=ftd(player.getCurrentTime());applyAll()};
 
@@ -1489,7 +901,7 @@ function useClip(c,auto){
   const id=vid($('url').value);
   if(id)loadClip(id);
   else toast('Times and captions are filled in. Add the video link in the Clip tab to preview.');
-  toTop();
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 function renderPicks(){
   const box=$('picks');
@@ -1516,7 +928,7 @@ $('picks').addEventListener('click',async e=>{
 });
 function nextPick(){
   plI++;
-  if(plI>=plList.length){plOn=false;userPause();toast('Finished all picks');return}
+  if(plI>=plList.length){plOn=false;try{player.pauseVideo()}catch(_){}toast('Finished all picks');return}
   useClip(plList[plI],true);
 }
 $('find').onclick=()=>{
@@ -1541,83 +953,10 @@ function pickMime(){
     :['video/mp4;codecs=avc1.640028,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
   return list.find(m=>MediaRecorder.isTypeSupported(m))||'';
 }
-function setHQ(){try{player.setPlaybackQuality('hd1080')}catch(_){}try{player.setPlaybackQualityRange('hd1080','hd1080')}catch(_){}}
-/* blood-only recolor: changes only strongly red pixels inside a box */
-function recolorRed(img,rx,ry,oval,target,sens){
-  const d=img.data,w=img.width,hh=img.height;
-  const tol=8+sens*2.4,sMin=0.7-sens*0.035,vMin=0.15;
-  const cx=(w-1)/2,cy=(hh-1)/2,ax=Math.max(1,w/2),ay=Math.max(1,hh/2);
-  for(let y=0;y<hh;y++){
-    for(let x=0;x<w;x++){
-      if(oval){const ux=(x-cx)/ax,uy=(y-cy)/ay;if(ux*ux+uy*uy>1)continue}
-      const o=(y*w+x)*4,r=d[o]/255,g=d[o+1]/255,b=d[o+2]/255;
-      const mx=r>g?(r>b?r:b):(g>b?g:b),mn=r<g?(r<b?r:b):(g<b?g:b),df=mx-mn;
-      if(mx<vMin||df<=0)continue;
-      const s=df/mx;if(s<sMin-0.15)continue;
-      let hu;
-      if(mx===r)hu=60*(((g-b)/df)%6);else if(mx===g)hu=60*((b-r)/df+2);else hu=60*((r-g)/df+4);
-      if(hu<0)hu+=360;
-      const dh=hu<180?hu:360-hu;
-      if(dh>tol)continue;
-      let wt=dh<tol*0.6?1:(tol-dh)/(tol*0.4);
-      wt*=Math.min(1,Math.max(0,(s-(sMin-0.15))/0.15));
-      if(wt<=0)continue;
-      let nr,ng,nb;
-      if(target<0){const k=0.22;nr=r*k;ng=g*k;nb=b*k}
-      else{
-        const c=mx*s,hp=target/60,xx=c*(1-Math.abs(hp%2-1)),m=mx-c;
-        let r1=0,g1=0,b1=0;
-        if(hp<1){r1=c;g1=xx}else if(hp<2){r1=xx;g1=c}else if(hp<3){g1=c;b1=xx}else if(hp<4){g1=xx;b1=c}else if(hp<5){r1=xx;b1=c}else{r1=c;b1=xx}
-        nr=r1+m;ng=g1+m;nb=b1+m;
-      }
-      d[o]=Math.round((r+(nr-r)*wt)*255);d[o+1]=Math.round((g+(ng-g)*wt)*255);d[o+2]=Math.round((b+(nb-b)*wt)*255);
-    }
-  }
-}
-function bloodPass(ctx,W,H,cropped,tNow){
-  const rel=tNow-S();
-  const act=boxes.filter(b=>b.on&&b.mode==='blood'&&rel>=b.from&&rel<b.to);
-  if(!act.length)return;
-  const vr=$('vwrap').getBoundingClientRect();
-  const pr=cropped?$('phone').getBoundingClientRect():{left:0,top:0,width:innerWidth,height:innerHeight};
-  const k=W/pr.width;
-  act.forEach(b=>{
-    let x0=(vr.left-pr.left+b.x/100*vr.width)*k,y0=(vr.top-pr.top+b.y/100*vr.height)*k;
-    let x1=x0+b.w/100*vr.width*k,y1=y0+b.h/100*vr.height*k;
-    x0=Math.max(0,Math.floor(x0));y0=Math.max(0,Math.floor(y0));x1=Math.min(W,Math.ceil(x1));y1=Math.min(H,Math.ceil(y1));
-    const w=x1-x0,hh=y1-y0;if(w<2||hh<2)return;
-    const img=ctx.getImageData(x0,y0,w,hh);
-    recolorRed(img,0,0,b.shape==='oval',+b.hue,+b.sens||5);
-    ctx.putImageData(img,x0,y0);
-  });
-}
-async function makeUpscaler(stream,cropped,big){
-  const vt=stream.getVideoTracks()[0];
-  const v=document.createElement('video');v.muted=true;v.playsInline=true;v.srcObject=new MediaStream([vt]);
-  try{await v.play()}catch(_){}
-  await new Promise(r=>{if(v.videoWidth)return r();v.onloadedmetadata=r;setTimeout(r,2500)});
-  let W=1080,H=1920;
-  if(!(big&&cropped)){W=v.videoWidth||1080;H=v.videoHeight||1920}
-  const c=document.createElement('canvas');c.width=W;c.height=H;
-  const ctx=c.getContext('2d',{alpha:false,willReadFrequently:true});ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
-  let alive=true;
-  const draw=()=>{
-    if(!alive)return;
-    if(v.readyState>=2&&v.videoWidth){
-      ctx.drawImage(v,0,0,W,H);
-      try{if(player&&player.getCurrentTime)bloodPass(ctx,W,H,cropped,player.getCurrentTime())}catch(_){}
-    }
-    requestAnimationFrame(draw);
-  };
-  draw();
-  const out=c.captureStream(60);
-  stream.getAudioTracks().forEach(a=>out.addTrack(a));
-  return {stream:out,canvas:c,stop(){alive=false;try{v.srcObject=null}catch(_){}}};
-}
 function recMsg(m){$('recmsg').textContent=m}
 function enterRec(){
   if(pickOn){pickOn=false;$('pick').style.display='none';$('pickbtn').textContent='🎯 Pick facecam area'}
-  const rw=Math.max(240,Math.min(innerHeight*9/16,innerWidth-190,1080));
+  const rw=Math.max(240,Math.min(innerHeight*9/16,innerWidth-190,720));
   const ph=$('phone');ph.style.setProperty('--rw',rw+'px');ph.classList.add('rec');
   document.body.classList.add('recording');
   const b=$('recbar');b.style.display='flex';b.style.left=(rw+12)+'px';
@@ -1635,14 +974,14 @@ function dl(blob,name){
 }
 async function recordOne(stream,mime,br){
   const chunks=[];
-  const mr=new MediaRecorder(stream,Object.assign({videoBitsPerSecond:br,audioBitsPerSecond:192000},mime?{mimeType:mime}:{}));
+  const mr=new MediaRecorder(stream,Object.assign({videoBitsPerSecond:br},mime?{mimeType:mime}:{}));
   mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
   const done=new Promise(r=>{mr.onstop=r});
-  userPause();
+  try{player.pauseVideo()}catch(_){}
   await sleep(300);
   jump(S());await sleep(900);
   const started=new Promise(res=>{const t0=Date.now();const iv=setInterval(()=>{if(playing||Date.now()-t0>9000){clearInterval(iv);res(playing)}},50)});
-  setHQ();userPlay();
+  player.playVideo();
   if(!(await started))throw new Error('The video did not start playing');
   playTrans();
   mr.start(250);
@@ -1651,33 +990,31 @@ async function recordOne(stream,mime,br){
   recFinish=null;
   if(mr.state!=='inactive')mr.stop();
   await done;
-  userPause();
+  try{player.pauseVideo()}catch(_){}
   return new Blob(chunks,{type:(mr.mimeType||mime||'video/webm').split(';')[0]});
 }
 async function recSession(items){
   if(recBusy)return;
-  if(!recSupported()){toast('Direct recording needs desktop Chrome or Edge. On a phone, use Phone recording mode in this tab.');return}
+  if(!recSupported()){toast('Recording needs desktop Chrome or Edge. Phones cannot do it.');return}
   if(!ready){toast('Load a clip first (Clip tab)');return}
   if(E()<=S()){toast('End time must be after start time');return}
   recBusy=true;recCancel=false;plOn=false;
   enterRec();
-  let stream=null,saved=0,up=null;
+  let stream=null,saved=0;
   try{
     recMsg('Choose this tab in the browser prompt');
-    stream=await navigator.mediaDevices.getDisplayMedia({video:{frameRate:{ideal:60,max:60},width:{ideal:3840},height:{ideal:2160}},audio:true,preferCurrentTab:true,selfBrowserSurface:'include',systemAudio:'exclude'});
+    stream=await navigator.mediaDevices.getDisplayMedia({video:{frameRate:30},audio:true,preferCurrentTab:true,selfBrowserSurface:'include',systemAudio:'exclude'});
     const vt=stream.getVideoTracks()[0];
     let cropped=false;
     try{if(window.CropTarget&&vt.cropTo){await vt.cropTo(await CropTarget.fromElement($('phone')));cropped=true}}catch(_){}
     vt.addEventListener('ended',()=>{recCancel=true;if(recFinish){const f=recFinish;recFinish=null;f()}});
     const hasAudio=stream.getAudioTracks().length>0;
-    const needBlood=boxes.some(b=>b.on&&b.mode==='blood'),big=$('recsize').value==='1080';
-    if((cropped&&big)||needBlood)up=await makeUpscaler(stream,cropped,big);
     const mime=pickMime(),br=+$('recbr').value;
     const list=items&&items.length?items:[null];
     for(let i=0;i<list.length&&!recCancel;i++){
       if(list[i]){useClip(list[i],true);await sleep(1600)}
       recMsg('Clip '+(i+1)+' of '+list.length+(cropped?'':' (full tab, not cropped)')+(hasAudio?'':' (no audio)'));
-      const blob=await recordOne(up?up.stream:stream,mime,br);
+      const blob=await recordOne(stream,mime,br);
       if(blob.size>0){
         const ext=/mp4/.test(blob.type)?'mp4':'webm';
         dl(blob,'clip-'+(i+1)+'-'+Math.round(S())+'s-'+Math.round(E())+'s.'+ext);saved++;
@@ -1686,60 +1023,10 @@ async function recSession(items){
   }catch(err){
     toast(err&&err.name==='NotAllowedError'?'Recording was cancelled.':('Recording failed: '+(err&&err.message||err)));
   }
-  try{if(up)up.stop()}catch(_){}
   if(stream)stream.getTracks().forEach(t=>t.stop());
   exitRec();recBusy=false;recFinish=null;
   if(saved)toast('Saved '+saved+' clip'+(saved>1?'s':'')+' to your downloads ✅');
 }
-/* phone recording mode */
-let pmOn=false;
-function pmShow(t,n,p,btns){
-  $('pmt').textContent=t;$('pmn').textContent=n||'';$('pmp').textContent=p||'';
-  const b=$('pmb');b.innerHTML='';
-  (btns||[]).forEach(x=>{const e=document.createElement('button');e.textContent=x[0];if(x[2])e.className='pri';e.onclick=x[1];b.appendChild(e)});
-  $('pmo').style.display='flex';
-}
-function pmExit(){
-  pmOn=false;
-  document.body.classList.remove('pmode');
-  $('phone').classList.remove('pm','pmfull');
-  $('pmo').style.display='none';
-  try{if(document.fullscreenElement)document.exitFullscreen()}catch(_){}
-  if(recFinish){const f=recFinish;recFinish=null;f()}
-  userPause();
-  setTimeout(applyAll,120);
-}
-async function phoneMode(){
-  if(pmOn)return;
-  if(!ready){toast('Load a clip first (Clip tab)');return}
-  if(E()<=S()){toast('End time must be after start time');return}
-  if(recBusy)return;
-  pmOn=true;plOn=false;
-  if(pickOn){pickOn=false;$('pick').style.display='none';$('pickbtn').textContent='🎯 Pick facecam area'}
-  document.body.classList.add('pmode');
-  $('phone').classList.add('pm');$('phone').classList.toggle('pmfull',$('pm_frame').value==='full');
-  try{await document.documentElement.requestFullscreen()}catch(_){}
-  setTimeout(applyAll,150);
-  userPause();jump(S());setHQ();
-  const wait=+$('pm_cd').value;
-  for(let c=wait;c>0&&pmOn;c--){
-    pmShow('Start your screen recorder now','',c+'s until the clip plays',[]);
-    $('pmn').textContent=c;
-    await sleep(1000);
-  }
-  if(!pmOn)return;
-  $('pmo').style.display='none';
-  const started=new Promise(res=>{const t0=Date.now();const iv=setInterval(()=>{if(playing||Date.now()-t0>9000){clearInterval(iv);res(playing)}},50)});
-  jump(S());playTrans();userPlay();
-  await started;
-  await new Promise(res=>{recFinish=res;setTimeout(()=>{if(recFinish===res){recFinish=null;res()}},(Math.max(.5,E()-S())+12)*1000)});
-  recFinish=null;
-  if(!pmOn)return;
-  userPause();
-  pmShow('Done. Stop your screen recorder now.','','Then trim the countdown at the start in your gallery.',[['↺ Play again',()=>{pmExit();setTimeout(phoneMode,300)}],['Close',pmExit,1]]);
-}
-$('pmbtn').onclick=phoneMode;
-document.addEventListener('dblclick',()=>{if(pmOn)pmExit()});
 $('rec').onclick=()=>recSession(null);
 $('recall').onclick=()=>{
   if(!picks.length){toast('Find moments first (Moments tab)');return}
@@ -1751,13 +1038,12 @@ $('lite').addEventListener('input',()=>document.body.classList.toggle('lite',$('
 document.body.classList.toggle('lite',$('lite').checked);
 
 /* share link */
-const SHARE=['url:v','start:s','end:e','caps:c','layout:ly','ccorner:cco','cshape:csh','csize:csz','cbw:cbw','cbc:cbc','cz:czz','cx:cxx','cy:cyy','bgc:bgc','style:st','font:fo','anim:an','pos:pos','hl:hl','n:n','fs:fs','xpos:x','motion:mo','trans:tr','f_gr:gr','f_vi:vi','f_sc:sc','f_lk:lk','wm:wm','split:sp','lt_name:ltn','lt_sub:lts','lt_style:lty','lt_col:ltc','lt_al:lta','lt_mode:ltm','lt_sz:ltz','ytcrop:ycr','cap_col:ccl','mid_txt:mtx','mid_k:mk','mid_col:mcl','mid_sz:msz','mid_y:my','neon_style:nst','cta_plat:cpl','cta_mode:cmo','cta_sz:ctz','neon_col:nc','neon_w:nw','neon_g:ng','neon_an:na',...CIDS.map(k=>'c_'+k+':k'+k)];
-const SHAREC=['rel:rel','up:up','loop:lp','f_bars:bars','camon:cam','cglow:glow','lt_on:lton','ytcrop_on:ycp','yt_cc:ycc','cap_on:capon','mid_on:mon','mid_up:mup','cta_on:cta','cneon:cn','neon_on:non'];
+const SHARE=['url:v','start:s','end:e','caps:c','layout:ly','ccorner:cco','cshape:csh','csize:csz','cbw:cbw','cbc:cbc','cz:czz','cx:cxx','cy:cyy','bgc:bgc','style:st','font:fo','anim:an','pos:pos','hl:hl','n:n','fs:fs','xpos:x','motion:mo','trans:tr','f_gr:gr','f_vi:vi','f_sc:sc','f_lk:lk','wm:wm',...CIDS.map(k=>'c_'+k+':k'+k)];
+const SHAREC=['rel:rel','up:up','loop:lp','f_bars:bars','camon:cam','cglow:glow'];
 $('share').onclick=async()=>{
   const p=new URLSearchParams();
   SHARE.forEach(x=>{const[id,k]=x.split(':');p.set(k,$(id).value)});
   SHAREC.forEach(x=>{const[id,k]=x.split(':');p.set(k,$(id).checked?1:0)});
-  if(boxes.length)p.set('cb',JSON.stringify(boxes));
   const link=location.origin+location.pathname+'#'+p.toString();
   try{await navigator.clipboard.writeText(link);toast('Link copied ✅')}
   catch(e){prompt('Copy this link:',link)}
@@ -1767,12 +1053,9 @@ function fromHash(){
   const p=new URLSearchParams(location.hash.slice(1));if(!p.get('v'))return;
   SHARE.forEach(x=>{const[id,k]=x.split(':');if(p.has(k))$(id).value=p.get(k)});
   SHAREC.forEach(x=>{const[id,k]=x.split(':');if(p.has(k))$(id).checked=p.get(k)==='1'});
-  if(p.has('cb')){try{const a=JSON.parse(p.get('cb'));if(Array.isArray(a))boxes=a.slice(0,30).map(b=>Object.assign(newBox(),b))}catch(_){}}
-  applyAll();parseCaps();buildCens();renderCensorUI();
+  applyAll();parseCaps();
   const id=vid($('url').value);if(id)loadClip(id);
 }
-if(location.protocol==='file:')$('empty').innerHTML='Open this page from its https link (for example GitHub Pages).<br>YouTube will not play it as a local file.';
-renderCensorUI();
 applyAll();parseCaps();fromHash();
 </script>
 </body>
